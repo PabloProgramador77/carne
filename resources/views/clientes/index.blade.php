@@ -29,7 +29,7 @@
             
             @if( count( $clientes ) > 0 )
                 @foreach( $clientes as $cliente )
-                    <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="col-lg-2 col-md-6 col-sm-12">
                         <x-adminlte-card theme-mode="outline" title="{{ $cliente->nombre }}" header-class="rounded-bottom border-primary">
                             <x-slot name="toolsSlot">
                                 <img src="{{ asset('/img/cliente.jpg') }}" alt="Cliente" width="75%" height="auto" class="">
