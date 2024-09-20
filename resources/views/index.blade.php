@@ -9,19 +9,19 @@
                 <h1 class="fs-2 fw-semibold text-primary">Resumen Empresarial</h1>
             </div>
             
-            <div class="col-lg-12 p-2 m-1 border row shadow">
-                <p class="bg-light fw-semibold text-center col-lg-12">Información rápida del sistema</p>
-                <div class="col-lg-3">
-                    <x-adminlte-small-box title="0" text="Productos registrados" icon="fas fa-users" theme="info"></x-adminlte-small-box>
+            <div class="col-lg-12 p-2 m-1 row">
+                <p class="p-1 bg-info fw-semibold text-center col-lg-12">Información rápida del sistema</p>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <x-adminlte-small-box title="0" text="Productos registrados" icon="fas fa-drumstick-bite" theme="info" class="shadow"></x-adminlte-small-box>
                 </div>
-                <div class="col-lg-3">
-                    <x-adminlte-small-box title="0" text="Clientes registrados" icon="fas fa-shoe-prints" theme="primary"></x-adminlte-small-box>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <x-adminlte-small-box title="0" text="Clientes registrados" icon="fas fa-users" theme="primary" class="shadow"></x-adminlte-small-box>
                 </div>
-                <div class="col-lg-3">
-                    <x-adminlte-small-box title="0" text="Pedidos realizados" icon="fas fa-socks" theme="secondary"></x-adminlte-small-box>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <x-adminlte-small-box title="0" text="Pedidos realizados" icon="fas fa-shopping-cart" theme="warning" class="shadow"></x-adminlte-small-box>
                 </div>
-                <div class="col-lg-3">
-                    <x-adminlte-small-box title="0" text="Ventas realizadas" icon="fas fa-boxes" theme="teal"></x-adminlte-small-box>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <x-adminlte-small-box title="0" text="Total de Ventas" icon="fas fa-dollar-sign" theme="teal" class="shadow"></x-adminlte-small-box>
                 </div>
             </div>
 
