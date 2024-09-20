@@ -18,4 +18,10 @@ class Cliente extends Model
         'domicilio',
 
     ];
+
+    public function productos(){
+
+        return $this->belongsToMany( Producto::class, 'cliente_has_productos', 'idCliente', 'idProducto' )->withPivot('precio');
+
+    }
 }

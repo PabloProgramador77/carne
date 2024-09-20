@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ClienteHasProductoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,3 +22,5 @@ Route::get('/clientes', [App\Http\Controllers\ClienteController::class, 'index']
 Route::post('/cliente/agregar', [App\Http\Controllers\ClienteController::class, 'store'])->name('agregar-cliente');
 Route::post('/cliente/actualizar', [App\Http\Controllers\ClienteController::class, 'update'])->name('actualizar-cliente');
 Route::post('/cliente/borrar', [App\Http\Controllers\ClienteController::class, 'destroy'])->name('borrar-cliente');
+Route::get('/cliente/productos/{id}', [App\Http\Controllers\ClienteController::class, 'create'])->name('productos-de-cliente');
+Route::post('/cliente/precios', [App\Http\Controllers\ClienteHasProductoController::class, 'store'])->name('precios-de-cliente');

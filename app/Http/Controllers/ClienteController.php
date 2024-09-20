@@ -8,6 +8,7 @@ use App\Http\Requests\Cliente\Create;
 use App\Http\Requests\Cliente\Read;
 use App\Http\Requests\Cliente\Update;
 use App\Http\Requests\Cliente\Delete;
+use App\Models\Producto;
 
 class ClienteController extends Controller
 {
@@ -32,9 +33,20 @@ class ClienteController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create( $id )
     {
-        //
+        try {
+            
+            $cliente = Cliente::find( $id );
+            $productos = Producto::orderBy('nombre', 'asc')->get();
+
+            return view('clientes.productos', compact('cliente', 'productos'));
+
+        } catch (\Throwable $th) {
+            
+            echo $th->getMessage();
+            
+        }
     }
 
     /**

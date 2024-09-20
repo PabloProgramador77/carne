@@ -14,7 +14,7 @@
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/home"><i class="fas fa-home"></i> Inicio</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-drumstick-bite"></i> Clientes</li>
+                        <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-users"></i> Clientes</li>
                     </ol>
                 </nav>
             </div>
@@ -32,7 +32,7 @@
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <x-adminlte-card theme-mode="outline" title="{{ $cliente->nombre }}" header-class="rounded-bottom border-primary">
                             <x-slot name="toolsSlot">
-                                <img src="{{ asset('/img/cliente.jpg') }}" alt="Cliente" width="100%" height="auto" class="">
+                                <img src="{{ asset('/img/cliente.jpg') }}" alt="Cliente" width="75%" height="auto" class="">
                                 @if( $cliente->telefono === NULL || $cliente->telefono === '' )
                                     <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">Sin telefono agregado al cliente.</small>
                                 @else

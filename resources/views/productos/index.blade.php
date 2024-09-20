@@ -32,11 +32,11 @@
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <x-adminlte-card theme-mode="outline" title="{{ $producto->nombre }}" header-class="rounded-bottom border-primary">
                             <x-slot name="toolsSlot">
-                                <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="100%" height="auto" class="">
+                                <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="75%" height="auto" class="">
                                 @if( $producto->descripcion === NULL || $producto->descripcion === '' )
-                                    <small class="fs-6 fw-semibold text-secondary">Sin descripción agregada al producto.</small>
+                                    <small class="fs-6 fw-semibold text-secondary d-block">Sin descripción agregada al producto.</small>
                                 @else
-                                    <small class="fs-6 fw-semibold text-secondary">{{ $producto->descripcion }}</small>
+                                    <small class="fs-6 fw-semibold text-secondary d-block">{{ $producto->descripcion }}</small>
                                 @endif
                                 
                             </x-slot>
