@@ -87,7 +87,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('</tbody>');
                     $ticket->writeHTML('</table>');
-                    $ticket->writeHTML('<p style="text-align: center; ">Total: $ '.$total.' MXN</p>');
+                    $ticket->writeHTML('<p style="text-align: center; ">Total: $ '.number_format( $total, 2).' MXN</p>');
 
                 }
 
