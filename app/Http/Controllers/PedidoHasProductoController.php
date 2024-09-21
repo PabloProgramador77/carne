@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PedidoHasProducto;
 use Illuminate\Http\Request;
 use App\Http\Requests\PedidoHasProducto\Create;
+use Mpdf\Mpdf;
 
 class PedidoHasProductoController extends Controller
 {
@@ -50,6 +51,7 @@ class PedidoHasProductoController extends Controller
 
             $pedidoController = new PedidoController();
             $pedidoController->edit( $request, $total );
+            $pedidoController->create( $request->pedido );
 
             $datos['exito'] = true;
 
