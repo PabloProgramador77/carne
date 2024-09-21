@@ -74,9 +74,32 @@ class PedidoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( Request $pedido)
+    public function show( Request $request )
     {
-        //
+        try {
+            
+            $pedido = Pedido::find( $request->id );
+
+            if( $pedido->id ){
+
+                $datos['exito'] = true;
+                $datos['productos'] = ClienteHasProducto::select('productos.nombre', 'cliente_has_productos.precio', 'pedido_has_productos.cantidad')
+                                    ->join('productos', 'cliente_has_productos.idProducto', '=', 'productos.id')
+                                    ->join('pedido_has_productos', 'cliente_has_productos.id', '=', 'pedido_has_productos.idClienteHasProducto')
+                                    ->where('pedido_has_productos.idPedido', '=', $request->id)
+                                    ->orderBy('productos.nombre', 'asc')
+                                    ->get(); 
+
+            }
+
+        } catch (\Throwable $th) {
+            
+            $datos['exito'] = false;
+            $datos['mensaje']= $th->getMessage();
+
+        }
+
+        return response()->json( $datos );
     }
 
     /**
@@ -114,8 +137,27 @@ class PedidoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pedido $pedido)
+    public function destroy( Request $request )
     {
-        //
+        try {
+
+            $pedido = Pedido::find( $request->id );
+
+            if( $pedido->id ){
+
+                $pedido->delete();
+
+                $datos['exito'] = true;
+
+            }
+
+        } catch (\Throwable $th) {
+            
+            $datos['exito'] = false;
+            $datos['mensaje'] = $th->getMessage();
+
+        }
+
+        return response()->json( $datos );
     }
 }

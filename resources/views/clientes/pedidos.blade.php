@@ -20,6 +20,10 @@
                 </nav>
             </div>
 
+            <div class="col-lg-12">
+                <small class="p-1 bg-warning text-center d-block rounded">Elige el pedido a ver y presiona el botón <i class="fas fa-info-circle"></i> para verlo a detalle o presion el botón <i class="fas fa-print"></i> para imprimirlo</small>
+            </div>
+
         </div>
 
         <div class="container-fluid row p-2">
@@ -35,7 +39,7 @@
                                 <small class="fs-6 fw-semibold d-block p-1 bg-light rounded"><b>{{ $pedido->created_at }}</b></small>
                             </x-slot>
                             <x-slot name="footerSlot">
-                                <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-toggle="modal" data-target="#modalVer" data-id="{{ $pedido->id }}"></x-adminlte-button>
+                                <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-toggle="modal" data-target="#modalVer" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}"></x-adminlte-button>
                                 <x-adminlte-button class="shadow imprimir" theme="success" icon="fas fa-print" data-id="{{ $pedido->id }}"></x-adminlte-button>
                             </x-slot>
                         </x-adminlte-card>
@@ -56,7 +60,10 @@
 
     </section>
 
+    @include('pedidos.pedido')
+
     <script src="{{ asset('js/jquery-3.7.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/sweetAlert.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/pedidos/read.js') }}" type="text/javascript"></script>
 
 @stop

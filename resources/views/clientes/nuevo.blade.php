@@ -5,7 +5,7 @@
         </div>
         <div class="col-lg-7">
             <form novalidate>
-                <p class="fs-6 fw-semibold bg-light border-bottom p-1">Los campos con * son obligatorios</p>
+                <small class="fs-6 fw-semibold bg-warning border-bottom p-1 d-block mb-2">Los campos con * son obligatorios</small>
                 <div class="form-group">
                     <x-adminlte-input name="nombre" id="nombre" placeholder="Nombre de cliente">
                         <x-slot name="prependSlot">

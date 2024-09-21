@@ -23,6 +23,10 @@
                 <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo producto" label=""></x-adminlte-button>
             </div>
 
+            <div class="col-lg-12">
+                <small class="rounded fs-5 fw-semibold text-center bg-warning d-block">Agregar productos nuevos con el botón <i class="fas fa-plus-circle"></i> o administra los existentes con sus botones correspondientes.</small>
+            </div>
+
         </div>
 
         <div class="container-fluid row p-2">
@@ -30,7 +34,7 @@
             @if( count( $productos ) > 0 )
                 @foreach( $productos as $producto )
                     <div class="col-lg-2 col-md-6 col-sm-12">
-                        <x-adminlte-card theme-mode="outline" title="{{ $producto->nombre }}" header-class="rounded-bottom border-primary">
+                        <x-adminlte-card theme-mode="outline" title="{{ $producto->nombre }}" header-class="rounded-bottom border-primary" class="shadow">
                             <x-slot name="toolsSlot">
                                 <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="75%" height="auto" class="">
                                 @if( $producto->descripcion === NULL || $producto->descripcion === '' )
@@ -49,7 +53,7 @@
                 @endforeach
             @else
                 <div class="col-lg-4 mx-auto">
-                    <x-adminlte-card theme-mode="outline" theme="danger" title="Sin productos registrados">
+                    <x-adminlte-card theme-mode="outline" theme="danger" title="Sin productos registrados" class="shadow">
                         <x-slot name="toolsSlot">
                             <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="100%" height="auto" class="">
                             <small class="bg-danger p-1 rounded d-block text-center">Por favor registra productos en el catalogo</small>

@@ -23,6 +23,10 @@
                 <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo cliente" label=""></x-adminlte-button>
             </div>
 
+            <div class="col-lg-12">
+                <small class="p-1 bg-warning text-center rounded d-block">Agrega nuevos clientes con el botón <i class="fas fa-plus-circle"></i> o administra los existentes con los botones correspondientes.</small>
+            </div>
+
         </div>
 
         <div class="container-fluid row p-2">
@@ -30,7 +34,7 @@
             @if( count( $clientes ) > 0 )
                 @foreach( $clientes as $cliente )
                     <div class="col-lg-3 col-md-6 col-sm-12">
-                        <x-adminlte-card theme-mode="outline" title="{{ $cliente->nombre }}" header-class="rounded-bottom border-primary">
+                        <x-adminlte-card theme-mode="outline" title="{{ $cliente->nombre }}" header-class="rounded-bottom border-primary" class="shadow">
                             <x-slot name="toolsSlot">
                                 <img src="{{ asset('/img/cliente.jpg') }}" alt="Cliente" width="75%" height="auto" class="">
                                 @if( $cliente->telefono === NULL || $cliente->telefono === '' )

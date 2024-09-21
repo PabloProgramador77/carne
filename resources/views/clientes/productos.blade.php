@@ -25,6 +25,10 @@
                 <x-adminlte-button theme="success" icon="fas fa-save" title="Guardar precios" label=" Guardar" class="shadow" id="guardar"></x-adminlte-button>
             </div>
 
+            <div class="col-lg-12">
+                <small class="p-1 bg-warning text-center d-block mb-2">Introduce el precio de los productos a venderle al cliente y para termina presiona el botón <i class="fas fa-save"></i>Guardar</small>
+            </div>
+
         </div>
 
         <div class="container-fluid row p-2">
@@ -34,7 +38,7 @@
                 @if( count( $productos ) > 0 )
                     @foreach( $productos as $producto )
                         <div class="col-lg-2 col-md-6 col-sm-12">
-                            <x-adminlte-card theme-mode="outline" title="{{ $producto->nombre }}" header-class="rounded-bottom border-primary">
+                            <x-adminlte-card theme-mode="outline" title="{{ $producto->nombre }}" header-class="rounded-bottom border-primary" class="shadow">
                                 <x-slot name="toolsSlot">
                                     <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="75%" height="auto">
                                 

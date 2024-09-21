@@ -5,7 +5,7 @@
         </div>
         <div class="col-lg-7">
             <form novalidate>
-                <p class="fs-6 fw-semibold bg-light border-bottom p-1">Cambia los datos como creas necesario. Los campos con * son obligatorios</p>
+                <small class="fs-6 fw-semibold bg-warning border-bottom p-1 d-block mb-2">Cambia los datos como creas necesario. Los campos con * son obligatorios</small>
                 <div class="form-group">
                     <x-adminlte-input name="nombreEditar" id="nombreEditar" placeholder="Nombre de producto">
                         <x-slot name="prependSlot">

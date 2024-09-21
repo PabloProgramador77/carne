@@ -1,5 +1,9 @@
 <x-adminlte-modal id="modalNuevo" size="xl" title="Nuevo Pedido" theme="primary" icon="fas fa-plus-circle" static-backdrop scrollable>
     <div class="container-fluid row">
+        <div class="col-lg-12">
+            <small class="p-1 bg-warning d-block text-center rounded">Elige el cliente para crear el nuevo pedido y presiona el botón <i class="fas fa-shopping-cart"></i> para comenzar el pedido</small>
+        </div>
+        
         @foreach( $clientes as $cliente )
             <div class="col-lg-2 col-md-6 col-sm-12">
                 <x-adminlte-card theme-mode="outline" title="{{ $cliente->nombre }}" header-class="rounded-bottom border-primary">
