@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\ClienteHasProductoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,3 +21,8 @@ Route::post('/cliente/actualizar', [App\Http\Controllers\ClienteController::clas
 Route::post('/cliente/borrar', [App\Http\Controllers\ClienteController::class, 'destroy'])->name('borrar-cliente');
 Route::get('/cliente/productos/{id}', [App\Http\Controllers\ClienteController::class, 'create'])->name('productos-de-cliente');
 Route::post('/cliente/precios', [App\Http\Controllers\ClienteHasProductoController::class, 'store'])->name('precios-de-cliente');
+Route::get('/cliente/pedidos/{id}', [App\Http\Controllers\ClienteController::class, 'show'])->name('pedidos-de-cliente');
+
+Route::get('/pedidos', [App\Http\Controllers\PedidoController::class, 'index'])->name('pedidos');
+Route::get('/pedido/cliente/{id}', [App\Http\Controllers\PedidoController::class, 'store'])->name('nuevo-pedido');
+Route::post('/pedido/pesos', [App\Http\Controllers\PedidoHasProductoController::class, 'store'])->name('pesos-de-pedido');

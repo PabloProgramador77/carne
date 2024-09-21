@@ -24,4 +24,10 @@ class Cliente extends Model
         return $this->belongsToMany( Producto::class, 'cliente_has_productos', 'idCliente', 'idProducto' )->withPivot('precio');
 
     }
+
+    public function pedido(){
+
+        return $this->belongsTo( Pedido::class, 'idCliente' );
+        
+    }
 }

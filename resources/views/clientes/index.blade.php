@@ -6,7 +6,7 @@
         <div class="container-fluid row border-bottom">
 
             <div class="col-lg-5">
-                <h1 class="fs-3 fw-semibold"><i class="fas fa-drumstick-bite"></i> Mis Clientes</h1>
+                <h1 class="fs-3 fw-semibold"><i class="fas fa-users"></i> Mis Clientes</h1>
                 <p class="fs-6 fw-semibold text-secondary"><i class="fas fa-user-shield"></i> Panel de Administrador</p>
             </div>
             
@@ -29,18 +29,18 @@
             
             @if( count( $clientes ) > 0 )
                 @foreach( $clientes as $cliente )
-                    <div class="col-lg-2 col-md-6 col-sm-12">
+                    <div class="col-lg-3 col-md-6 col-sm-12">
                         <x-adminlte-card theme-mode="outline" title="{{ $cliente->nombre }}" header-class="rounded-bottom border-primary">
                             <x-slot name="toolsSlot">
                                 <img src="{{ asset('/img/cliente.jpg') }}" alt="Cliente" width="75%" height="auto" class="">
                                 @if( $cliente->telefono === NULL || $cliente->telefono === '' )
-                                    <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">Sin telefono agregado al cliente.</small>
+                                    <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">Sin telefono agregado.</small>
                                 @else
                                     <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block"><b>Tel:</b> {{ $cliente->telefono }}</small>
                                 @endif
 
                                 @if( $cliente->domicilio === NULL || $cliente->domicilio === '' )
-                                    <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">Sin domicilio agregado al cliente.</small>
+                                    <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">Sin domicilio agregado.</small>
                                 @else
                                     <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">{{ $cliente->domicilio }}</small>
                                 @endif
@@ -49,6 +49,7 @@
                                 <x-adminlte-button class="shadow editar" theme="info" icon="fas fa-edit" data-toggle="modal" data-target="#modalEditar" data-id="{{ $cliente->id }}" data-value="{{ $cliente->nombre }}, {{ $cliente->telefono }}, {{ $cliente->domicilio }}"></x-adminlte-button>
                                 <x-adminlte-button class="shadow borrar" theme="danger" icon="fas fa-trash" data-id="{{ $cliente->id }}" data-value="{{ $cliente->nombre }}"></x-adminlte-button>
                                 <a href="{{ url('cliente/productos') }}/{{ $cliente->id }}" class="btn btn-secondary shadow rounded" title="Agregar productos a cliente"><i class="fas fa-drumstick-bite"></i></a>
+                                <a href="{{ url('cliente/pedidos') }}/{{ $cliente->id }}" class="btn btn-success shadow rounded" title="Pedidos de cliente"><i class="fas fa-shopping-cart"></i></a>
                             </x-slot>
                         </x-adminlte-card>
                     </div>

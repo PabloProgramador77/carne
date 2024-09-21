@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Pedido;
 use Illuminate\Http\Request;
 use App\Http\Requests\Cliente\Create;
 use App\Http\Requests\Cliente\Read;
@@ -79,9 +80,27 @@ class ClienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cliente $cliente)
+    public function show( $id )
     {
-        //
+        try {
+            
+            $pedidos = Pedido::where('idCliente', '=', $id)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+            $cliente = Cliente::find( $id );
+
+            if( $cliente->id ){
+
+                return view('clientes.pedidos', compact('pedidos', 'cliente'));
+
+            }
+
+        } catch (\Throwable $th) {
+            
+            echo $th->getMessage();
+
+        }
     }
 
     /**
