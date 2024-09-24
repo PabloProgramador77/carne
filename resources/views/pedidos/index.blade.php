@@ -21,7 +21,7 @@
 
             <div class="col-lg-2 my-2">
                 <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo pedido"></x-adminlte-button>
-                <x-adminlte-button theme="warning" data-toggle="modal" data-target="#modalCorte" icon="fas fa-cash-register" title="Corte de caja" class="mx-5"></x-adminlte-button>
+                <x-adminlte-button theme="warning" data-toggle="modal" data-target="#modalCorte" icon="fas fa-cash-register" title="Corte de caja" class="mx-5" id="corte"></x-adminlte-button>
             </div>
 
             <div class="col-lg-12">
@@ -66,9 +66,12 @@
 
     @include('pedidos.nuevo')
     @include('pedidos.pedido')
+    @include('pedidos.corte')
 
     <script src="{{ asset('js/jquery-3.7.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/sweetAlert.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/read.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/cortes/pedidos.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/cortes/corte.js') }}" type="text/javascript"></script>
 
 @stop

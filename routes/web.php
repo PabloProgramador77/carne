@@ -28,3 +28,8 @@ Route::get('/pedido/cliente/{id}', [App\Http\Controllers\PedidoController::class
 Route::post('/pedido/pesos', [App\Http\Controllers\PedidoHasProductoController::class, 'store'])->name('pesos-de-pedido');
 Route::post('/pedido/cancelar', [App\Http\Controllers\PedidoController::class, 'destroy'])->name('cancelar-pedido');
 Route::post('/pedido/buscar', [App\Http\Controllers\PedidoController::class, 'show'])->name('buscar-pedido');
+
+Route::get('/cortes', [App\Http\Controllers\CorteController::class, 'index'])->name('cortes');
+Route::post('/corte/nuevo', [App\Http\Controllers\CorteController::class, 'create'])->name('nuevo-corte');
+Route::post('/corte/agregar',[App\Http\Controllers\CorteController::class, 'store'])->name('agregar-corte');
+Route::post('/corte/buscar', [App\Http\Controllers\CorteController::class, 'show'])->name('buscar-corte');

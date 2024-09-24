@@ -313,6 +313,12 @@ return [
             'icon' => 'fas fa-shopping-cart',
             'text_color' => 'success',
         ],
+        [
+            'text' => 'Cortes',
+            'url' => 'cortes',
+            'icon' => 'fas fa-cash-register',
+            'text_color' => 'success',
+        ]
         
     ],
 
