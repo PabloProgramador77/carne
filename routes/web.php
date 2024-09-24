@@ -33,3 +33,8 @@ Route::get('/cortes', [App\Http\Controllers\CorteController::class, 'index'])->n
 Route::post('/corte/nuevo', [App\Http\Controllers\CorteController::class, 'create'])->name('nuevo-corte');
 Route::post('/corte/agregar',[App\Http\Controllers\CorteController::class, 'store'])->name('agregar-corte');
 Route::post('/corte/buscar', [App\Http\Controllers\CorteController::class, 'show'])->name('buscar-corte');
+
+Route::get('/cliente/abonos/{id}', [App\Http\Controllers\AbonoController::class, 'index'])->name('abonos-cliente');
+Route::post('/abono/agregar', [App\Http\Controllers\AbonoController::class, 'store'])->name('agregar-abono');
+Route::post('/abono/actualizar', [App\Http\Controllers\AbonoController::class, 'update'])->name('actualizar-abono');
+Route::post('/abono/borrar', [App\Http\Controllers\AbonoController::class, 'destroy'])->name('borrar-abono');
