@@ -18,36 +18,35 @@
                     </ol>
                 </nav>
             </div>
+            <div class="col-lg-12">
+                <small class="p-1 bg-warning text-center rounded d-block">Para agregar un nuevo corte ve a la sección de Pedidos, y para ver los datos del corte presiona el botón <i class="fas fa-info-circle"></i></small>
+            </div>
 
         </div>
 
         <div class="container-fluid row p-2">
             
             @if( count( $cortes ) > 0 )
-                @foreach( $cortes as $corte )
-                    <div class="col-lg-2 col-md-6 col-sm-12">
-                        <x-adminlte-card theme-mode="outline" title="Folio: {{ $corte->id }}" header-class="rounded-bottom border-primary">
-                            <x-slot name="toolsSlot">
-                                <img src="{{ asset('/img/corte.jpg') }}" alt="corte" width="75%" height="auto" class="">
-                                <small class="fs-5 fw-semibold col-lg-12 d-block border border-light p-1 rounded"><b>Fecha:</b> {{ $corte->created_at }}</small>
-                                <p class="fs-5 fw-semibold col-lg-12 d-block bg-success p-1 rounded text-center"><b>Total: $</b> {{ number_format( $corte->total, 2) }} MXN</p>
-                            </x-slot>
-                            <x-slot name="footerSlot">
-                                <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-toggle="modal" data-target="#modalVer" data-id="{{ $corte->id }}" data-value="{{ $corte->id }}, {{ $corte->total }}, {{ $corte->created_at }}"></x-adminlte-button>
-                                <x-adminlte-button class="shadow imprimir" theme="success" icon="fas fa-print" data-id="{{ $corte->id }}"></x-adminlte-button>
-                            </x-slot>
-                        </x-adminlte-card>
-                    </div>
-                @endforeach
+                @php
+                    $heads = ['Folio', 'Total', 'Fecha', ''];
+                @endphp
+                <x-adminlte-datatable id="contenedorCorte" theme="light" :heads="$heads" striped hoverable compressed beautify>
+                    @foreach( $cortes as $corte )
+                        <tr>
+                            <td>{{ $corte->id }}</td>
+                            <td>$ {{ $corte->total }}</td>
+                            <td>{{ $corte->created_at }}</td>
+                            <td>
+                                <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="info" data-toggle="modal" data-target="#modalVer" data-id="{{ $corte->id }}" data-value="{{ $corte->id }}, {{ $corte->total }}, {{ $corte->created_at }}"></x-adminlte-button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </x-adminlte-datatable>
+                
             @else
-                <div class="col-lg-4 mx-auto">
-                    <x-adminlte-card theme-mode="outline" theme="danger" title="Sin cortes registrados">
-                        <x-slot name="toolsSlot">
-                            <img src="{{ asset('/img/corte.jpg') }}" alt="corte" width="100%" height="auto" class="">
-                            <small class="bg-danger p-1 rounded d-block text-center">Por favor registra cortes en el catalogo</small>
-                        </x-slot>
-                    </x-adminlte-card>
-                </div>
+                <tr>
+                    <td colspan="4" class="text-danger"><i class="fas fa-info-circle"></i> Sin cortes registrados.</td>
+                </tr>
             @endif
 
         </div>

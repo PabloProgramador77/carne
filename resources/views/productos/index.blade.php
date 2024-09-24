@@ -32,34 +32,28 @@
         <div class="container-fluid row p-2">
             
             @if( count( $productos ) > 0 )
-                @foreach( $productos as $producto )
-                    <div class="col-lg-2 col-md-6 col-sm-12">
-                        <x-adminlte-card theme-mode="outline" title="{{ $producto->nombre }}" header-class="rounded-bottom border-primary" class="shadow">
-                            <x-slot name="toolsSlot">
-                                <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="75%" height="auto" class="">
-                                @if( $producto->descripcion === NULL || $producto->descripcion === '' )
-                                    <small class="fs-6 fw-semibold text-secondary d-block">Sin descripción agregada al producto.</small>
-                                @else
-                                    <small class="fs-6 fw-semibold text-secondary d-block">{{ $producto->descripcion }}</small>
-                                @endif
-                                
-                            </x-slot>
-                            <x-slot name="footerSlot">
-                                <x-adminlte-button class="shadow editar" theme="info" icon="fas fa-edit" data-toggle="modal" data-target="#modalEditar" data-id="{{ $producto->id }}" data-value="{{ $producto->nombre }}, {{ $producto->descripcion }}"></x-adminlte-button>
-                                <x-adminlte-button class="shadow borrar" theme="danger" icon="fas fa-trash" data-id="{{ $producto->id }}" data-value="{{ $producto->nombre }}"></x-adminlte-button>
-                            </x-slot>
-                        </x-adminlte-card>
-                    </div>
-                @endforeach
+
+                @php
+                    $heads = ['Folio', 'Nombre', 'Descripción', ''];
+                @endphp
+                <x-adminlte-datatable id="contenedorProductos" :heads="$heads" theme="light" striped hoverable beautify compressed>
+                    @foreach( $productos as $producto )
+                        <tr>
+                            <td>{{ $producto->id }}</td>
+                            <td>{{ $producto->nombre }}</td>
+                            <td>{{ $producto->descripcion ? $producto->descripcion : 'Sin descripción' }}</td>
+                            <td>
+                                <x-adminlte-button class="shadow editar" theme="info" data-id="{{ $producto->id }}" data-toggle="modal" data-target="#modalEditar" data-value="{{ $producto->nombre }}, {{ $producto->descripcion }}" icon="fas fa-edit" ></x-adminlte-button>
+                                <x-adminlte-button class="shadow borrar" theme="danger" data-id="{{ $producto->id }}" data-value="{{ $producto->nombre }}" icon="fas fa-trash"></x-adminlte-button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </x-adminlte-datatable>
+                
             @else
-                <div class="col-lg-4 mx-auto">
-                    <x-adminlte-card theme-mode="outline" theme="danger" title="Sin productos registrados" class="shadow">
-                        <x-slot name="toolsSlot">
-                            <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="100%" height="auto" class="">
-                            <small class="bg-danger p-1 rounded d-block text-center">Por favor registra productos en el catalogo</small>
-                        </x-slot>
-                    </x-adminlte-card>
-                </div>
+                <tr>
+                    <td colspan="4" text-color="danger"><i class="fas fa-info-circle"></i> Sin productos registrados.</td>
+                </tr>
             @endif
 
         </div>

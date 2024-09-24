@@ -32,41 +32,30 @@
         <div class="container-fluid row p-2">
             
             @if( count( $clientes ) > 0 )
-                @foreach( $clientes as $cliente )
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <x-adminlte-card theme-mode="outline" title="{{ $cliente->nombre }}" header-class="rounded-bottom border-primary" class="shadow">
-                            <x-slot name="toolsSlot">
-                                <img src="{{ asset('/img/cliente.jpg') }}" alt="Cliente" width="75%" height="auto" class="">
-                                @if( $cliente->telefono === NULL || $cliente->telefono === '' )
-                                    <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">Sin telefono agregado.</small>
-                                @else
-                                    <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block"><b>Tel:</b> {{ $cliente->telefono }}</small>
-                                @endif
-
-                                @if( $cliente->domicilio === NULL || $cliente->domicilio === '' )
-                                    <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">Sin domicilio agregado.</small>
-                                @else
-                                    <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">{{ $cliente->domicilio }}</small>
-                                @endif
-                            </x-slot>
-                            <x-slot name="footerSlot">
-                                <x-adminlte-button class="shadow editar" theme="info" icon="fas fa-edit" data-toggle="modal" data-target="#modalEditar" data-id="{{ $cliente->id }}" data-value="{{ $cliente->nombre }}, {{ $cliente->telefono }}, {{ $cliente->domicilio }}"></x-adminlte-button>
-                                <x-adminlte-button class="shadow borrar" theme="danger" icon="fas fa-trash" data-id="{{ $cliente->id }}" data-value="{{ $cliente->nombre }}"></x-adminlte-button>
-                                <a href="{{ url('cliente/productos') }}/{{ $cliente->id }}" class="btn btn-secondary shadow rounded" title="Agregar productos a cliente"><i class="fas fa-drumstick-bite"></i></a>
-                                <a href="{{ url('cliente/pedidos') }}/{{ $cliente->id }}" class="btn btn-success shadow rounded" title="Pedidos de cliente"><i class="fas fa-shopping-cart"></i></a>
-                            </x-slot>
-                        </x-adminlte-card>
-                    </div>
-                @endforeach
+                @php
+                    $heads = ['Folio', 'Nombre', 'Telefono', 'Domicilio', ''];
+                @endphp
+                <x-adminlte-datatable id="contenedorClientes" theme="light" :heads="$heads" striped hoverable compressed beautify>
+                    @foreach( $clientes as $cliente )
+                        <tr>
+                            <td>{{ $cliente->id }}</td>
+                            <td>{{ $cliente->nombre }}</td>
+                            <td>{{ $cliente->telefono ? : 'Sin telefono' }}</td>
+                            <td>{{ $cliente->domicilio ? : 'Sin domicilio' }}</td>
+                            <td>
+                                <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $cliente->id }}" data-value="{{ $cliente->nombre }}, {{ $cliente->telefono }}, {{ $cliente->domicilio }}"></x-adminlte-button>
+                                <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $cliente->id }}" data-value="{{ $cliente->nombre }}"></x-adminlte-button>
+                                <a href="{{ url('/cliente/productos') }}/{{ $cliente->id }}" class="btn btn-secondary shadow rounded" title="Productos de cliente"><i class="fas fa-drumstick-bite"></i></a>
+                                <a href="{{ url('/cliente/pedidos') }}/{{ $cliente->id }}" class="btn btn-success shadow rounded" title="Pedidos de cliente"><i class="fas fa-shopping-cart"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </x-adminlte-datatable>
+                
             @else
-                <div class="col-lg-4 mx-auto">
-                    <x-adminlte-card theme-mode="outline" theme="danger" title="Sin clientes registrados">
-                        <x-slot name="toolsSlot">
-                            <img src="{{ asset('/img/cliente.jpg') }}" alt="Cliente" width="100%" height="auto" class="">
-                            <small class="bg-danger p-1 rounded d-block text-center">Por favor registra clientes en el catalogo</small>
-                        </x-slot>
-                    </x-adminlte-card>
-                </div>
+                <tr>
+                    <td colspan="5" class="text-danger"><i class="fas fa-info-circle"></i> Sin clientes registrados.</td>
+                </tr>
             @endif
 
         </div>

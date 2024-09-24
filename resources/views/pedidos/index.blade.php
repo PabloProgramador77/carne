@@ -33,31 +33,26 @@
         <div class="container-fluid row p-2">
             
             @if( count( $pedidos ) > 0 )
-                @foreach( $pedidos as $pedido )
-                    <div class="col-lg-2 col-md-6 col-sm-12">
-                        <x-adminlte-card theme-mode="outline" title="{{ $pedido->cliente->nombre ? $pedido->cliente->nombre : 'Cliente desconocido' }}" header-class="rounded-bottom border-primary">
-                            <x-slot name="toolsSlot">
-                                <img src="{{ asset('/img/pedido.jpg') }}" alt="pedido" width="75%" height="auto" class="">
-                                <p class="fs-5 fw-semibold col-lg-12 d-block border border-light p-1 rounded">Folio: {{ $pedido->id }}</p>
-                                <p class="fs-5 fw-semibold col-lg-12 d-block bg-success p-1 rounded text-center"><b>Total: $</b> {{ number_format( $pedido->total, 2) }} MXN</p>
-                                <small class="fs-6 fw-semibold d-block p-1 bg-light rounded"><b>{{ $pedido->created_at }}</b></small>
-                            </x-slot>
-                            <x-slot name="footerSlot">
-                                <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-toggle="modal" data-target="#modalVer" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}"></x-adminlte-button>
-                                <x-adminlte-button class="shadow imprimir" theme="success" icon="fas fa-print" data-id="{{ $pedido->id }}"></x-adminlte-button>
-                            </x-slot>
-                        </x-adminlte-card>
-                    </div>
-                @endforeach
+                @php
+                    $heads = ['Folio', 'Cliente', 'Total', 'Fecha', ''];
+                @endphp
+                <x-adminlte-datatable id="contenedorPedidos" theme="light" :heads="$heads" striped hoverable compressed beautify>
+                    @foreach( $pedidos as $pedido )
+                        <tr>
+                            <td>{{ $pedido->id }}</td>
+                            <td>{{ $pedido->cliente->nombre }}</td>
+                            <td>$ {{ $pedido->total }}</td>
+                            <td>{{ $pedido->created_at }}</td>
+                            <td>
+                                <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </x-adminlte-datatable>
             @else
-                <div class="col-lg-4 mx-auto">
-                    <x-adminlte-card theme-mode="outline" theme="danger" title="Sin pedidos registrados">
-                        <x-slot name="toolsSlot">
-                            <img src="{{ asset('/img/pedido.jpg') }}" alt="pedido" width="100%" height="auto" class="">
-                            <small class="bg-danger p-1 rounded d-block text-center">Por favor registra pedidos en el catalogo</small>
-                        </x-slot>
-                    </x-adminlte-card>
-                </div>
+                <tr>
+                    <td colspan="5" class="text-danger"><i class="fas fa-info-circle"></i> Sin pedidos registrados.</td>
+                </tr>
             @endif
 
         </div>
