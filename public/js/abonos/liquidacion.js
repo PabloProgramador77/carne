@@ -1,7 +1,7 @@
 jQuery.noConflict();
 jQuery(document).ready(function(){
 
-    $("#registrar").on('click', function(e){
+    $("#liquidacion").on('click', function(e){
 
         e.preventDefault();
 
@@ -10,7 +10,7 @@ jQuery(document).ready(function(){
 
         Swal.fire({
 
-            title: 'Registrando abono',
+            title: 'Liquidando deuda',
             html: 'Un momento por favor: <b></b>',
             timer: 9975,
             allowOutsideClick: false,
@@ -30,9 +30,9 @@ jQuery(document).ready(function(){
                     url: '/abono/agregar',
                     data:{
 
-                        'monto' : $("#monto").val(),
-                        'nota' : $("#nota").val(),
-                        'cliente' : $("#idCliente").val(),
+                        'monto' : $("#montoDeuda").val(),
+                        'nota' : 'Liquidación',
+                        'cliente' : $("#idClienteDeuda").val(),
                         '_token' : csrfToken,
 
                     },

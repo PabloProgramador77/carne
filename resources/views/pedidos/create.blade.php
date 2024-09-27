@@ -30,7 +30,7 @@
                         <x-adminlte-card theme-mode="outline" title="{{ $producto->nombre }}" header-class="rounded-bottom border-primary" class="shadow">
                             <x-slot name="toolsSlot">
                                 <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="75%" height="auto">
-                                <p class="p-1 bg-info rounded text-center"><b>$ {{ $producto->precio }}</b> MXN</p>
+                                <p class="p-1 bg-info rounded text-center"><b>$ {{ number_format( $producto->precio, 2 ) }}</b> MXN</p>
                                 <div class="form-group pt-3">
                                     <x-adminlte-input name="cantidad" id="cantidad" placeholder="Peso/Cantidad del producto" data-value="{{ $producto->id }}, {{ $producto->precio }}">
                                         <x-slot name="prependSlot">

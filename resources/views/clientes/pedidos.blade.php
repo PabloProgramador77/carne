@@ -36,7 +36,7 @@
                     @foreach( $pedidos as $pedido )
                         <tr>
                             <td>{{ $pedido->id }}</td>
-                            <td>$ {{ $pedido->total }}</td>
+                            <td>$ {{ number_format( $pedido->total, 2 ) }}</td>
                             <td>{{ $pedido->created_at }}</td>
                             <td>
                                 <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-toggle="modal" data-target="#modalVer" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}"></x-adminlte-button>

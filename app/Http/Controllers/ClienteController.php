@@ -62,6 +62,7 @@ class ClienteController extends Controller
                 'nombre' => $request->nombre,
                 'telefono' => $request->telefono,
                 'domicilio' => $request->domicilio,
+                'deuda' => 0,
 
             ]);
 
@@ -106,9 +107,48 @@ class ClienteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cliente $cliente)
+    public function edit(Request $request)
     {
-        //
+        try {
+
+            $deuda = 0;
+            
+            $pedido = Pedido::find( $request->pedido );
+
+            if( $pedido && $pedido->id ){
+
+                $cliente = Cliente::find( $pedido->idCliente );
+
+                if( $cliente && $cliente->id ){
+
+                    $deuda = $cliente->deuda;
+
+                    $cliente = Cliente::where('id', '=', $pedido->idCliente)
+                            ->update([
+
+                                'deuda' => number_format( ( $deuda + $pedido->total ), 2),
+                            
+                            ]);
+
+                }else{
+
+                    return true;
+
+                }
+
+            }else{
+
+                return true;
+
+            }
+
+            return true;
+
+        } catch (\Throwable $th) {
+            
+            echo $th->getMessage();
+
+        }
     }
 
     /**

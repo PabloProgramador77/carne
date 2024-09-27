@@ -16,6 +16,7 @@ class Cliente extends Model
         'nombre',
         'telefono',
         'domicilio',
+        'deuda',
 
     ];
 

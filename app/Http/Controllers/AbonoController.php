@@ -9,6 +9,8 @@ use App\Http\Requests\Abono\Create;
 use App\Http\Requests\Abono\Read;
 use App\Http\Requests\Abono\Update;
 use App\Http\Requests\Abono\Delete;
+use App\Models\Pedido;
+use NumberFormatter;
 
 class AbonoController extends Controller
 {
@@ -19,7 +21,9 @@ class AbonoController extends Controller
     {
         try {
             
-            $abonos = Abono::orderBy('created_at', 'asc')->get();
+            $abonos = Abono::where('idCliente', '=', $id)
+                    ->orderBy('created_at', 'asc')
+                    ->get();
             $cliente = Cliente::find( $id );
 
             return view('abonos.index',compact('cliente', 'abonos'));
@@ -45,13 +49,29 @@ class AbonoController extends Controller
     public function store(Create $request)
     {
         try {
-            
+        
             $abono = Abono::create([
 
                 'monto' => $request->monto,
+                'nota' => $request->nota,
                 'idCliente' => $request->cliente,
 
             ]);
+
+            $cliente = Cliente::find( $request->cliente );
+
+            if( $cliente && $cliente->id ){
+
+                $deuda = number_format( $cliente->deuda - $request->monto, 2);
+
+                $cliente = Cliente::where('id', '=', $request->cliente )
+                        ->update([
+
+                            'deuda' => number_format( $deuda, 2),
+
+                        ]);
+
+            }
 
             $datos['exito'] = true;
 
@@ -76,9 +96,14 @@ class AbonoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Abono $abono)
+    public function edit(Abono $request)
     {
-        //
+        try {
+            
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -88,12 +113,34 @@ class AbonoController extends Controller
     {
         try {
             
+            $abonoAnt = Abono::find( $request->id );
+
             $abono = Abono::where('id', '=', $request->id)
                     ->update([
 
                         'monto' => $request->monto,
+                        'nota' => $request->nota,
 
                     ]);
+
+            $idCliente = $abonoAnt->idCliente;
+
+            $cliente = Cliente::find( $idCliente );
+
+            if( $cliente && $cliente->id ){
+
+                $deuda = number_format( $cliente->deuda + $abonoAnt->monto, 2);
+
+                $deuda = number_format( $deuda - $request->monto, 2);
+
+                $cliente = Cliente::where('id', '=', $idCliente)
+                        ->update([
+
+                            'deuda' => number_format( $deuda, 2),
+
+                        ]);
+
+            }
 
             $datos['exito'] = true;
 
@@ -113,10 +160,21 @@ class AbonoController extends Controller
     public function destroy(Delete $request)
     {
         try {
-            
+
             $abono = Abono::find( $request->id );
 
             if( $abono->id ){
+
+                $cliente = Cliente::find( $abono->idCliente );
+
+                $deuda = number_format( $cliente->deuda + $abono->monto, 2);
+            
+                $cliente = Cliente::where('id', '=', $abono->idCliente)
+                        ->update([
+
+                            'deuda' => number_format( $deuda , 2),
+
+                        ]);
 
                 $abono->delete();
 

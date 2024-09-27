@@ -14,6 +14,7 @@ class Abono extends Model
     protected $fillable = [
 
         'monto',
+        'nota',
         'idCliente',
 
     ];

@@ -34,7 +34,7 @@
                     @foreach( $cortes as $corte )
                         <tr>
                             <td>{{ $corte->id }}</td>
-                            <td>$ {{ $corte->total }}</td>
+                            <td>$ {{ number_format( $corte->total, 2 ) }}</td>
                             <td>{{ $corte->created_at }}</td>
                             <td>
                                 <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="info" data-toggle="modal" data-target="#modalVer" data-id="{{ $corte->id }}" data-value="{{ $corte->id }}, {{ $corte->total }}, {{ $corte->created_at }}"></x-adminlte-button>

@@ -51,6 +51,8 @@ class PedidoHasProductoController extends Controller
 
             $pedidoController = new PedidoController();
             $pedidoController->edit( $request, $total );
+            $clienteController = new ClienteController();
+            $clienteController->edit( $request );
             $pedidoController->create( $request->pedido );
 
             $datos['exito'] = true;

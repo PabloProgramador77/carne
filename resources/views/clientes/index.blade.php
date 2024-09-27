@@ -33,13 +33,14 @@
             
             @if( count( $clientes ) > 0 )
                 @php
-                    $heads = ['Folio', 'Nombre', 'Telefono', 'Domicilio', ''];
+                    $heads = ['Folio', 'Nombre', 'Deuda', 'Telefono', 'Domicilio', ''];
                 @endphp
                 <x-adminlte-datatable id="contenedorClientes" theme="light" :heads="$heads" striped hoverable compressed beautify>
                     @foreach( $clientes as $cliente )
                         <tr>
                             <td>{{ $cliente->id }}</td>
                             <td>{{ $cliente->nombre }}</td>
+                            <td>$ {{ number_format( (float)$cliente->deuda, 2 ) }}</td>
                             <td>{{ $cliente->telefono ? : 'Sin telefono' }}</td>
                             <td>{{ $cliente->domicilio ? : 'Sin domicilio' }}</td>
                             <td>

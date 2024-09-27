@@ -32,6 +32,7 @@ jQuery(document).ready(function(){
 
                         'monto' : $("#montoEditar").val(),
                         'id' : $("#idAbono").val(),
+                        'nota' : $("#notaEditar").val(),
                         '_token' : csrfToken,
 
                     },

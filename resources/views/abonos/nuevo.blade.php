@@ -14,6 +14,13 @@
                             </div>
                         </x-slot>
                     </x-adminlte-input>
+                    <x-adminlte-input name="nota" id="nota" placeholder="Nota de abono">
+                        <x-slot name="prependSlot">
+                            <div class="input-group-text text-info">
+                                <i class="fas fa-sticky-note"></i>
+                            </div>
+                        </x-slot>
+                    </x-adminlte-input>
                 </div>
             </form>
         </div>

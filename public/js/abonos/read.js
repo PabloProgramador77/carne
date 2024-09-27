@@ -9,9 +9,11 @@ jQuery(document).ready(function(){
 
         $("#montoEditar").val('');
         $("#idAbono").val('');
+        $("#notaEditar").val('');
 
         var monto = $(this).attr('data-value').split(',')[1];
         var id = $(this).attr('data-value').split(',')[0];
+        var nota = $(this).attr('data-value').split(',')[2];
 
         if( id === null || id === '' ){
 
@@ -30,6 +32,7 @@ jQuery(document).ready(function(){
 
             $("#montoEditar").val( monto );
             $("#idAbono").val( id );
+            $("#notaEditar").val( nota );
 
             $("#actualizar").attr('disabled', false);
 
