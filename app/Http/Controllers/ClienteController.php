@@ -110,8 +110,6 @@ class ClienteController extends Controller
     public function edit(Request $request)
     {
         try {
-
-            $deuda = 0;
             
             $pedido = Pedido::find( $request->pedido );
 
@@ -121,24 +119,16 @@ class ClienteController extends Controller
 
                 if( $cliente && $cliente->id ){
 
-                    $deuda = $cliente->deuda;
+                    $deuda = number_format( ( floatval($cliente->deuda) + floatval( $pedido->total ) ), 2) ;
 
                     $cliente = Cliente::where('id', '=', $pedido->idCliente)
                             ->update([
 
-                                'deuda' => number_format( ( $deuda + $pedido->total ), 2),
+                                'deuda' => number_format( floatval( $deuda ), 2),
                             
                             ]);
 
-                }else{
-
-                    return true;
-
                 }
-
-            }else{
-
-                return true;
 
             }
 

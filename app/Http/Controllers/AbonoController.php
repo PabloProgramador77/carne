@@ -22,7 +22,7 @@ class AbonoController extends Controller
         try {
             
             $abonos = Abono::where('idCliente', '=', $id)
-                    ->orderBy('created_at', 'asc')
+                    ->orderBy('created_at', 'desc')
                     ->get();
             $cliente = Cliente::find( $id );
 
@@ -62,12 +62,12 @@ class AbonoController extends Controller
 
             if( $cliente && $cliente->id ){
 
-                $deuda = number_format( $cliente->deuda - $request->monto, 2);
+                $deuda = number_format( floatval($cliente->deuda) - floatval($request->monto), 2);
 
                 $cliente = Cliente::where('id', '=', $request->cliente )
                         ->update([
 
-                            'deuda' => number_format( $deuda, 2),
+                            'deuda' => number_format( floatval($deuda), 2),
 
                         ]);
 
@@ -129,14 +129,14 @@ class AbonoController extends Controller
 
             if( $cliente && $cliente->id ){
 
-                $deuda = number_format( $cliente->deuda + $abonoAnt->monto, 2);
+                $deuda = number_format( floatval($cliente->deuda) + floatval($abonoAnt->monto), 2);
 
-                $deuda = number_format( $deuda - $request->monto, 2);
+                $deuda = number_format( floatval($deuda) - floatval($request->monto), 2);
 
                 $cliente = Cliente::where('id', '=', $idCliente)
                         ->update([
 
-                            'deuda' => number_format( $deuda, 2),
+                            'deuda' => number_format( floatval($deuda), 2),
 
                         ]);
 
@@ -167,12 +167,12 @@ class AbonoController extends Controller
 
                 $cliente = Cliente::find( $abono->idCliente );
 
-                $deuda = number_format( $cliente->deuda + $abono->monto, 2);
+                $deuda = number_format( floatval($cliente->deuda) + floatval($abono->monto), 2);
             
                 $cliente = Cliente::where('id', '=', $abono->idCliente)
                         ->update([
 
-                            'deuda' => number_format( $deuda , 2),
+                            'deuda' => number_format( floatval($deuda) , 2),
 
                         ]);
 

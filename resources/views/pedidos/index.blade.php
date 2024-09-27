@@ -34,7 +34,7 @@
             
             @if( count( $pedidos ) > 0 )
                 @php
-                    $heads = ['Folio', 'Cliente', 'Total', 'Fecha', ''];
+                    $heads = ['Folio', 'Cliente', 'Total', 'Nota', 'Fecha', ''];
                 @endphp
                 <x-adminlte-datatable id="contenedorPedidos" theme="light" :heads="$heads" striped hoverable compressed beautify>
                     @foreach( $pedidos as $pedido )
@@ -42,6 +42,7 @@
                             <td>{{ $pedido->id }}</td>
                             <td>{{ $pedido->cliente->nombre }}</td>
                             <td>$ {{ number_format( $pedido->total, 2 ) }}</td>
+                            <td>{{ $pedido->nota ? : 'Sin nota' }}</td>
                             <td>{{ $pedido->created_at }}</td>
                             <td>
                                 <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>

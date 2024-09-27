@@ -41,11 +41,11 @@ class PedidoHasProductoController extends Controller
                     'idPedido' => $request->pedido,
                     'idClienteHasProducto' => $peso['producto'],
                     'cantidad' => $peso['cantidad'],
-                    'monto' => number_format( $peso['cantidad'] * $peso['precio'] ),
+                    'monto' => number_format( ( floatval($peso['cantidad']) * floatval($peso['precio']) ), 2 ),
 
                 ]);
 
-                $total += number_format( $peso['cantidad'] * $peso['precio'] );
+                $total += number_format( ( floatval($peso['cantidad']) * floatval($peso['precio']) ), 2 );
 
             }
 

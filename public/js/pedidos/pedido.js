@@ -1,7 +1,7 @@
 jQuery.noConflict();
 jQuery(document).ready( function(){
 
-    $("#guardar").on('click', function( e ){
+    $("#imprimirPedido").on('click', function( e ){
 
         e.preventDefault();
 
@@ -52,6 +52,7 @@ jQuery(document).ready( function(){
                         data:{
     
                             'pesos' : pesos,
+                            'nota' : $("#notaPedido").val(),
                             'pedido' : $("#idPedido").val(),
                             '_token' : csrfToken,
     

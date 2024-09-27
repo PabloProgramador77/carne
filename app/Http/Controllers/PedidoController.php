@@ -190,11 +190,14 @@ class PedidoController extends Controller
     public function edit(Request $request, $total)
     {
         try {
-            
+
+            $totalPedido = is_numeric( $total ) ? number_format( $total, 2 ) : 0;
+
             $pedido = Pedido::where('id', '=', $request->pedido)
                     ->update([
 
-                        'total' => $total,
+                        'total' => number_format( floatval( $totalPedido ), 2),
+                        'nota' => $request->nota,
 
                     ]);
 

@@ -12,7 +12,7 @@
             </div>
 
             <div class="col-lg-5 my-2">
-                <x-adminlte-button theme="success" icon="fas fa-hand-holding-usd" title="Terminar pedido" label=" Terminar" class="shadow" id="guardar"></x-adminlte-button>
+                <x-adminlte-button theme="success" icon="fas fa-hand-holding-usd" title="Terminar pedido" label=" Terminar" class="shadow" id="guardar" data-toggle="modal" data-target="#modalTerminar"></x-adminlte-button>
                 <x-adminlte-button theme="danger" icon="fas fa-ban" title="Cancelar pedido" label=" Cancelar" class="shadow" id="cancelar" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}"></x-adminlte-button>
             </div>
 
@@ -58,6 +58,8 @@
         </div>
 
     </section>
+
+    @include('pedidos.terminar')
 
     <script src="{{ asset('js/jquery-3.7.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/sweetAlert.js') }}" type="text/javascript"></script>
