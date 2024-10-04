@@ -49,6 +49,7 @@
                                 <a href="{{ url('/cliente/productos') }}/{{ $cliente->id }}" class="btn btn-secondary shadow rounded" title="Productos de cliente"><i class="fas fa-drumstick-bite"></i></a>
                                 <a href="{{ url('/cliente/pedidos') }}/{{ $cliente->id }}" class="btn btn-success shadow rounded" title="Pedidos de cliente"><i class="fas fa-shopping-cart"></i></a>
                                 <a href="{{ url('/cliente/abonos') }}/{{ $cliente->id }}" class="btn btn-warning shadow rounded" title="Abonos de cliente"><i class="fas fa-hand-holding-usd"></i></a>
+                                <a href="{{ url('/cliente/prestamos') }}/{{ $cliente->id }}" class="btn btn-primary shadow rounded" title="Abonos de cliente"><i class="fas fa-hand-holding-usd"></i></a>
                             </td>
                         </tr>
                     @endforeach

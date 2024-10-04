@@ -38,3 +38,8 @@ Route::get('/cliente/abonos/{id}', [App\Http\Controllers\AbonoController::class,
 Route::post('/abono/agregar', [App\Http\Controllers\AbonoController::class, 'store'])->name('agregar-abono');
 Route::post('/abono/actualizar', [App\Http\Controllers\AbonoController::class, 'update'])->name('actualizar-abono');
 Route::post('/abono/borrar', [App\Http\Controllers\AbonoController::class, 'destroy'])->name('borrar-abono');
+
+Route::get('/cliente/prestamos/{id}', [App\Http\Controllers\PrestamoController::class, 'index'])->name('prestamos-cliente');
+Route::post('/prestamo/agregar', [App\Http\Controllers\PrestamoController::class, 'store'])->name('agregar-prestamo');
+Route::post('/prestamo/actualizar', [App\Http\Controllers\PrestamoController::class, 'update'])->name('actualizar-prestamo');
+Route::post('/prestamo/borrar', [App\Http\Controllers\PrestamoController::class, 'destroy'])->name('borrar-prestamo');
