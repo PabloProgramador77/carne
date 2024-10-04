@@ -40,7 +40,7 @@
                         <tr>
                             <td>{{ $cliente->id }}</td>
                             <td>{{ $cliente->nombre }}</td>
-                            <td>$ {{ number_format( (float)$cliente->deuda, 2 ) }}</td>
+                            <td>$ {{ $cliente->deuda }}</td>
                             <td>{{ $cliente->telefono ? : 'Sin telefono' }}</td>
                             <td>{{ $cliente->domicilio ? : 'Sin domicilio' }}</td>
                             <td>

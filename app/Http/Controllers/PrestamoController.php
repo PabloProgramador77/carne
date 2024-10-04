@@ -61,12 +61,13 @@ class PrestamoController extends Controller
 
             if( $cliente && $cliente->id ){
 
-                $deuda = number_format( floatval($cliente->deuda) + floatval($request->monto), 2);
+                $deuda = floatval($cliente->deuda) + floatval($request->monto);
+                $deuda = number_format( $deuda, 2);
 
                 $cliente = Cliente::where('id', '=', $request->cliente )
                         ->update([
 
-                            'deuda' => number_format( floatval($deuda), 2),
+                            'deuda' => $deuda,
 
                         ]);
 
@@ -123,14 +124,16 @@ class PrestamoController extends Controller
 
             if( $cliente && $cliente->id ){
 
-                $deuda = number_format( floatval($cliente->deuda) - floatval($prestamoAnt->monto), 2);
+                $deuda = floatval($cliente->deuda) - floatval($prestamoAnt->monto);
 
-                $deuda = number_format( floatval($deuda) + floatval($request->monto), 2);
+                $deuda = floatval($deuda) + floatval($request->monto);
+
+                $deuda = number_format( $deuda, 2 );
 
                 $cliente = Cliente::where('id', '=', $idCliente)
                         ->update([
 
-                            'deuda' => number_format( floatval($deuda), 2),
+                            'deuda' => $deuda,
 
                         ]);
 
@@ -161,12 +164,14 @@ class PrestamoController extends Controller
 
                 $cliente = Cliente::find( $prestamo->idCliente );
 
-                $deuda = number_format( floatval($cliente->deuda) - floatval($prestamo->monto), 2);
+                $deuda = floatval($cliente->deuda) - floatval($prestamo->monto);
+
+                $deuda = number_format( $deuda, 2 );
             
                 $cliente = Cliente::where('id', '=', $prestamo->idCliente)
                         ->update([
 
-                            'deuda' => number_format( floatval($deuda) , 2),
+                            'deuda' => $deuda,
 
                         ]);
 

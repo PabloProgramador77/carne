@@ -8,7 +8,7 @@
             <div class="col-lg-6">
                 <h1 class="fs-3 fw-semibold"><i class="fas fa-users"></i> Abonos de {{ $cliente->nombre }}</h1>
                 <p class="fs-6 fw-semibold text-secondary"><i class="fas fa-user-shield"></i> Panel de Administrador</p>
-                <x-adminlte-input class="col-lg-3" name="deuda" id="deuda" readonly="true" value="{{ number_format( (float)$cliente->deuda, 2) }}">
+                <x-adminlte-input class="col-lg-3" name="deuda" id="deuda" readonly="true" value="{{ $cliente->deuda }}">
                     <x-slot name="prependSlot">
                         <div class="input-group-text text-success">
                             <i class="fas fa-dollar-sign"> Deuda Actual:</i>

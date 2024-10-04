@@ -196,7 +196,7 @@ class PedidoController extends Controller
             $pedido = Pedido::where('id', '=', $request->pedido)
                     ->update([
 
-                        'total' => number_format( floatval( $totalPedido ), 2),
+                        'total' => $totalPedido,
                         'nota' => $request->nota,
 
                     ]);
