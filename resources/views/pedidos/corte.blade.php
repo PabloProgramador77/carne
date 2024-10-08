@@ -6,7 +6,7 @@
         @php
             $heads = ['Cliente', 'Total', 'Fecha'];
         @endphp
-        <x-adminlte-datatable id="contenedorPedidos" :heads="$heads" theme="light" striped hoverable bordered compressed beautify>
+        <x-adminlte-datatable id="contenedorPedidosCorte" :heads="$heads" theme="light" striped hoverable bordered compressed beautify>
             
         </x-adminlte-datatable>
         

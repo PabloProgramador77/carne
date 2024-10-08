@@ -74,8 +74,8 @@ jQuery(document).ready( function(){
 
                             html += '<tr class="bg-success text-center p-1"><td colspan="3">Total de Corte: $ '+total+' MXN</td></tr>';
 
-                            $("#contenedorPedidos").empty();
-                            $("#contenedorPedidos").append( html );
+                            $("#contenedorPedidosCorte").empty();
+                            $("#contenedorPedidosCorte").append( html );
 
                         }else{
                         
