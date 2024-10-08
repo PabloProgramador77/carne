@@ -119,12 +119,14 @@ class ClienteController extends Controller
 
                 if( $cliente && $cliente->id ){
 
-                    $deuda = number_format( ( floatval($cliente->deuda) + floatval( $pedido->total ) ), 2) ;
+                    $deuda = is_numeric( $cliente->deuda) ? floatval($cliente->deuda) : round( floatval( $cliente->deuda), 2);
+                    $total = is_numeric( $pedido->total) ? floatval( $pedido->total ) : round( floatval( $pedido->total), 2);
+                    $totalDeuda = $deuda + $total;
 
                     $cliente = Cliente::where('id', '=', $pedido->idCliente)
                             ->update([
 
-                                'deuda' => number_format( floatval( $deuda ), 2),
+                                'deuda' => $totalDeuda,
                             
                             ]);
 

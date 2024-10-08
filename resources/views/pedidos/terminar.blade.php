@@ -13,7 +13,8 @@
         </div>
     </div>
     <x-slot name="footerSlot">
-        <x-adminlte-button theme="primary" label=" Imprimir" id="imprimirPedido" icon="fas fa-print"></x-adminlte-button>
+        <x-adminlte-button theme="primary" label=" Terminar e Imprimir" id="imprimirPedido" icon="fas fa-print"></x-adminlte-button>
+        <x-adminlte-button theme="info" label=" Terminar" id="cobrarPedido" icon="fas fa-hand-holding-usd"></x-adminlte-button>
         <x-adminlte-button theme="danger" label=" Cerrar" id="cancelar" data-dismiss="modal" icon="fas fa-window-close"></x-adminlte-button>
     </x-slot>
 </x-adminlte-modal>

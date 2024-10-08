@@ -24,6 +24,7 @@ class AbonoController extends Controller
             $abonos = Abono::where('idCliente', '=', $id)
                     ->orderBy('created_at', 'desc')
                     ->get();
+
             $cliente = Cliente::find( $id );
 
             return view('abonos.index',compact('cliente', 'abonos'));
@@ -62,14 +63,16 @@ class AbonoController extends Controller
 
             if( $cliente && $cliente->id ){
 
-                $deuda = floatval($cliente->deuda) - floatval($request->monto);
+                $deuda = is_numeric( $cliente->deuda) ? floatval( $cliente->deuda) : round( floatval( $cliente->deuda), 2);
+                $monto = is_numeric( $request->monto) ? floatval( $request->monto) : round( floatval( $request->monto), 2);
+                $deudaTotal = $deuda - $monto;
 
                 $deuda = number_format( $deuda, 2 );
 
                 $cliente = Cliente::where('id', '=', $request->cliente )
                         ->update([
 
-                            'deuda' => $deuda,
+                            'deuda' => $deudaTotal,
 
                         ]);
 
@@ -131,16 +134,18 @@ class AbonoController extends Controller
 
             if( $cliente && $cliente->id ){
 
-                $deuda = floatval($cliente->deuda) + floatval($abonoAnt->monto);
+                $deuda = is_numeric( $cliente->deuda) ? floatval( $cliente->deuda) : round( floatval( $cliente->deuda), 2);
+                $monto = is_numeric( $request->monto) ? floatval( $request->monto) : round( floatval( $request->monto), 2);
 
-                $deuda = floatval($deuda) - floatval($request->monto);
+                $deudaTotal = $deuda + $abonoAnt->monto;
+                $deudaTotal = $deudaTotal - $monto; 
 
                 $deuda = number_format( $deuda, 2 );
 
                 $cliente = Cliente::where('id', '=', $idCliente)
                         ->update([
 
-                            'deuda' => $deuda,
+                            'deuda' => $deudaTotal,
 
                         ]);
 
@@ -171,14 +176,17 @@ class AbonoController extends Controller
 
                 $cliente = Cliente::find( $abono->idCliente );
 
-                $deuda = floatval($cliente->deuda) + floatval($abono->monto);
+                $deuda = is_numeric( $cliente->deuda) ? floatval( $cliente->deuda) : round( floatval( $cliente->deuda), 2);
+                $monto = is_numeric( $abono->monto) ? floatval( $abono->monto) : round( floatval( $abono->monto), 2);
 
-                $deuda = number_format( $deuda, 2 );
+                $deudaTotal = $deuda + $monto;
+
+                $deuda = $deudaTotal;
             
                 $cliente = Cliente::where('id', '=', $abono->idCliente)
                         ->update([
 
-                            'deuda' => $deuda,
+                            'deuda' => $deudaTotal,
 
                         ]);
 

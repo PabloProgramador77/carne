@@ -61,13 +61,15 @@ class PrestamoController extends Controller
 
             if( $cliente && $cliente->id ){
 
-                $deuda = floatval($cliente->deuda) + floatval($request->monto);
-                $deuda = number_format( $deuda, 2);
+                $deuda = is_numeric( $cliente->deuda) ? floatval( $cliente->deuda) : round( floatval( $cliente->deuda), 2);
+                $monto = is_numeric( $request->monto) ? floatval( $request->monto) : round( floatval( $request->monto), 2);
+
+                $deudaTotal = $deuda + $monto;
 
                 $cliente = Cliente::where('id', '=', $request->cliente )
                         ->update([
 
-                            'deuda' => $deuda,
+                            'deuda' => $deudaTotal,
 
                         ]);
 
@@ -124,16 +126,17 @@ class PrestamoController extends Controller
 
             if( $cliente && $cliente->id ){
 
-                $deuda = floatval($cliente->deuda) - floatval($prestamoAnt->monto);
+                $deuda = is_numeric( $cliente->deuda) ? floatval( $cliente->deuda) : round( floatval( $cliente->deuda), 2);
+                $monto = is_numeric( $request->monto) ? floatval( $request->monto) : round( floatval( $request->monto), 2);
 
-                $deuda = floatval($deuda) + floatval($request->monto);
+                $deudaTotal = $deuda - $prestamoAnt->monto;
 
-                $deuda = number_format( $deuda, 2 );
+                $deudaTotal = $deudaTotal + $request->monto;
 
                 $cliente = Cliente::where('id', '=', $idCliente)
                         ->update([
 
-                            'deuda' => $deuda,
+                            'deuda' => $deudaTotal,
 
                         ]);
 
@@ -164,14 +167,15 @@ class PrestamoController extends Controller
 
                 $cliente = Cliente::find( $prestamo->idCliente );
 
-                $deuda = floatval($cliente->deuda) - floatval($prestamo->monto);
+                $deuda = is_numeric( $cliente->deuda) ? floatval( $cliente->deuda) : round( floatval( $cliente->deuda), 2);
+                $monto = is_numeric( $prestamo->monto) ? floatval( $prestamo->monto) : round( floatval( $prestamo->monto), 2);
 
-                $deuda = number_format( $deuda, 2 );
+                $deudaTotal = $deuda - $monto;
             
                 $cliente = Cliente::where('id', '=', $prestamo->idCliente)
                         ->update([
 
-                            'deuda' => $deuda,
+                            'deuda' => $deudaTotal,
 
                         ]);
 

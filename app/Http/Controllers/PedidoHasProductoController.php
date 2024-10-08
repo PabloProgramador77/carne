@@ -20,9 +20,45 @@ class PedidoHasProductoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create( Request $request )
     {
-        //
+        try {
+
+            $total = 0;
+            
+            foreach( $request->pesos as $peso ){
+
+                $cantidad = is_numeric( $peso['cantidad']) ? floatval( $peso['cantidad']) : round( floatval( $peso['cantidad']), 2);
+                $precio = is_numeric( $peso['precio']) ? floatval( $peso['precio'] ) : round( floatval( $peso['precio']), 2);
+
+                $pedidoHasProducto = PedidoHasProducto::create([
+
+                    'idPedido' => $request->pedido,
+                    'idClienteHasProducto' => $peso['producto'],
+                    'cantidad' => $cantidad,
+                    'monto' => $cantidad * $precio,
+
+                ]);
+
+                $total += $cantidad * $precio;
+
+            }
+
+            $pedidoController = new PedidoController();
+            $pedidoController->edit( $request, $total );
+            $clienteController = new ClienteController();
+            $clienteController->edit( $request );
+
+            $datos['exito'] = true;
+
+        } catch (\Throwable $th) {
+            
+            $datos['exito'] = false;
+            $datos['mensaje'] = $th->getMessage();
+
+        }
+
+        return response()->json( $datos );
     }
 
     /**
@@ -36,16 +72,19 @@ class PedidoHasProductoController extends Controller
             
             foreach( $request->pesos as $peso ){
 
+                $cantidad = is_numeric( $peso['cantidad']) ? floatval( $peso['cantidad']) : 0;
+                $precio = is_numeric( $peso['precio']) ? floatval( $peso['precio'] ) : 0;
+
                 $pedidoHasProducto = PedidoHasProducto::create([
 
                     'idPedido' => $request->pedido,
                     'idClienteHasProducto' => $peso['producto'],
-                    'cantidad' => $peso['cantidad'],
-                    'monto' => floatval($peso['cantidad']) * floatval($peso['precio']),
+                    'cantidad' => $cantidad,
+                    'monto' => $cantidad * $precio,
 
                 ]);
 
-                $total += floatval($peso['cantidad']) * floatval($peso['precio']);
+                $total += $cantidad * $precio;
 
             }
 

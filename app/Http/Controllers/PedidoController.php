@@ -191,12 +191,10 @@ class PedidoController extends Controller
     {
         try {
 
-            $totalPedido = is_numeric( $total ) ? number_format( $total, 2 ) : 0;
-
             $pedido = Pedido::where('id', '=', $request->pedido)
                     ->update([
 
-                        'total' => $totalPedido,
+                        'total' => $total,
                         'nota' => $request->nota,
 
                     ]);

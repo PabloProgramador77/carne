@@ -26,6 +26,7 @@ Route::get('/cliente/pedidos/{id}', [App\Http\Controllers\ClienteController::cla
 Route::get('/pedidos', [App\Http\Controllers\PedidoController::class, 'index'])->name('pedidos');
 Route::get('/pedido/cliente/{id}', [App\Http\Controllers\PedidoController::class, 'store'])->name('nuevo-pedido');
 Route::post('/pedido/pesos', [App\Http\Controllers\PedidoHasProductoController::class, 'store'])->name('pesos-de-pedido');
+Route::post('/pedido/cobrar', [App\Http\Controllers\PedidoHasProductoController::class, 'create'])->name('cobrar-pedido');
 Route::post('/pedido/cancelar', [App\Http\Controllers\PedidoController::class, 'destroy'])->name('cancelar-pedido');
 Route::post('/pedido/buscar', [App\Http\Controllers\PedidoController::class, 'show'])->name('buscar-pedido');
 

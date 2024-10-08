@@ -64,6 +64,7 @@
     <script src="{{ asset('js/jquery-3.7.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/sweetAlert.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/pedido.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/pedidos/cobrar.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/cancelar.js') }}" type="text/javascript"></script>
 
 @stop
