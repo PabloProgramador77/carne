@@ -33,99 +33,51 @@
 
         <div class="container-fluid row p-2">
             
-            @if( count( $cliente->productos ) > 0 )
-
-                @if( count( $productos ) > 0 )
-                    @foreach( $productos as $producto )
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <x-adminlte-card theme-mode="outline" title="{{ $producto->nombre }}" header-class="rounded-bottom border-primary" class="shadow">
-                                <x-slot name="toolsSlot">
-                                    <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="75%" height="auto">
-                                
-                                    @if( $producto->descripcion === NULL || $producto->descripcion === '' )
-                                        <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">Sin descripción agregado al producto.</small>
-                                    @else
-                                        <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">{{ $producto->descripcion }}</small>
-                                    @endif
-                                    <div class="form-group pt-3">
-                                        @foreach( $cliente->productos as $pc )
-
-                                            @php
-                                                $precio = '';
-                                            @endphp
-
-                                            @if( $producto->id === $pc->id )
-                                                
-                                                @php 
-                                                    $precio = $pc->pivot->precio; 
-                                                @endphp
-                                                @break
-                                        
-                                            @endif
-
-                                        @endforeach
-                                        <x-adminlte-input name="precio" id="precio" placeholder="Precio para el cliente" data-id="{{ $cliente->id }}" data-value="{{ $producto->id }}" value="{{ isset( $precio ) ? $precio : '' }}">
-                                            <x-slot name="prependSlot">
-                                                <div class="input-group-text text-info">
-                                                    <i class="fas fa-dollar-sign">*</i>
-                                                </div>
-                                            </x-slot>
-                                        </x-adminlte-input>
+            @if( count( $productos ) > 0 )
+                @php
+                    $heads = ['Producto', 'Descripción', 'Precio'];
+                @endphp
+                <x-adminlte-datatable id="contenedorProductos" theme="light" :heads="$heads" striped hoverable compressed beautify>
+                @foreach( $productos as $producto )
+                    <tr>
+                        <td>{{ $producto->nombre }}</td>
+                        @if( $producto->descripcion === NULL || $producto->descripcion === '' )
+                            <td>Sin descripción agregado al producto.</td>
+                        @else
+                            <td>{{ $producto->descripcion }}</td>
+                        @endif
+                        <td>
+                            @foreach( $cliente->productos as $pc)
+                                @php
+                                    $precio = '';
+                                @endphp
+                                @if( $producto->id === $pc->id)
+                                    @php
+                                        $precio = $pc->pivot->precio;
+                                    @endphp
+                                    @break
+                                @endif
+                            @endforeach
+                            <x-adminlte-input name="precio" id="precio" placeholder="Precio para el cliente" data-id="{{ $cliente->id }}" data-value="{{ $producto->id }}" value="{{ isset($precio) ? $precio : '' }}">
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text text-info">
+                                        <i class="fas fa-dollar-sign">*</i>
                                     </div>
-                                    
                                 </x-slot>
-                            </x-adminlte-card>
-                        </div>
-                    @endforeach
-
-                @else
-                    <div class="col-lg-4 mx-auto">
-                        <x-adminlte-card theme-mode="outline" theme="danger" title="Sin prodcutos registrados">
-                            <x-slot name="toolsSlot">
-                                <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="100%" height="auto" class="">
-                                <small class="bg-danger p-1 rounded d-block text-center">Por favor registra productos en el catalogo</small>
-                            </x-slot>
-                        </x-adminlte-card>
-                    </div>
-                @endif
-
+                            </x-adminlte-input>
+                        </td>
+                    </tr>
+                @endforeach
+                </x-adminlte-datatable>
             @else
-                @if( count( $productos ) > 0 )
-                    @foreach( $productos as $producto )
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <x-adminlte-card theme-mode="outline" title="{{ $producto->nombre }}" header-class="rounded-bottom border-primary">
-                                <x-slot name="toolsSlot">
-                                    <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="75%" height="auto">
-                                
-                                    @if( $producto->descripcion === NULL || $producto->descripcion === '' )
-                                        <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">Sin descripción agregado al producto.</small>
-                                    @else
-                                        <small class="fs-6 fw-semibold text-secondary col-lg-12 d-block">{{ $producto->descripcion }}</small>
-                                    @endif
-                                    <div class="form-group pt-3">
-                                        <x-adminlte-input name="precio" id="precio" placeholder="Precio para el cliente" data-id="{{ $cliente->id }}" data-value="{{ $producto->id }}">
-                                            <x-slot name="prependSlot">
-                                                <div class="input-group-text text-info">
-                                                    <i class="fas fa-dollar-sign">*</i>
-                                                </div>
-                                            </x-slot>
-                                        </x-adminlte-input>
-                                    </div>
-                                    
-                                </x-slot>
-                            </x-adminlte-card>
-                        </div>
-                    @endforeach
-                @else
-                    <div class="col-lg-4 mx-auto">
-                        <x-adminlte-card theme-mode="outline" theme="danger" title="Sin prodcutos registrados">
-                            <x-slot name="toolsSlot">
-                                <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="100%" height="auto" class="">
-                                <small class="bg-danger p-1 rounded d-block text-center">Por favor registra productos en el catalogo</small>
-                            </x-slot>
-                        </x-adminlte-card>
-                    </div>
-                @endif
+                <div class="col-lg-4 mx-auto">
+                    <x-adminlte-card theme-mode="outline" theme="danger" title="Sin productos registrados">
+                        <x-slot name="toolsSlot">
+                            <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="100%" height="auto" class="">
+                            <small class="bg-danger p-1 rounded d-block text-center">Por favor registra productos en el catalogo</small>
+                        </x-slot>
+                    </x-adminlte-card>
+                </div>
             @endif
 
         </div>
