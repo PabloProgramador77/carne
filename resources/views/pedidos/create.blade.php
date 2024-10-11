@@ -25,25 +25,34 @@
         <div class="container-fluid row p-2">
     
             @if( count( $productos ) > 0 )
+                @php
+                    $heads = ['Producto', 'Descripción', 'Precio', 'Piezas / Peso'];
+                @endphp
+                <x-adminlte-datatable id="contenedorProductos" theme="light" :heads="$heads" striped hoverable compressed beautify>
                 @foreach( $productos as $producto )
-                    <div class="col-lg-2 col-md-6 col-sm-12">
-                        <x-adminlte-card theme-mode="outline" title="{{ $producto->nombre }}" header-class="rounded-bottom border-primary" class="shadow">
-                            <x-slot name="toolsSlot">
-                                <img src="{{ asset('/img/carne.jpg') }}" alt="Carne" width="75%" height="auto">
-                                <p class="p-1 bg-info rounded text-center"><b>$ {{ number_format( $producto->precio, 2 ) }}</b> MXN</p>
-                                <div class="form-group pt-3">
-                                    <x-adminlte-input name="cantidad" id="cantidad" placeholder="Peso/Cantidad del producto" data-value="{{ $producto->id }}, {{ $producto->precio }}">
-                                        <x-slot name="prependSlot">
-                                            <div class="input-group-text text-info">
-                                                <i class="fas fa-balance-scale"></i>
-                                            </div>
-                                        </x-slot>
-                                    </x-adminlte-input>
-                                </div>
-                            </x-slot>
-                        </x-adminlte-card>
-                    </div>
-                @endforeach
+                    <tr>
+                        <td>{{ $producto->nombre }}</td>
+                        <td>
+                            @if( $producto->descripcion === NULL || $producto->descripcion === '')
+                                Sin descripción
+                            @else
+                                {{ $producto->descripcion }}
+                            @endif
+                        </td>
+                        <td>$ {{ $producto->precio }} MXN</td>
+                        <td>
+                            <x-adminlte-input name="cantidad" id="cantidad" placeholder="Peso/Cantidad del producto" data-value="{{ $producto->id }}, {{ $producto->precio }}">
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text text-info">
+                                        <i class="fas fa-balance-scale"></i>
+                                    </div>
+                                </x-slot>
+                            </x-adminlte-input>
+                        </td>
+                    </tr>
+                    @endforeach
+                </x-adminlte-datatable>
+                
             @else
                 <div class="col-lg-4 mx-auto">
                     <x-adminlte-card theme-mode="outline" theme="danger" title="Sin prodcutos registrados">
