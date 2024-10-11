@@ -17,7 +17,11 @@ class PedidoController extends Controller
     {
         try {
             
-            $pedidos = Pedido::orderBy('created_at', 'desc')->with('cliente')->get();
+            $pedidos = Pedido::orderBy('created_at', 'desc')
+                    ->where('estado', '!=', 'Corte')
+                    ->with('cliente')
+                    ->get();
+
             $clientes = Cliente::orderBy('nombre', 'asc')->get();
 
             return view('pedidos.index', compact('pedidos', 'clientes'));

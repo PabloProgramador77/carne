@@ -36,9 +36,7 @@ class CorteController extends Controller
             
             $pedidos = Pedido::select('pedidos.total', 'pedidos.created_at', 'clientes.nombre')
                         ->join('clientes', 'pedidos.idCliente', '=', 'clientes.id')
-                        ->leftJoin('corte_has_pedidos', 'pedidos.id', '=', 'corte_has_pedidos.idPedido')
-                        ->whereNull('corte_has_pedidos.idPedido') // Filtra los pedidos sin corte
-                        ->distinct() // Asegura que no haya duplicados
+                        ->where('pedidos.estado', '=', 'Pagado')
                         ->get();
 
             if( count( $pedidos ) > 0 ){
@@ -72,9 +70,7 @@ class CorteController extends Controller
             
             $pedidos = Pedido::select('pedidos.id', 'pedidos.total', 'pedidos.created_at', 'clientes.nombre')
                         ->join('clientes', 'pedidos.idCliente', '=', 'clientes.id')
-                        ->leftJoin('corte_has_pedidos', 'pedidos.id', '=', 'corte_has_pedidos.idPedido')
-                        ->whereNull('corte_has_pedidos.idPedido') // Filtra los pedidos sin corte
-                        ->distinct() // Asegura que no haya duplicados
+                        ->where('pedidos.estado', '=','Pagado')
                         ->get();
             
             if( count( $pedidos ) > 0 ){
@@ -84,6 +80,13 @@ class CorteController extends Controller
                 foreach( $pedidos as $pedido ){
 
                     $total += $pedido->total;
+
+                    $pedido = Pedido::where('id', '=', $pedido->id)
+                            ->update([
+                                
+                                'estado' => 'Corte',
+                                
+                            ]);
 
                 }
 
