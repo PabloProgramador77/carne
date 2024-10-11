@@ -131,6 +131,7 @@ class PedidoController extends Controller
                 
                 'total' => 0,
                 'idCliente' => $cliente->id,
+                'estado' => 'Pendiente',
 
             ]);
 
@@ -212,9 +213,33 @@ class PedidoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pedido $pedido)
+    public function update(Request $request )
     {
-        //
+        try {
+            
+            $pedido = Pedido::where('id', '=', $request->pedido)
+                    ->update([
+
+                        'estado' => $request->estado,
+
+                    ]);
+
+            if( $request->estado === 'Cobrado' ){
+
+                $this->create( $request->pedido );
+
+            }
+
+            $datos['exito'] = true;
+
+        } catch (\Throwable $th) {
+            
+            $datos['exito'] = false;
+            $datos['mensaje'] = $th->getMessage();
+
+        }
+
+        return response()->json( $datos );
     }
 
     /**

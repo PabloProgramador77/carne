@@ -29,6 +29,7 @@ Route::post('/pedido/pesos', [App\Http\Controllers\PedidoHasProductoController::
 Route::post('/pedido/cobrar', [App\Http\Controllers\PedidoHasProductoController::class, 'create'])->name('cobrar-pedido');
 Route::post('/pedido/cancelar', [App\Http\Controllers\PedidoController::class, 'destroy'])->name('cancelar-pedido');
 Route::post('/pedido/buscar', [App\Http\Controllers\PedidoController::class, 'show'])->name('buscar-pedido');
+Route::post('/pedido/pagar', [App\Http\Controllers\PedidoController::class, 'update'])->name('pagar-pedido');
 
 Route::get('/cortes', [App\Http\Controllers\CorteController::class, 'index'])->name('cortes');
 Route::post('/corte/nuevo', [App\Http\Controllers\CorteController::class, 'create'])->name('nuevo-corte');

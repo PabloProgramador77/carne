@@ -16,6 +16,7 @@ class Pedido extends Model
         'total',
         'nota',
         'idCliente',
+        'estado',
 
     ];
 
