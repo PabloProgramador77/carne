@@ -272,4 +272,33 @@ class PedidoController extends Controller
 
         return response()->json( $datos );
     }
+
+    /**
+     * Consulta de ventas
+     * ! Recopila todos los pedidos que no estan en corte
+     */
+    public function ventas(){
+        try {
+            
+            $pedidos = Pedido::select('pedidos.total', 'pedidos.created_at', 'clientes.nombre', 'pedidos.estado')
+                    ->join('clientes', 'pedidos.idCliente', '=', 'clientes.id')
+                    ->where('pedidos.estado', '!=', 'Corte')
+                    ->get();
+
+            if( count( $pedidos ) > 0 ){
+
+                $datos['exito'] = true;
+                $datos['pedidos'] = $pedidos;
+
+            }
+
+        } catch (\Throwable $th) {
+            
+            $datos['exito'] = false;
+            $datos['mensaje'] = $th->getMessage();
+
+        }
+
+        return response()->json( $datos );
+    }
 }

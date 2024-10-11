@@ -5,7 +5,7 @@
 
         <div class="container-fluid row border-bottom">
 
-            <div class="col-lg-5">
+            <div class="col-lg-4">
                 <h1 class="fs-3 fw-semibold"><i class="fas fa-shopping-cart"></i> Mis pedidos</h1>
                 <p class="fs-6 fw-semibold text-secondary"><i class="fas fa-user-shield"></i> Panel de Administrador</p>
             </div>
@@ -19,9 +19,10 @@
                 </nav>
             </div>
 
-            <div class="col-lg-2 my-2">
+            <div class="col-lg-3 my-2">
                 <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo pedido"></x-adminlte-button>
-                <x-adminlte-button theme="warning" data-toggle="modal" data-target="#modalCorte" icon="fas fa-cash-register" title="Corte de caja" class="mx-5" id="corte"></x-adminlte-button>
+                <x-adminlte-button theme="warning" data-toggle="modal" data-target="#modalCorte" icon="fas fa-cash-register" title="Corte de caja" class="mx-3" id="corte"></x-adminlte-button>
+                <x-adminlte-button theme="secondary" data-toggle="modal" data-target="#modalVentas" icon="fas fa-info-circle" title="Consulta de ventas" id="ventas"></x-adminlte-button>
             </div>
 
             <div class="col-lg-12">
@@ -75,6 +76,7 @@
     @include('pedidos.nuevo')
     @include('pedidos.pedido')
     @include('pedidos.corte')
+    @include('pedidos.ventas')
 
     <script src="{{ asset('js/jquery-3.7.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/sweetAlert.js') }}" type="text/javascript"></script>
@@ -82,5 +84,6 @@
     <script src="{{ asset('js/cortes/pedidos.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/cortes/corte.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/update.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/pedidos/ventas.js') }}" type="text/javascript"></script>
 
 @stop
