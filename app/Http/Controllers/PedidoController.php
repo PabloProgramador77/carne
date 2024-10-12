@@ -290,6 +290,11 @@ class PedidoController extends Controller
                 $datos['exito'] = true;
                 $datos['pedidos'] = $pedidos;
 
+            }else{
+
+                $datos['exito'] = false;
+                $datos['mensaje'] = 'Sin ventas registradas';
+                
             }
 
         } catch (\Throwable $th) {
