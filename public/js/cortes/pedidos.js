@@ -54,17 +54,23 @@ jQuery(document).ready( function(){
     
                             });
 
-                            $("#imprimirCorte").attr('disabled', false);
-
                             var total = 0;
+                            var efectivo = 0;
 
-                            var html = '<thead><tr><th>Cliente</th><th>Total</th><th>Fecha</th></thead>';
+                            var html = '<thead><tr><th>Cliente</th><th>Total</th><th>Estatus</th><th>Fecha</th></thead>';
 
                             respuesta.pedidos.forEach( function( pedido ){
+
+                                if( pedido.estado === 'Pagado' ){
+
+                                    efectivo += parseFloat( pedido.total );
+
+                                }
 
                                 html += '<tr>';
                                 html += '<td>'+pedido.nombre+'</td>';
                                 html += '<td>$ '+pedido.total+' MXN</td>';
+                                html += '<td>'+pedido.estado+'</td>';
                                 html += '<td>'+pedido.created_at+'</td>';
                                 html += '</tr>';
 
@@ -72,10 +78,17 @@ jQuery(document).ready( function(){
 
                             });
 
-                            html += '<tr class="bg-success text-center p-1"><td colspan="3">Total de Corte: $ '+total+' MXN</td></tr>';
+                            html += '<tr class="bg-primary text-center p-1"><td colspan="4">Total de Corte: $ '+total+' MXN</td></tr>';
+                            html += '<tr class="bg-success text-center p-1"><td colspan="4">Efectivo en caja: $ '+efectivo+' MXN</td></tr>';
 
                             $("#contenedorPedidosCorte").empty();
                             $("#contenedorPedidosCorte").append( html );
+
+                            if( efectivo > 0 ){
+
+                                $("#imprimirCorte").attr('disabled', false);
+                                
+                            }
 
                         }else{
                         

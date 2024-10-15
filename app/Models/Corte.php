@@ -14,6 +14,7 @@ class Corte extends Model
     protected $fillable = [
 
         'total',
+        'efectivo',
 
     ];
 

@@ -34,9 +34,9 @@ class CorteController extends Controller
     {
         try {
             
-            $pedidos = Pedido::select('pedidos.total', 'pedidos.created_at', 'clientes.nombre')
+            $pedidos = Pedido::select('pedidos.total', 'pedidos.created_at', 'clientes.nombre', 'pedidos.estado')
                         ->join('clientes', 'pedidos.idCliente', '=', 'clientes.id')
-                        ->where('pedidos.estado', '=', 'Pagado')
+                        ->where('pedidos.estado', '!=', 'Corte')
                         ->get();
 
             if( count( $pedidos ) > 0 ){
@@ -68,31 +68,39 @@ class CorteController extends Controller
     {
         try {
             
-            $pedidos = Pedido::select('pedidos.id', 'pedidos.total', 'pedidos.created_at', 'clientes.nombre')
+            $pedidos = Pedido::select('pedidos.id', 'pedidos.total', 'pedidos.created_at', 'clientes.nombre', 'pedidos.estado')
                         ->join('clientes', 'pedidos.idCliente', '=', 'clientes.id')
-                        ->where('pedidos.estado', '=','Pagado')
+                        ->where('pedidos.estado', '!=','Corte')
                         ->get();
             
             if( count( $pedidos ) > 0 ){
 
                 $total = 0;
+                $efectivo = 0;
 
                 foreach( $pedidos as $pedido ){
 
-                    $total += $pedido->total;
+                    if( $pedido->estado === 'Pagado' ){
 
-                    $pedido = Pedido::where('id', '=', $pedido->id)
-                            ->update([
-                                
-                                'estado' => 'Corte',
-                                
-                            ]);
+                        $efectivo += $pedido->total;
+
+                        $orden = Pedido::where('id', '=', $pedido->id)
+                                ->update([
+                                    
+                                    'estado' => 'Corte',
+                                    
+                                ]);
+
+                    }
+
+                    $total += $pedido->total;
 
                 }
 
                 $corte = Corte::create([
 
                     'total' => $total,
+                    'efectivo' => $efectivo,
 
                 ]);
 
@@ -102,12 +110,16 @@ class CorteController extends Controller
 
                     foreach( $pedidos as $pedido ){
 
-                        $corteHasPedido = CorteHasPedido::create([
+                        if( $pedido->estado === 'Pagado' ){
 
-                            'idCorte' => $idCorte,
-                            'idPedido' => $pedido->id,
+                            $corteHasPedido = CorteHasPedido::create([
 
-                        ]);
+                                'idCorte' => $idCorte,
+                                'idPedido' => $pedido->id,
+    
+                            ]);
+
+                        }
 
                     }
 
