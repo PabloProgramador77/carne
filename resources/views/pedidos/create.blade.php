@@ -5,7 +5,7 @@
 
         <div class="container-fluid row border-bottom">
 
-            <div class="col-lg-7">
+            <div class="col-lg-5">
                 <h1 class="fs-3 fw-semibold"><i class="fas fa-shopping-cart"></i> Pedido de {{ $cliente->nombre }}</h1>
                 <input type="hidden" name="idPedido" id="idPedido" value="{{ $pedido->id }}">
                 <p class="fs-6 fw-semibold text-secondary"><i class="fas fa-user-shield"></i> Panel de Administrador</p>
@@ -15,7 +15,15 @@
                 <x-adminlte-button theme="success" icon="fas fa-hand-holding-usd" title="Terminar pedido" label=" Terminar" class="shadow" id="guardar" data-toggle="modal" data-target="#modalTerminar"></x-adminlte-button>
                 <x-adminlte-button theme="danger" icon="fas fa-ban" title="Cancelar pedido" label=" Cancelar" class="shadow" id="cancelar" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}"></x-adminlte-button>
             </div>
-
+            <div class="col-lg-2 my-2">
+                <x-adminlte-input id="total" name="total" readonly="true" class="border border-success shadow" value="0">
+                    <x-slot name="prependSlot">
+                        <div class="input-group-text text-success">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </x-slot>
+                </x-adminlte-input>                 
+            </div>
             <div class="col-lg-12">
                 <small class="p-1 bg-warning text-center d-block rounded">Introduce la cantidad en los producto a vender y para terminar el pedido presiona el botón <i class="fas fa-hand-holding-usd"></i>Terminar. O si deseas cancelar el pedido presiona el botón <i class="fas fa-ban"></i>Cancelar</small>
             </div>
@@ -75,5 +83,6 @@
     <script src="{{ asset('js/pedidos/pedido.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/cobrar.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/cancelar.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/pedidos/total.js') }}" type="text/javascript"></script>
 
 @stop
