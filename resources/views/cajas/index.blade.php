@@ -44,6 +44,7 @@
                             <td>
                                 <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $caja->id }}" data-value="{{ $caja->id }}, {{ $caja->nombre }}, {{ $caja->total }}"></x-adminlte-button>
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $caja->id }}" data-value="{{ $caja->nombre }}"></x-adminlte-button>
+                                <a href="{{ url('/gastos') }}/{{ $caja->id }}" class="btn btn-secondary shadow gastos" title="Gastos"><i class="fas fa-hand-holding-usd"></i></a>
                             </td>
                         </tr>
                     @endforeach
