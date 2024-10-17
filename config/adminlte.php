@@ -318,6 +318,12 @@ return [
             'url' => 'cortes',
             'icon' => 'fas fa-cash-register',
             'text_color' => 'success',
+        ],
+        [
+            'text' => 'Cajas',
+            'url' => 'cajas',
+            'icon' => 'fas fa-cash-register',
+            'text-color' => 'success',
         ]
         
     ],

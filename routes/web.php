@@ -46,3 +46,8 @@ Route::get('/cliente/prestamos/{id}', [App\Http\Controllers\PrestamoController::
 Route::post('/prestamo/agregar', [App\Http\Controllers\PrestamoController::class, 'store'])->name('agregar-prestamo');
 Route::post('/prestamo/actualizar', [App\Http\Controllers\PrestamoController::class, 'update'])->name('actualizar-prestamo');
 Route::post('/prestamo/borrar', [App\Http\Controllers\PrestamoController::class, 'destroy'])->name('borrar-prestamo');
+
+Route::get('/cajas', [App\Http\Controllers\CajaController::class, 'index'])->name('cajas');
+Route::post('/caja/agregar', [App\Http\Controllers\CajaController::class, 'store'])->name('agregar-caja');
+Route::post('/caja/actualizar', [App\Http\Controllers\CajaController::class, 'update'])->name('actualizar-caja');
+Route::post('/caja/borrar', [App\Http\Controllers\CajaController::class, 'destroy'])->name('borrar-caja');
