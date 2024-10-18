@@ -8,6 +8,7 @@ use App\Http\Requests\Caja\Create;
 use App\Http\Requests\Caja\Read;
 use App\Http\Requests\Caja\Update;
 use App\Http\Requests\Caja\Delete;
+use App\Http\Requests\Gasto\Importe;
 
 class CajaController extends Controller
 {
@@ -74,9 +75,27 @@ class CajaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Caja $caja)
+    public function edit(Importe $request)
     {
-        //
+        try {
+            
+            $caja = Caja::where('id', '=', $request->caja)
+                    ->update([
+
+                        'total' => $request->importe,
+
+                    ]);
+
+            $datos['exito'] = true;
+
+        } catch (\Throwable $th) {
+            
+            $datos['exito'] = false;
+            $datos['mensaje'] = $th->getMessage();
+
+        }
+
+        return response()->json( $datos );
     }
 
     /**

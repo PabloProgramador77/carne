@@ -14,6 +14,7 @@
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/home"><i class="fas fa-home"></i> Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="/cajas"><i class="fas fa-cash-register"></i> Cajas</a></li>
                         <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-hand-holding-usd"></i> Gastos de Caja</li>
                     </ol>
                     <input type="hidden" name="idCaja" id="idCaja" value="{{ $caja->id }}">
@@ -21,7 +22,8 @@
             </div>
 
             <div class="col-lg-2 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo gasto"></x-adminlte-button>
+                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo gasto" class="shadow"></x-adminlte-button>
+                <x-adminlte-button theme="info" icon="fas fa-dollar-sign" title="Monto de apertura" class="mx-2 shadow" id="apertura"></x-adminlte-button>
             </div>
 
             <div class="col-lg-12">
@@ -70,5 +72,6 @@
     <script src="{{ asset('js/gastos/read.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/gastos/update.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/gastos/delete.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/gastos/apertura.js') }}" type="text/javascript"></script>
 
 @stop

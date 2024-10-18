@@ -51,6 +51,7 @@ Route::get('/cajas', [App\Http\Controllers\CajaController::class, 'index'])->nam
 Route::post('/caja/agregar', [App\Http\Controllers\CajaController::class, 'store'])->name('agregar-caja');
 Route::post('/caja/actualizar', [App\Http\Controllers\CajaController::class, 'update'])->name('actualizar-caja');
 Route::post('/caja/borrar', [App\Http\Controllers\CajaController::class, 'destroy'])->name('borrar-caja');
+Route::post('/caja/importe', [App\Http\Controllers\CajaController::class, 'edit'])->name('importe-caja');
 
 Route::get('/gastos/{id}', [App\Http\Controllers\GastoController::class, 'index'])->name('gastos');
 Route::post('/gasto/agregar', [App\Http\Controllers\GastoController::class, 'store'])->name('agregar-gasto');
