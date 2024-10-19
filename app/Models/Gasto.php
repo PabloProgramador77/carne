@@ -15,6 +15,7 @@ class Gasto extends Model
 
         'monto',
         'descripcion',
+        'estado',
         'idCaja',
 
     ];

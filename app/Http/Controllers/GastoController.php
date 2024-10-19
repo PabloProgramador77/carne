@@ -51,6 +51,7 @@ class GastoController extends Controller
 
                 'monto' => $request->monto,
                 'descripcion' => $request->descripcion,
+                'estado' => 'Pendiente',
                 'idCaja' => $request->caja,
 
             ]);

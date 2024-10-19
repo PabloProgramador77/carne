@@ -12,6 +12,17 @@
         
     </div>
     <x-slot name="footerSlot">
-        <x-adminlte-button theme="success" label=" Imprimir" id="imprimirCorte" icon="fas fa-print"></x-adminlte-button>
+        <x-adminlte-select id="caja" name="caja">
+            <x-slot name="prependSlot">
+                <div class="input-group-text">
+                    <i class="fas fa-cash-register"></i>
+                </div>
+            </x-slot>
+            <option value="0">Elige una caja</option>
+            @foreach( $cajas as $caja)
+                <option value="{{ $caja->id }}">{{ $caja->nombre }}</option>
+            @endforeach
+        </x-adminlte-select>
+        <x-adminlte-button theme="success" label=" Imprimir" id="imprimirCorte" icon="fas fa-print" class="shadow mx-5"></x-adminlte-button>
     </x-slot>
 </x-adminlte-modal>

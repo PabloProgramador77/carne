@@ -33,6 +33,7 @@ jQuery(document).ready( function(){
                     url: '/corte/agregar',
                     data:{
 
+                        'caja' : $("#caja").val(),
                         '_token' : csrfToken,
 
                     },

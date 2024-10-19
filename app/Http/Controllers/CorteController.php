@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Caja;
 use App\Models\Corte;
+use App\Models\CorteHasGasto;
 use App\Models\CorteHasPedido;
+use App\Models\Gasto;
 use App\Models\Pedido;
 use Illuminate\Http\Request;
 
@@ -39,10 +42,15 @@ class CorteController extends Controller
                         ->where('pedidos.estado', '!=', 'Corte')
                         ->get();
 
-            if( count( $pedidos ) > 0 ){
+            $gastos = Gasto::select('gastos.id', 'gastos.monto', 'gastos.descripcion', 'gastos.created_at')
+                    ->where('gastos.estado', '!=', 'Corte')
+                    ->get();
+
+            if( count( $pedidos ) > 0 || count( $gastos ) > 0 ){
 
                 $datos['exito'] = true;
                 $datos['pedidos'] = $pedidos;
+                $datos['gastos'] = $gastos;
 
             }else{
 
@@ -72,8 +80,12 @@ class CorteController extends Controller
                         ->join('clientes', 'pedidos.idCliente', '=', 'clientes.id')
                         ->where('pedidos.estado', '!=','Corte')
                         ->get();
+
+            $gastos = Gasto::select('gastos.id', 'gastos.monto', 'gastos.descripcion', 'gastos.estado')
+                    ->where('gastos.estado', '!=', 'Corte')
+                    ->get();
             
-            if( count( $pedidos ) > 0 ){
+            if( count( $pedidos ) > 0 || count( $gastos ) > 0 ){
 
                 $total = 0;
                 $efectivo = 0;
@@ -94,6 +106,19 @@ class CorteController extends Controller
                     }
 
                     $total += $pedido->total;
+
+                }
+
+                foreach( $gastos as $gasto ){
+
+                    $efectivo -= $gasto->monto;
+
+                    $costo = Gasto::where('id', '=', $gasto->id)
+                            ->update([
+
+                                'estado' => 'Corte',
+
+                            ]);
 
                 }
 
@@ -123,7 +148,26 @@ class CorteController extends Controller
 
                     }
 
+                    foreach( $gastos as $gasto){
+
+                        $corteHasGasto = CorteHasGasto::create([
+
+                            'idCorte' => $idCorte,
+                            'idGasto' => $gasto->id,
+
+                        ]);
+
+                    }
+
                 }
+
+                $caja = Caja::where('id', '=', $request->caja)
+                        ->update([
+
+                            'total' => $efectivo,
+
+                        ]);
+
 
                 $datos['exito'] = true;
 

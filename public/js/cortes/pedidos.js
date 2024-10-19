@@ -6,6 +6,7 @@ jQuery(document).ready( function(){
         e.preventDefault();
 
         $("#imprimirCorte").attr('disabled', true);
+        $("#caja").attr('disabled', true);
 
         var procesamiento;
 
@@ -78,8 +79,37 @@ jQuery(document).ready( function(){
 
                             });
 
+                            if( respuesta.gastos.length > 0 ){
+
+                                html += '<thead><tr><th>Folio</th><th>Gasto</th><th>Total</th><th>Fecha</th></thead>';
+
+                                respuesta.gastos.forEach( function( gasto ){
+
+                                    efectivo -= parseFloat( gasto.monto );
+                                    
+                                    html += '<tr>';
+                                    html += '<td>'+gasto.id+'</td>';
+                                    html += '<td>'+gasto.descripcion+'</td>';
+                                    html += '<td>$ '+gasto.monto+' MXN</td>';
+                                    html += '<td>'+gasto.created_at+'</td>';
+                                    html += '</tr>';
+
+                                });
+
+                            }
+
                             html += '<tr class="bg-primary text-center p-1"><td colspan="4">Total de Corte: $ '+total+' MXN</td></tr>';
-                            html += '<tr class="bg-success text-center p-1"><td colspan="4">Efectivo en caja: $ '+efectivo+' MXN</td></tr>';
+
+                            if( efectivo <= 0 ){
+
+                                html += '<tr class="bg-danger text-center p-1"><td colspan="4">Efectivo en caja: $ '+efectivo+' MXN</td></tr>';
+
+                            }else{
+
+                                html += '<tr class="bg-success text-center p-1"><td colspan="4">Efectivo en caja: $ '+efectivo+' MXN</td></tr>';
+
+                            }
+                            
 
                             $("#contenedorPedidosCorte").empty();
                             $("#contenedorPedidosCorte").append( html );
@@ -87,6 +117,7 @@ jQuery(document).ready( function(){
                             if( efectivo > 0 ){
 
                                 $("#imprimirCorte").attr('disabled', false);
+                                $("#caja").attr('disabled', false);
                                 
                             }
 
@@ -102,6 +133,7 @@ jQuery(document).ready( function(){
                             });
 
                             $("#imprimirCorte").attr('disabled', true);
+                            $("#caja").attr('disabled', true);
 
                         }
 

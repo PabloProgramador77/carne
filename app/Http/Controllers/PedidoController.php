@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pedido;
 use App\Models\Cliente;
 use App\Models\ClienteHasProducto;
+use App\Models\Caja;
 use Illuminate\Http\Request;
 use Mpdf\Mpdf;
 
@@ -24,7 +25,9 @@ class PedidoController extends Controller
 
             $clientes = Cliente::orderBy('nombre', 'asc')->get();
 
-            return view('pedidos.index', compact('pedidos', 'clientes'));
+            $cajas = Caja::all();
+
+            return view('pedidos.index', compact('pedidos', 'clientes', 'cajas'));
 
         } catch (\Throwable $th) {
             
