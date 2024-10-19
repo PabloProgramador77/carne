@@ -197,10 +197,17 @@ class CorteController extends Controller
                         ->orderBy('pedidos.created_at', 'desc')
                         ->get();
 
-            if( count( $pedidos ) > 0 ){
+            $gastos = Gasto::select('gastos.id', 'gastos.monto', 'gastos.descripcion','gastos.created_at')
+                    ->join('corte_has_gastos', 'gastos.id', '=', 'corte_has_gastos.idGasto')
+                    ->where('corte_has_gastos.idCorte', '=', $request->id)
+                    ->get();
+
+
+            if( count( $pedidos ) > 0 || count( $gastos ) > 0 ){
 
                 $datos['exito'] = true;
                 $datos['pedidos'] = $pedidos;
+                $datos['gastos'] = $gastos;
 
             }else{
 

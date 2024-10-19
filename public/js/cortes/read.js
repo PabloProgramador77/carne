@@ -64,6 +64,23 @@ jQuery( document ).ready( function( e ){
 
                         });
 
+                        if( respuesta.gastos && respuesta.gastos.length > 0 ){
+
+                            html += '<tr><td><b>Folio</b></td><td><b>Gasto</b></td><td><b>Importe</b></td><td><b>Fecha</b></td></tr>';
+
+                            respuesta.gastos.forEach( function( gasto ){
+
+                                html += '<tr>';
+                                html += '<td>'+gasto.id+'</td>';
+                                html += '<td>'+gasto.descripcion+'</td>';
+                                html += '<td>$ '+gasto.monto+'</td>';
+                                html += '<td>'+gasto.created_at+'</td>';
+                                html += '</tr>';
+
+                            });
+
+                        }
+                        
                         $("#contenedorPedidos").empty().append( html );
 
                         $("#imprimirCorte").attr('disabled', false);
