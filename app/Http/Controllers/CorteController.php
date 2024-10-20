@@ -88,6 +88,7 @@ class CorteController extends Controller
             if( count( $pedidos ) > 0 || count( $gastos ) > 0 ){
 
                 $total = 0;
+                $costos = 0;
                 $efectivo = 0;
 
                 foreach( $pedidos as $pedido ){
@@ -119,6 +120,8 @@ class CorteController extends Controller
                                 'estado' => 'Corte',
 
                             ]);
+
+                    $costos += $gasto->monto;
 
                 }
 
@@ -161,10 +164,14 @@ class CorteController extends Controller
 
                 }
 
-                $caja = Caja::where('id', '=', $request->caja)
+                $caja = Caja::find( $request->caja );
+
+                $totalCaja = floatval( ( ($caja->total + $efectivo) - $costos ) );
+
+                Caja::where('id', '=', $request->caja)
                         ->update([
 
-                            'total' => $efectivo,
+                            'total' => $totalCaja,
 
                         ]);
 

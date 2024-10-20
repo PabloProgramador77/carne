@@ -21,7 +21,8 @@ class GastoController extends Controller
         try {
 
             $caja = Caja::find( $id );
-            $gastos = Gasto::all();
+            $gastos = Gasto::where('estado', '!=', 'Corte')
+                    ->get();
 
             return view('gastos.index', compact('caja', 'gastos'));
             

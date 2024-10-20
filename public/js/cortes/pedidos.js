@@ -57,6 +57,7 @@ jQuery(document).ready( function(){
 
                             var total = 0;
                             var efectivo = 0;
+                            var gastos = 0;
 
                             var html = '<thead><tr><th>Cliente</th><th>Total</th><th>Estatus</th><th>Fecha</th></thead>';
 
@@ -94,11 +95,14 @@ jQuery(document).ready( function(){
                                     html += '<td>'+gasto.created_at+'</td>';
                                     html += '</tr>';
 
+                                    gastos += parseFloat( gasto.monto );
+
                                 });
 
                             }
 
-                            html += '<tr class="bg-primary text-center p-1"><td colspan="4">Total de Corte: $ '+total+' MXN</td></tr>';
+                            html += '<tr class="bg-primary text-center p-1"><td colspan="4">Total de Ventas: $ '+total+' MXN</td></tr>';
+                            html += '<tr class="bg-warning text-center p-1"><td colspan="4">Total de Gastos: $ '+gastos+' MXN</td></tr>';
 
                             if( efectivo <= 0 ){
 
