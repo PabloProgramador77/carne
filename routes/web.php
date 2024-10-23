@@ -57,3 +57,8 @@ Route::get('/gastos/{id}', [App\Http\Controllers\GastoController::class, 'index'
 Route::post('/gasto/agregar', [App\Http\Controllers\GastoController::class, 'store'])->name('agregar-gasto');
 Route::post('/gasto/actualizar', [App\Http\Controllers\GastoController::class, 'update'])->name('actualizar-gasto');
 Route::post('/gasto/borrar', [App\Http\Controllers\GastoController::class, 'destroy'])->name('borrar-gasto');
+
+Route::get('/usuarios', [App\Http\Controllers\UserController::class, 'index'])->name('usuarios');
+Route::post('/usuario/agregar', [App\Http\Controllers\UserController::class, 'store'])->name('agregar-usuario');
+Route::post('/usuario/actualizar', [App\Http\Controllers\UserController::class, 'update'])->name('actualizar-usuario');
+Route::post('/usuario/borrar', [App\Http\Controllers\UserController::class, 'destroy'])->name('borrar-usuario');

@@ -324,7 +324,32 @@ return [
             'url' => 'cajas',
             'icon' => 'fas fa-cash-register',
             'text-color' => 'success',
-        ]
+        ],
+        [
+            'text' => 'Usuarios',
+            'icon' => 'fas fa-users',
+            'text-color' => 'success',
+            'submenu' => [
+                [
+                    'text' => 'Usuarios',
+                    'url' => 'usuarios',
+                    'icon' => 'fas fa-users',
+                    'text-color' => 'success',
+                ],
+                [
+                    'text' => 'Roles de usuario',
+                    'url' => 'roles',
+                    'icon' => 'fas fa-user-tag',
+                    'text-color' => 'success',
+                ],
+                [
+                    'text' => 'Permisos de usuario',
+                    'url' => 'permisos',
+                    'icon' => 'fas fa-user-cog',
+                    'text-color' => 'success',
+                ],
+            ],
+        ],
         
     ],
 
