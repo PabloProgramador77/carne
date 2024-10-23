@@ -10,7 +10,7 @@
                     <x-adminlte-input name="nombreEditar" id="nombreEditar" placeholder="Rol de usuario">
                         <x-slot name="prependSlot">
                             <div class="input-group-text text-info">
-                                <i class="fas fa-user">*</i>
+                                <i class="fas fa-user-tag">*</i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>

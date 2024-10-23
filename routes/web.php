@@ -67,3 +67,8 @@ Route::get('/roles', [App\Http\Controllers\RoleController::class, 'index'])->nam
 Route::post('/rol/agregar', [App\Http\Controllers\RoleController::class, 'store'])->name('agregar-rol');
 Route::post('/rol/actualizar', [App\Http\Controllers\RoleController::class, 'update'])->name('actualizar-rol');
 Route::post('/rol/borrar', [App\Http\Controllers\RoleController::class, 'destroy'])->name('borrar-rol');
+
+Route::get('/permisos', [App\Http\Controllers\PermisoController::class, 'index'])->name('permisos');
+Route::post('/permiso/agregar', [App\Http\Controllers\PermisoController::class, 'store'])->name('agregar-permiso');
+Route::post('/permiso/actualizar', [App\Http\Controllers\PermisoController::class, 'update'])->name('actualizar-permiso');
+Route::post('/permiso/borrar', [App\Http\Controllers\PermisoController::class, 'destroy'])->name('borrar-permiso');

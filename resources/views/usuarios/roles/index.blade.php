@@ -24,7 +24,7 @@
             </div>
 
             <div class="col-lg-12">
-                <small class="p-1 bg-warning text-center rounded d-block">Agrega nuevos roles de rol con el botón <i class="fas fa-plus-circle"></i> o administra los existentes con los botones correspondientes.</small>
+                <small class="p-1 bg-warning text-center rounded d-block">Agrega nuevos roles de usuario con el botón <i class="fas fa-plus-circle"></i> o administra los existentes con los botones correspondientes.</small>
             </div>
 
         </div>
