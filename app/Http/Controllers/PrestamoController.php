@@ -9,6 +9,7 @@ use App\Http\Requests\Prestamo\Create;
 use App\Http\Requests\Prestamo\Read;
 use App\Http\Requests\Prestamo\update;
 use App\Http\Requests\Prestamo\Delete;
+use \Mpdf\Mpdf;
 
 class PrestamoController extends Controller
 {
@@ -37,9 +38,48 @@ class PrestamoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create( $idCliente, $idPrestamo )
     {
-        //
+        try{
+
+            $ticket = new \Mpdf\Mpdf([
+
+                'mode' => 'utf-8',
+                'format' => ['80', '2750'],
+                'orientation' => 'P',
+                'autoPageBreak' => false,
+
+            ]);
+
+            $prestamo = Prestamo::find( $idPrestamo );
+            $cliente = Cliente::find( $idCliente);
+
+            $ticket->writeHTML('<h4 style="text-align: center;">La Higienica Premium</h4>');
+            $ticket->writeHTML('<h4 style="text-align: center;">4765876390</h4>');
+            $ticket->writeHTML('<h5 style="text-align: center;">'.$prestamo->updated_at.'</h5>');
+            $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+            $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->id.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Folio:</td><td>'.$prestamo->id.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$cliente->nombre.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Concepto:</td><td>Prestamo</td></tr>');
+            $ticket->writeHTML('</table>');
+            $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+            $ticket->writeHTML('<tr><th>Nota</th><th>Importe</th></tr>');
+            $ticket->writeHTML('<tr><td>'.$prestamo->nota.'</td><td>$'.$prestamo->monto.'</td></tr>');
+            $ticket->writeHTML('</table>');
+            $ticket->writeHTML('<p style="text-align: center;"><b>Saldo de cuenta:</b> $'.$cliente->deuda.'</p>');
+            $ticket->writeHTML('<p style="text-align: center; margin-top: 20px;">_____________________</p>');
+            $ticket->writeHTML('<p style="text-align: center;">Firma de '.$cliente->nombre.'</p>');
+
+            $ticket->Output( public_path('tickets/').'prestamo'.$prestamo->id.'.pdf', \Mpdf\Output\Destination::FILE );
+
+            $this->copia( $idCliente, $idPrestamo );
+
+        }catch(\Throwable $th){
+
+            echo $th->getMessage();
+
+        }
     }
 
     /**
@@ -57,6 +97,8 @@ class PrestamoController extends Controller
 
             ]);
 
+            $idPrestamo = $prestamo->id;
+
             $cliente = Cliente::find( $request->cliente );
 
             if( $cliente && $cliente->id ){
@@ -66,12 +108,14 @@ class PrestamoController extends Controller
 
                 $deudaTotal = $deuda + $monto;
 
-                $cliente = Cliente::where('id', '=', $request->cliente )
+                Cliente::where('id', '=', $request->cliente )
                         ->update([
 
                             'deuda' => $deudaTotal,
 
                         ]);
+
+                $this->create( $cliente->id, $idPrestamo );
 
             }
 
@@ -193,5 +237,48 @@ class PrestamoController extends Controller
         }
 
         return response()->json( $datos );
+    }
+
+    /**
+     * Copia de ticket
+     */
+    public function copia( $idCliente, $idPrestamo ){
+        try{
+
+            $ticket = new \Mpdf\Mpdf([
+
+                'mode' => 'utf-8',
+                'format' => ['80', '2750'],
+                'orientation' => 'P',
+                'autoPageBreak' => false,
+
+            ]);
+
+            $prestamo = Prestamo::find( $idPrestamo );
+            $cliente = Cliente::find( $idCliente);
+
+            $ticket->writeHTML('<h4 style="text-align: center;">La Higienica Premium</h4>');
+            $ticket->writeHTML('<h4 style="text-align: center; 4765876390"></h4>');
+            $ticket->writeHTML('<h5 style="text-align: center;">'.$prestamo->updated_at.'</h5>');
+            $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+            $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->id.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Folio:</td><td>'.$prestamo->id.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$cliente->nombre.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Concepto:</td><td>Prestamo</td></tr>');
+            $ticket->writeHTML('</table>');
+            $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+            $ticket->writeHTML('<tr><th>Nota</th><th>Importe</th></tr>');
+            $ticket->writeHTML('<tr><td>'.$prestamo->nota.'</td><td>$'.$prestamo->monto.'</td></tr>');
+            $ticket->writeHTML('</table>');
+            $ticket->writeHTML('<p style="text-align: center;"><b>Saldo de cuenta:</b> $'.$cliente->deuda.'</p>');
+            $ticket->writeHTML('<p style="text-align: center; margin-top: 10px;">**TICKET COPIA**</p>');
+
+            $ticket->Output( public_path('tickets/').'copiaPrestamo'.$prestamo->id.'.pdf', \Mpdf\Output\Destination::FILE );
+
+        }catch(\Throwable $th){
+
+            echo $th->getMessage();
+
+        }        
     }
 }

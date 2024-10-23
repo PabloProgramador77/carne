@@ -176,6 +176,8 @@ class CorteController extends Controller
                         ]);
 
 
+                $this->corte( $idCorte );
+
                 $datos['exito'] = true;
 
             }
@@ -255,5 +257,73 @@ class CorteController extends Controller
     public function destroy(Corte $corte)
     {
         //
+    }
+
+    /**
+     * Reporte PDF de corte
+     */
+    public function corte( $idCorte ){
+        try {
+            
+            $corte = Corte::find( $idCorte );
+
+            if( $corte && $corte->id ){
+
+                $ticket = new \Mpdf\Mpdf([
+
+                    'mode' => 'utf-8',
+                    'format' => ['80', '2750'],
+                    'orientation' => 'P',
+                    'autoPageBreak' => false,
+    
+                ]);
+
+                $ticket->writeHTML('<h4 style="text-align: center;">La Higienica Premium</h4>');
+                $ticket->writeHTML('<h5 style="text-align: center;">476 587 6390</h5>');
+                $ticket->writeHTML('<h6 style="text-align: center;">'.$corte->created_at.'</h6>');
+                $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+                $ticket->writeHTML('<tr><td>Folio:</td><td>'.$corte->id.'</td></tr>');
+                $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
+                $ticket->writeHTML('<tr><td>Concepto: </td><td>Corte de caja</td></tr>');
+                $ticket->writeHTML('</table>');
+
+                $pedidos = Pedido::select('pedidos.total', 'pedidos.created_at', 'clientes.nombre')
+                        ->join('clientes', 'pedidos.idCliente', '=', 'clientes.id')
+                        ->join('corte_has_pedidos', 'pedidos.id', '=', 'corte_has_pedidos.idPedido')
+                        ->where('corte_has_pedidos.idCorte', '=', $corte->id)
+                        ->get();
+
+                if( count( $pedidos ) > 0 ){
+
+                    $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+                    $ticket->writeHTML('<tr><th>Pedido</th><th>Importe</th><th>Fecha</th></tr>');
+
+                    foreach( $pedidos as $pedido ){
+
+                        $ticket->writeHTML('<tr><td>'.$pedido->nombre.'</td><td>$ '.$pedido->total.'</td><td>'.$pedido->created_at.'</td></tr>');
+
+                    }
+
+                    $ticket->writeHTML('<tr><td colpsan="3" style="text-align: center;">Total de Corte: $ '.$corte->total.'</td></tr>');
+                    $ticket->writeHTML('</table>');
+
+                }else{
+
+                    $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+                    $ticket->writeHTML('<tr><th>Pedido</th><th>Importe</th><th>Fecha</th></tr>');
+                    $ticket->writeHTML('<tr><td colspan="3" style="text-align: center;">Sin pedidos en el corte</td></tr>');
+                    $ticket->writeHTML('</table>');
+
+                }
+                
+                $ticket->Output( public_path('tickets/').'corte'.$corte->id.'.pdf', \Mpdf\Output\Destination::FILE );
+
+            }
+
+        } catch (\Throwable $th) {
+            
+            echo $th->getMessage();
+
+        }
     }
 }

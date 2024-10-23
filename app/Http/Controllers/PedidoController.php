@@ -67,15 +67,19 @@ class PedidoController extends Controller
 
                     $total = 0;
 
-                    $ticket->writeHTML('<h4 style="text-align: center;">BLVD AQUILES SERDAN #1001</h4>');
+                    $ticket->writeHTML('<h4 style="text-align: center;">La Higienica Premium</h4>');
                     $ticket->writeHTML('<h5 style="text-align: center;">476 587 6390</h5>');
                     $ticket->writeHTML('<h6 style="text-align: center;">'.$pedido->created_at.'</h6>');
-                    $ticket->writeHTML('<h6 style="text-align: center;">Cliente: '.$pedido->cliente->nombre.'</h6>');
-                    $ticket->writeHTML('<h6 style="text-align: center;">Folio: '.$pedido->id.'</h6>');
+                    $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+                    $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
+                    $ticket->writeHTML('<tr><td>Folio:</td><td>'.$pedido->id.'</td></tr>');
+                    $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$pedido->cliente->nombre.'</td></tr>');
+                    $ticket->writeHTML('<tr><td>Concepto:</td><td>Abono</td></tr>');
+                    $ticket->writeHTML('</table>');
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
                     $ticket->writeHTML('<thead style="border-bottom: 2px;">');
-                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Precio</th><th>Importe</th></tr>');
+                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Importe</th></tr>');
                     $ticket->writeHTML('</thead>');
                     $ticket->writeHTML('<tbody>');
 
@@ -84,7 +88,6 @@ class PedidoController extends Controller
                         $ticket->writeHTML('<tr>');
                         $ticket->writeHTML('<td>'.$producto->cantidad.'</td>');
                         $ticket->writeHTML('<td>'.$producto->nombre.'</td>');
-                        $ticket->writeHTML('<td>$'.$producto->precio.'</td>');
                         $ticket->writeHTML('<td>$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
@@ -95,6 +98,8 @@ class PedidoController extends Controller
                     $ticket->writeHTML('</tbody>');
                     $ticket->writeHTML('</table>');
                     $ticket->writeHTML('<p style="text-align: center; ">Total: $ '.number_format( $total, 2).' MXN</p>');
+                    $ticket->writeHTML('<p style="text-align: center; margin-top: 20px;">_____________________</p>');
+                    $ticket->writeHTML('<p style="text-align: center;">Firma de '.$pedido->cliente->nombre.'</p>');
 
                 }
 
@@ -109,6 +114,8 @@ class PedidoController extends Controller
             $ticket->Output( public_path('tickets/').'ticket'.$pedido->id.'.pdf', \Mpdf\Output\Destination::FILE );
 
             if( file_exists( public_path('tickets/').'ticket'.$pedido->id.'.pdf' ) ){
+
+                $this->copia( $id );
 
                 return true;
 
@@ -231,9 +238,26 @@ class PedidoController extends Controller
 
                     ]);
 
+            $pedido = Pedido::find( $request->pedido );
+
+            $idCliente = $pedido->idCliente;
+
             if( $request->estado === 'Cobrado' ){
 
                 $this->create( $request->pedido );
+
+            }else{
+
+                $cliente = Cliente::find( $idCliente );
+                
+                $total = floatval( $cliente->deuda - $pedido->total );
+
+                Cliente::where('id', '=', $idCliente)
+                        ->update([
+
+                            'deuda' => $total,
+
+                        ]);
 
             }
 
@@ -309,4 +333,97 @@ class PedidoController extends Controller
 
         return response()->json( $datos );
     }
+
+    /**
+     * Copia de ticket
+     */
+    public function copia( $id ){
+        try {
+            
+            $ticket = new \Mpdf\Mpdf([
+
+                'mode' => 'utf-8',
+                'format' => ['80', '2750'],
+                'orientation' => 'P',
+                'autoPageBreak' => false,
+
+            ]);
+
+            $pedido = Pedido::find( $id );
+
+            if( $pedido->id ){
+
+                $productos = ClienteHasProducto::select('productos.nombre', 'cliente_has_productos.precio', 'pedido_has_productos.cantidad')
+                            ->join('productos', 'cliente_has_productos.idProducto', '=', 'productos.id')
+                            ->join('pedido_has_productos', 'cliente_has_productos.id', '=', 'pedido_has_productos.idClienteHasProducto')
+                            ->where('pedido_has_productos.idPedido', '=', $id)
+                            ->orderBy('productos.nombre', 'asc')
+                            ->get();
+
+                if( count( $productos ) > 0 ){
+
+                    $total = 0;
+
+                    $ticket->writeHTML('<h4 style="text-align: center;">La Higienica Premium</h4>');
+                    $ticket->writeHTML('<h5 style="text-align: center;">4765876390</h5>');
+                    $ticket->writeHTML('<h6 style="text-align: center;">'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+                    $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
+                    $ticket->writeHTML('<tr><td>Folio:</td><td>'.$pedido->id.'</td></tr>');
+                    $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$pedido->cliente->nombre.'</td></tr>');
+                    $ticket->writeHTML('<tr><td>Concepto:</td><td>Abono</td></tr>');
+                    $ticket->writeHTML('</table>');
+
+                    $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
+                    $ticket->writeHTML('<thead style="border-bottom: 2px;">');
+                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Importe</th></tr>');
+                    $ticket->writeHTML('</thead>');
+                    $ticket->writeHTML('<tbody>');
+
+                    foreach( $productos as $producto ){
+
+                        $ticket->writeHTML('<tr>');
+                        $ticket->writeHTML('<td>'.$producto->cantidad.'</td>');
+                        $ticket->writeHTML('<td>'.$producto->nombre.'</td>');
+                        $ticket->writeHTML('<td>$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
+                        $ticket->writeHTML('</tr>');
+
+                        $total += number_format( ($producto->cantidad * $producto->precio), 2 );
+
+                    }
+
+                    $ticket->writeHTML('</tbody>');
+                    $ticket->writeHTML('</table>');
+                    $ticket->writeHTML('<p style="text-align: center; ">Total: $ '.number_format( $total, 2).' MXN</p>');
+                    $ticket->writeHTML('<p style="text-align: center; margin-top: 10px;">**TICKET COPIA**</p>');
+
+                }
+
+            }
+
+            if( !file_exists( public_path('tickets') ) ){
+
+                mkdir( public_path('tickets') );
+
+            }
+
+            $ticket->Output( public_path('tickets/').'copia'.$pedido->id.'.pdf', \Mpdf\Output\Destination::FILE );
+
+            if( file_exists( public_path('tickets/').'copia'.$pedido->id.'.pdf' ) ){
+
+                return true;
+
+            }else{
+
+                return false;
+
+            }
+
+        } catch (\Throwable $th) {
+             
+            echo $th->getMessage();
+
+        }        
+    }
+
 }
