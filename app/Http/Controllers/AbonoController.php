@@ -64,6 +64,7 @@ class AbonoController extends Controller
             $ticket->writeHTML('<tr><td>Folio:</td><td>'.$abono->id.'</td></tr>');
             $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$cliente->nombre.'</td></tr>');
             $ticket->writeHTML('<tr><td>Concepto:</td><td>Abono</td></tr>');
+            $ticket->WriteHTML('<tr><td>Deuda: $<td><td>'.floatval($cliente->deuda + $abono->monto).'</td></tr>');
             $ticket->writeHTML('</table>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
             $ticket->writeHTML('<tr><th>Nota</th><th>Importe</th></tr>');
@@ -274,6 +275,7 @@ class AbonoController extends Controller
             $ticket->writeHTML('<tr><td>Folio:</td><td>'.$abono->id.'</td></tr>');
             $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$cliente->nombre.'</td></tr>');
             $ticket->writeHTML('<tr><td>Concepto:</td><td>Abono</td></tr>');
+            $ticket->WriteHTML('<tr><td>Deuda: $<td><td>'.floatval($cliente->deuda + $abono->monto).'</td></tr>');
             $ticket->writeHTML('</table>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
             $ticket->writeHTML('<tr><th>Nota</th><th>Importe</th></tr>');

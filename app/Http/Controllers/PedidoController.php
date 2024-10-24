@@ -74,7 +74,7 @@ class PedidoController extends Controller
                     $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
                     $ticket->writeHTML('<tr><td>Folio:</td><td>'.$pedido->id.'</td></tr>');
                     $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$pedido->cliente->nombre.'</td></tr>');
-                    $ticket->writeHTML('<tr><td>Concepto:</td><td>Abono</td></tr>');
+                    $ticket->writeHTML('<tr><td>Concepto:</td><td>Compra</td></tr>');
                     $ticket->writeHTML('</table>');
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
@@ -371,7 +371,7 @@ class PedidoController extends Controller
                     $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
                     $ticket->writeHTML('<tr><td>Folio:</td><td>'.$pedido->id.'</td></tr>');
                     $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$pedido->cliente->nombre.'</td></tr>');
-                    $ticket->writeHTML('<tr><td>Concepto:</td><td>Abono</td></tr>');
+                    $ticket->writeHTML('<tr><td>Concepto:</td><td>Compra</td></tr>');
                     $ticket->writeHTML('</table>');
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');

@@ -58,10 +58,11 @@ class PrestamoController extends Controller
             $ticket->writeHTML('<h4 style="text-align: center;">4765876390</h4>');
             $ticket->writeHTML('<h5 style="text-align: center;">'.$prestamo->updated_at.'</h5>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
-            $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->id.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
             $ticket->writeHTML('<tr><td>Folio:</td><td>'.$prestamo->id.'</td></tr>');
             $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$cliente->nombre.'</td></tr>');
             $ticket->writeHTML('<tr><td>Concepto:</td><td>Prestamo</td></tr>');
+            $ticket->WriteHTML('<tr><td>Deuda: $<td><td>'.floatval($cliente->deuda - $prestamo->monto).'</td></tr>');
             $ticket->writeHTML('</table>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
             $ticket->writeHTML('<tr><th>Nota</th><th>Importe</th></tr>');
@@ -261,10 +262,11 @@ class PrestamoController extends Controller
             $ticket->writeHTML('<h4 style="text-align: center; 4765876390"></h4>');
             $ticket->writeHTML('<h5 style="text-align: center;">'.$prestamo->updated_at.'</h5>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
-            $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->id.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
             $ticket->writeHTML('<tr><td>Folio:</td><td>'.$prestamo->id.'</td></tr>');
             $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$cliente->nombre.'</td></tr>');
             $ticket->writeHTML('<tr><td>Concepto:</td><td>Prestamo</td></tr>');
+            $ticket->WriteHTML('<tr><td>Deuda: $<td><td>'.floatval($cliente->deuda - $prestamo->monto).'</td></tr>');
             $ticket->writeHTML('</table>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
             $ticket->writeHTML('<tr><th>Nota</th><th>Importe</th></tr>');
