@@ -31,6 +31,7 @@ Route::post('/pedido/cancelar', [App\Http\Controllers\PedidoController::class, '
 Route::post('/pedido/buscar', [App\Http\Controllers\PedidoController::class, 'show'])->name('buscar-pedido');
 Route::post('/pedido/pagar', [App\Http\Controllers\PedidoController::class, 'update'])->name('pagar-pedido');
 Route::post('/pedidos/ventas', [App\Http\Controllers\PedidoController::class, 'ventas'])->name('ventas');
+Route::post('/pedido/imprimir', [App\Http\Controllers\PedidoController::class, 'imprimir'])->name('imprimir-pedido');
 
 Route::get('/cortes', [App\Http\Controllers\CorteController::class, 'index'])->name('cortes');
 Route::post('/corte/nuevo', [App\Http\Controllers\CorteController::class, 'create'])->name('nuevo-corte');
@@ -41,11 +42,13 @@ Route::get('/cliente/abonos/{id}', [App\Http\Controllers\AbonoController::class,
 Route::post('/abono/agregar', [App\Http\Controllers\AbonoController::class, 'store'])->name('agregar-abono');
 Route::post('/abono/actualizar', [App\Http\Controllers\AbonoController::class, 'update'])->name('actualizar-abono');
 Route::post('/abono/borrar', [App\Http\Controllers\AbonoController::class, 'destroy'])->name('borrar-abono');
+Route::post('/abono/imprimir', [App\Http\Controllers\AbonoController::class, 'imprimir'])->name('imprimir-abono');
 
 Route::get('/cliente/prestamos/{id}', [App\Http\Controllers\PrestamoController::class, 'index'])->name('prestamos-cliente');
 Route::post('/prestamo/agregar', [App\Http\Controllers\PrestamoController::class, 'store'])->name('agregar-prestamo');
 Route::post('/prestamo/actualizar', [App\Http\Controllers\PrestamoController::class, 'update'])->name('actualizar-prestamo');
 Route::post('/prestamo/borrar', [App\Http\Controllers\PrestamoController::class, 'destroy'])->name('borrar-prestamo');
+Route::post('/prestamo/imprimir', [App\Http\Controllers\PrestamoController::class, 'imprimir'])->name('imprimir-prestamo');
 
 Route::get('/cajas', [App\Http\Controllers\CajaController::class, 'index'])->name('cajas');
 Route::post('/caja/agregar', [App\Http\Controllers\CajaController::class, 'store'])->name('agregar-caja');

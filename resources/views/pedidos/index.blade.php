@@ -85,5 +85,6 @@
     <script src="{{ asset('js/cortes/corte.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/update.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/ventas.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/pedidos/imprimir.js') }}" type="text/javascript"></script>
 
 @stop

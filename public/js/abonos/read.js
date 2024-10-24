@@ -1,6 +1,7 @@
 jQuery.noConflict();
 jQuery(document).ready(function(){
 
+    //Botón de editar
     $("#actualizar").attr('disabled', true);
 
     $(".editar").on('click', function(e){
@@ -39,6 +40,32 @@ jQuery(document).ready(function(){
         }
 
         
+
+    });
+
+    /**Boton de información */
+    $(".ver").on('click', function(e){
+
+        e.preventDefault();
+
+        var id = $(this).attr('data-id');
+        var monto = $(this).attr('data-value').split(',')[0];
+        var nota = $(this).attr('data-value').split(',')[1];
+        var cliente = $(this).attr('data-value').split(',')[2];
+        var deuda = $(this).attr('data-value').split(',')[3];
+        var fecha = $(this).attr('data-value').split(',')[4];
+
+        $("#detallesAbono").empty();
+        
+        var html = '<tr><th>Folio</th><th>Importe</th><th>Nota</th><th>Fecha</th></tr>';
+
+        html += '<tr><td>'+id+'</td><td>$ '+monto+'</td><td>'+nota+'</td><td>'+fecha+'</td></tr>';
+
+        $("#deudaCliente").empty().text( 'Saldo: $ '+deuda );
+        $("#clienteAbono").empty().text( cliente );
+        $("#idAbono").val( id );
+
+        $("#detallesAbono").append( html );
 
     });
 

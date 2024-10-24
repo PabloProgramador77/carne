@@ -429,4 +429,97 @@ class PedidoController extends Controller
         }        
     }
 
+    /**
+     * Reimpresión de ticket
+     */
+    public function imprimir( Request $request ){
+        try {
+            
+            $ticket = new \Mpdf\Mpdf([
+
+                'mode' => 'utf-8',
+                'format' => ['80', '2750'],
+                'orientation' => 'P',
+                'autoPageBreak' => false,
+
+            ]);
+
+            $pedido = Pedido::find( $request->id );
+
+            if( $pedido->id ){
+
+                $productos = ClienteHasProducto::select('productos.nombre', 'cliente_has_productos.precio', 'pedido_has_productos.cantidad')
+                            ->join('productos', 'cliente_has_productos.idProducto', '=', 'productos.id')
+                            ->join('pedido_has_productos', 'cliente_has_productos.id', '=', 'pedido_has_productos.idClienteHasProducto')
+                            ->where('pedido_has_productos.idPedido', '=', $request->id)
+                            ->orderBy('productos.nombre', 'asc')
+                            ->get();
+
+                if( count( $productos ) > 0 ){
+
+                    $total = 0;
+
+                    $ticket->writeHTML('<h4 style="text-align: center;">La Higienica Premium</h4>');
+                    $ticket->writeHTML('<h5 style="text-align: center;">4765876390</h5>');
+                    $ticket->writeHTML('<h6 style="text-align: center;">'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+                    $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
+                    $ticket->writeHTML('<tr><td>Folio:</td><td>'.$pedido->id.'</td></tr>');
+                    $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$pedido->cliente->nombre.'</td></tr>');
+                    $ticket->writeHTML('<tr><td>Concepto:</td><td>Compra</td></tr>');
+                    $ticket->writeHTML('</table>');
+
+                    $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
+                    $ticket->writeHTML('<thead style="border-bottom: 2px;">');
+                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Importe</th></tr>');
+                    $ticket->writeHTML('</thead>');
+                    $ticket->writeHTML('<tbody>');
+
+                    foreach( $productos as $producto ){
+
+                        $ticket->writeHTML('<tr>');
+                        $ticket->writeHTML('<td>'.$producto->cantidad.'</td>');
+                        $ticket->writeHTML('<td>'.$producto->nombre.'</td>');
+                        $ticket->writeHTML('<td>$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
+                        $ticket->writeHTML('</tr>');
+
+                        $total += number_format( ($producto->cantidad * $producto->precio), 2 );
+
+                    }
+
+                    $ticket->writeHTML('</tbody>');
+                    $ticket->writeHTML('</table>');
+                    $ticket->writeHTML('<p style="text-align: center; ">Total: $ '.number_format( $total, 2).' MXN</p>');
+                    $ticket->writeHTML('<p style="text-align: center; margin-top: 10px;">**TICKET REIMPRESO**</p>');
+
+                }
+
+            }
+
+            if( !file_exists( public_path('tickets') ) ){
+
+                mkdir( public_path('tickets') );
+
+            }
+
+            $ticket->Output( public_path('tickets/').'reimpresion'.$pedido->id.'.pdf', \Mpdf\Output\Destination::FILE );
+
+            if( file_exists( public_path('tickets/').'reimpresion'.$pedido->id.'.pdf' ) ){
+
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresion'.$pedido->id.'.pdf "Microsoft Print to PDF"');
+
+                $datos['exito'] = true;
+
+            }
+
+        } catch (\Throwable $th) {
+            
+            $datos['exito'] = false;
+            $datos['mensaje'] = $th->getMessage();
+            
+        }
+        
+        return response()->json( $datos );
+    }
+
 }

@@ -299,4 +299,58 @@ class AbonoController extends Controller
 
         }        
     }
+
+    /**
+     * Reimpresión de ticket
+     */
+    public function imprimir( Request $request ){
+        try {
+            
+            $ticket = new \Mpdf\Mpdf([
+
+                'mode' => 'utf-8',
+                'format' => ['80', '2750'],
+                'orientation' => 'P',
+                'autoPageBreak' => false,
+
+            ]);
+
+            $abono = Abono::find( $request->id );
+            $cliente = Cliente::find( $abono->idCliente );
+
+            $ticket->writeHTML('<h4 style="text-align: center;">La Higienica Premium</h4>');
+            $ticket->writeHTML('<h4 style="text-align: center; 4765876390"></h4>');
+            $ticket->writeHTML('<h5 style="text-align: center;">'.$abono->updated_at.'</h5>');
+            $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+            $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Folio:</td><td>'.$abono->id.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$cliente->nombre.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Concepto:</td><td>Abono</td></tr>');
+            $ticket->writeHTML('</table>');
+            $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+            $ticket->writeHTML('<tr><th>Nota</th><th>Importe</th></tr>');
+            $ticket->writeHTML('<tr><td>'.$abono->nota.'</td><td>$'.$abono->monto.'</td></tr>');
+            $ticket->writeHTML('</table>');
+            $ticket->writeHTML('<p style="text-align: center;"><b>Saldo de cuenta:</b> $'.$cliente->deuda.'</p>');
+            $ticket->writeHTML('<p style="text-align: center; margin-top: 10px;">**TICKET REIMPRESO**</p>');
+
+            $ticket->Output( public_path('tickets/').'reimpresionAbono'.$abono->id.'.pdf', \Mpdf\Output\Destination::FILE );
+
+            if( file_exists( public_path('tickets/').'reimpresionAbono'.$abono->id.'.pdf' ) ){
+
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresionAbono'.$abono->id.'.pdf "Microsoft Print to PDF"');
+
+                $datos['exito'] = true;
+
+            }
+
+        } catch (\Throwable $th) {
+            
+            $datos['exito'] = false;
+            $datos['mensaje'] = $th->getMessage();
+
+        }
+        
+        return response()->json( $datos );
+    }
 }

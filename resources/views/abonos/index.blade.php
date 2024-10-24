@@ -55,6 +55,7 @@
                             <td>
                                 <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $abono->id }}" data-value="{{ $abono->id }}, {{ $abono->monto }}, {{ $abono->nota }}"></x-adminlte-button>
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $abono->id }}" data-value="{{ $abono->monto }}"></x-adminlte-button>
+                                <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="secondary" data-toggle="modal" data-target="#modalVer" data-id="{{ $abono->id }}" data-value="{{ $abono->monto }}, {{ $abono->nota }}, {{ $abono->cliente->nombre }}, {{ $abono->cliente->deuda }}, {{ $abono->created_at }}"></x-adminlte-button>
                             </td>
                         </tr>
                     @endforeach
@@ -73,6 +74,7 @@
     @include('abonos.nuevo')
     @include('abonos.editar')
     @include('abonos.liquidar')
+    @include('abonos.abono')
 
     <script src="{{ asset('js/jquery-3.7.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/sweetAlert.js') }}" type="text/javascript"></script>
@@ -82,5 +84,6 @@
     <script src="{{ asset('js/abonos/delete.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/abonos/liquidar.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/abonos/liquidacion.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/abonos/imprimir.js') }}" type="text/javascript"></script>
 
 @stop

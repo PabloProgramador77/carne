@@ -54,6 +54,7 @@
                             <td>
                                 <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $prestamo->id }}" data-value="{{ $prestamo->id }}, {{ $prestamo->monto }}, {{ $prestamo->nota }}"></x-adminlte-button>
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $prestamo->id }}" data-value="{{ $prestamo->monto }}"></x-adminlte-button>
+                                <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="secondary" data-toggle="modal" data-target="#modalVer" data-id="{{ $prestamo->id }}" data-value="{{ $prestamo->monto }}, {{ $prestamo->nota }}, {{ $prestamo->cliente->nombre }}, {{ $prestamo->cliente->deuda }}, {{ $prestamo->created_at }}"></x-adminlte-button>
                             </td>
                         </tr>
                     @endforeach
@@ -71,6 +72,7 @@
 
     @include('prestamos.nuevo')
     @include('prestamos.editar')
+    @include('prestamos.prestamo')
 
     <script src="{{ asset('js/jquery-3.7.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/sweetAlert.js') }}" type="text/javascript"></script>
@@ -78,5 +80,6 @@
     <script src="{{ asset('js/prestamos/read.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/prestamos/update.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/prestamos/delete.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/prestamos/imprimir.js') }}" type="text/javascript"></script>
 
 @stop

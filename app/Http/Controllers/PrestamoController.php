@@ -290,4 +290,53 @@ class PrestamoController extends Controller
 
         }        
     }
+
+    /**
+     * Reimpresión de ticket
+     */
+    public function imprimir( Request $request ){
+        try{
+
+            $ticket = new \Mpdf\Mpdf([
+
+                'mode' => 'utf-8',
+                'format' => ['80', '2750'],
+                'orientation' => 'P',
+                'autoPageBreak' => false,
+
+            ]);
+
+            $prestamo = Prestamo::find( $request->id );
+            $cliente = Cliente::find( $prestamo->idCliente );
+
+            $ticket->writeHTML('<h4 style="text-align: center;">La Higienica Premium</h4>');
+            $ticket->writeHTML('<h4 style="text-align: center; 4765876390"></h4>');
+            $ticket->writeHTML('<h5 style="text-align: center;">'.$prestamo->updated_at.'</h5>');
+            $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+            $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Folio:</td><td>'.$prestamo->id.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$cliente->nombre.'</td></tr>');
+            $ticket->writeHTML('<tr><td>Concepto:</td><td>Prestamo</td></tr>');
+            $ticket->writeHTML('</table>');
+            $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+            $ticket->writeHTML('<tr><th>Nota</th><th>Importe</th></tr>');
+            $ticket->writeHTML('<tr><td>'.$prestamo->nota.'</td><td>$'.$prestamo->monto.'</td></tr>');
+            $ticket->writeHTML('</table>');
+            $ticket->writeHTML('<p style="text-align: center;"><b>Saldo de cuenta:</b> $'.$cliente->deuda.'</p>');
+            $ticket->writeHTML('<p style="text-align: center; margin-top: 10px;">**TICKET REIMPRESO**</p>');
+
+            $ticket->Output( public_path('tickets/').'reimpresionPrestamo'.$prestamo->id.'.pdf', \Mpdf\Output\Destination::FILE );
+
+            if( file_exists( public_path('tickets/').'reimpresionPrestamo'.$prestamo->id.'.pdf' ) ){
+
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresionPrestamo'.$prestamo->id.'.pdf "Microsoft Print to PDF"');
+
+            }
+
+        }catch(\Throwable $th){
+
+            echo $th->getMessage();
+
+        }
+    }
 }
