@@ -318,6 +318,12 @@ class CorteController extends Controller
                 
                 $ticket->Output( public_path('tickets/').'corte'.$corte->id.'.pdf', \Mpdf\Output\Destination::FILE );
 
+                if( file_exists( public_path('tickets/').'corte'.$corte->id.'.pdf' ) ){
+
+                    shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'corte'.$corte->id.'.pdf "Microsoft Print to PDF"');
+                     
+                }
+
             }
 
         } catch (\Throwable $th) {

@@ -411,6 +411,9 @@ class PedidoController extends Controller
 
             if( file_exists( public_path('tickets/').'copia'.$pedido->id.'.pdf' ) ){
 
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'copia'.$pedido->id.'.pdf "Microsoft Print to PDF"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'ticket'.$pedido->id.'.pdf "Microsoft Print to PDF"');
+
                 return true;
 
             }else{

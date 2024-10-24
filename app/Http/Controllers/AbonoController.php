@@ -286,6 +286,13 @@ class AbonoController extends Controller
 
             $ticket->Output( public_path('tickets/').'copiaAbono'.$abono->id.'.pdf', \Mpdf\Output\Destination::FILE );
 
+            if( file_exists( public_path('tickets/').'copiaAbono'.$abono->id.'.pdf' ) ){
+
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'copiaAbono'.$abono->id.'.pdf "Microsoft Print to PDF"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'abono'.$abono->id.'.pdf "Microsoft Print to PDF"');
+
+            }
+
         } catch (\Throwable $th) {
             
             echo $th->getMessage();

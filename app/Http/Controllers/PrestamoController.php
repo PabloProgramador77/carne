@@ -277,6 +277,13 @@ class PrestamoController extends Controller
 
             $ticket->Output( public_path('tickets/').'copiaPrestamo'.$prestamo->id.'.pdf', \Mpdf\Output\Destination::FILE );
 
+            if( file_exists( public_path('tickets/').'copiaPrestamo'.$prestamo->id.'.pdf' ) ){
+
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'copiaPrestamo'.$prestamo->id.'.pdf "Microsoft Print to PDF"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'prestamo'.$prestamo->id.'.pdf "Microsoft Print to PDF"');
+
+            }
+
         }catch(\Throwable $th){
 
             echo $th->getMessage();
