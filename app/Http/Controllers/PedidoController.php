@@ -411,8 +411,8 @@ class PedidoController extends Controller
 
             if( file_exists( public_path('tickets/').'copia'.$pedido->id.'.pdf' ) ){
 
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'copia'.$pedido->id.'.pdf "Microsoft Print to PDF"');
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'ticket'.$pedido->id.'.pdf "Microsoft Print to PDF"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'copia'.$pedido->id.'.pdf "POS-58"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'ticket'.$pedido->id.'.pdf "POS-58"');
 
                 return true;
 
@@ -506,7 +506,7 @@ class PedidoController extends Controller
 
             if( file_exists( public_path('tickets/').'reimpresion'.$pedido->id.'.pdf' ) ){
 
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresion'.$pedido->id.'.pdf "Microsoft Print to PDF"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresion'.$pedido->id.'.pdf "POS-58"');
 
                 $datos['exito'] = true;
 

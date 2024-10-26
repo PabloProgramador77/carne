@@ -288,8 +288,8 @@ class AbonoController extends Controller
 
             if( file_exists( public_path('tickets/').'copiaAbono'.$abono->id.'.pdf' ) ){
 
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'copiaAbono'.$abono->id.'.pdf "Microsoft Print to PDF"');
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'abono'.$abono->id.'.pdf "Microsoft Print to PDF"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'copiaAbono'.$abono->id.'.pdf "POS-58"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'abono'.$abono->id.'.pdf "POS-58"');
 
             }
 
@@ -338,7 +338,7 @@ class AbonoController extends Controller
 
             if( file_exists( public_path('tickets/').'reimpresionAbono'.$abono->id.'.pdf' ) ){
 
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresionAbono'.$abono->id.'.pdf "Microsoft Print to PDF"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresionAbono'.$abono->id.'.pdf "POS-58"');
 
                 $datos['exito'] = true;
 

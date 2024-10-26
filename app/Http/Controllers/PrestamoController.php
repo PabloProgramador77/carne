@@ -279,8 +279,8 @@ class PrestamoController extends Controller
 
             if( file_exists( public_path('tickets/').'copiaPrestamo'.$prestamo->id.'.pdf' ) ){
 
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'copiaPrestamo'.$prestamo->id.'.pdf "Microsoft Print to PDF"');
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'prestamo'.$prestamo->id.'.pdf "Microsoft Print to PDF"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'copiaPrestamo'.$prestamo->id.'.pdf "POS-58"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'prestamo'.$prestamo->id.'.pdf "POS-58"');
 
             }
 
@@ -329,7 +329,7 @@ class PrestamoController extends Controller
 
             if( file_exists( public_path('tickets/').'reimpresionPrestamo'.$prestamo->id.'.pdf' ) ){
 
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresionPrestamo'.$prestamo->id.'.pdf "Microsoft Print to PDF"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresionPrestamo'.$prestamo->id.'.pdf "POS-58"');
 
             }
 
