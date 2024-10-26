@@ -36,8 +36,7 @@ class PedidoController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
+    /*     * Show the form for creating a new resource.
      */
     public function create( $id )
     {
@@ -46,9 +45,15 @@ class PedidoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['80', '2750'],
+                'format' => ['58', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
+                'margin_left' => 5,
+                'margin_right' => 5,
+                'margin_top' => 5,
+                'margin_bottom' => 5,
+                'margin_header' => 5,
+                'margin_footer' => 5,
 
             ]);
 
@@ -67,14 +72,13 @@ class PedidoController extends Controller
 
                     $total = 0;
 
-                    $ticket->writeHTML('<h4 style="text-align: center;">La Higienica Premium</h4>');
-                    $ticket->writeHTML('<h5 style="text-align: center;">476 587 6390</h5>');
-                    $ticket->writeHTML('<h6 style="text-align: center;">'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
+                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$pedido->cliente->nombre.'</h5>');
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
-                    $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
-                    $ticket->writeHTML('<tr><td>Folio:</td><td>'.$pedido->id.'</td></tr>');
-                    $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$pedido->cliente->nombre.'</td></tr>');
-                    $ticket->writeHTML('<tr><td>Concepto:</td><td>Compra</td></tr>');
+                    $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
+                    $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Folio:</b></td><td>'.$pedido->id.'</td></tr>');
+                    $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Concepto:</b></td><td>Compra</td></tr>');
                     $ticket->writeHTML('</table>');
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
@@ -86,9 +90,9 @@ class PedidoController extends Controller
                     foreach( $productos as $producto ){
 
                         $ticket->writeHTML('<tr>');
-                        $ticket->writeHTML('<td>'.$producto->cantidad.'</td>');
-                        $ticket->writeHTML('<td>'.$producto->nombre.'</td>');
-                        $ticket->writeHTML('<td>$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
                         $total += number_format( ($producto->cantidad * $producto->precio), 2 );
@@ -97,7 +101,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('</tbody>');
                     $ticket->writeHTML('</table>');
-                    $ticket->writeHTML('<p style="text-align: center; ">Total: $ '.number_format( $total, 2).' MXN</p>');
+                    $ticket->writeHTML('<p style="text-align: center;"><b>Total: $ '.number_format( $total, 2).'</b></p>');
                     $ticket->writeHTML('<p style="text-align: center; margin-top: 20px;">_____________________</p>');
                     $ticket->writeHTML('<p style="text-align: center;">Firma de '.$pedido->cliente->nombre.'</p>');
 
@@ -343,9 +347,15 @@ class PedidoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['80', '2750'],
+                'format' => ['58', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
+                'margin_left' => 5,
+                'margin_right' => 5,
+                'margin_top' => 5,
+                'margin_bottom' => 5,
+                'margin_header' => 5,
+                'margin_footer' => 5,
 
             ]);
 
@@ -364,14 +374,13 @@ class PedidoController extends Controller
 
                     $total = 0;
 
-                    $ticket->writeHTML('<h4 style="text-align: center;">La Higienica Premium</h4>');
-                    $ticket->writeHTML('<h5 style="text-align: center;">4765876390</h5>');
-                    $ticket->writeHTML('<h6 style="text-align: center;">'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
+                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$pedido->cliente->nombre.'</h5>');
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
-                    $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
-                    $ticket->writeHTML('<tr><td>Folio:</td><td>'.$pedido->id.'</td></tr>');
-                    $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$pedido->cliente->nombre.'</td></tr>');
-                    $ticket->writeHTML('<tr><td>Concepto:</td><td>Compra</td></tr>');
+                    $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
+                    $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Folio:</b></td><td>'.$pedido->id.'</td></tr>');
+                    $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Concepto:</b></td><td>Compra</td></tr>');
                     $ticket->writeHTML('</table>');
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
@@ -383,9 +392,9 @@ class PedidoController extends Controller
                     foreach( $productos as $producto ){
 
                         $ticket->writeHTML('<tr>');
-                        $ticket->writeHTML('<td>'.$producto->cantidad.'</td>');
-                        $ticket->writeHTML('<td>'.$producto->nombre.'</td>');
-                        $ticket->writeHTML('<td>$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
                         $total += number_format( ($producto->cantidad * $producto->precio), 2 );
@@ -394,7 +403,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('</tbody>');
                     $ticket->writeHTML('</table>');
-                    $ticket->writeHTML('<p style="text-align: center; ">Total: $ '.number_format( $total, 2).' MXN</p>');
+                    $ticket->writeHTML('<p style="text-align: center; "><b>Total: $ '.number_format( $total, 2).'</b></p>');
                     $ticket->writeHTML('<p style="text-align: center; margin-top: 10px;">**TICKET COPIA**</p>');
 
                 }
@@ -411,8 +420,8 @@ class PedidoController extends Controller
 
             if( file_exists( public_path('tickets/').'copia'.$pedido->id.'.pdf' ) ){
 
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'copia'.$pedido->id.'.pdf "POS-58"');
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'ticket'.$pedido->id.'.pdf "POS-58"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'copia'.$pedido->id.'.pdf "POS-58 11.3.0.1"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'ticket'.$pedido->id.'.pdf "POS-58 11.3.0.1"');
 
                 return true;
 
@@ -438,9 +447,15 @@ class PedidoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['80', '2750'],
+                'format' => ['58', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
+                'margin_left' => 5,
+                'margin_right' => 5,
+                'margin_top' => 5,
+                'margin_bottom' => 5,
+                'margin_header' => 5,
+                'margin_footer' => 5,
 
             ]);
 
@@ -459,13 +474,12 @@ class PedidoController extends Controller
 
                     $total = 0;
 
-                    $ticket->writeHTML('<h4 style="text-align: center;">La Higienica Premium</h4>');
-                    $ticket->writeHTML('<h5 style="text-align: center;">4765876390</h5>');
-                    $ticket->writeHTML('<h6 style="text-align: center;">'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
+                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$pedido->cliente->nombre.'</h5>');
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
                     $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
                     $ticket->writeHTML('<tr><td>Folio:</td><td>'.$pedido->id.'</td></tr>');
-                    $ticket->writeHTML('<tr><td>Cliente:</td><td>'.$pedido->cliente->nombre.'</td></tr>');
                     $ticket->writeHTML('<tr><td>Concepto:</td><td>Compra</td></tr>');
                     $ticket->writeHTML('</table>');
 
@@ -478,9 +492,9 @@ class PedidoController extends Controller
                     foreach( $productos as $producto ){
 
                         $ticket->writeHTML('<tr>');
-                        $ticket->writeHTML('<td>'.$producto->cantidad.'</td>');
-                        $ticket->writeHTML('<td>'.$producto->nombre.'</td>');
-                        $ticket->writeHTML('<td>$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
                         $total += number_format( ($producto->cantidad * $producto->precio), 2 );
@@ -489,7 +503,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('</tbody>');
                     $ticket->writeHTML('</table>');
-                    $ticket->writeHTML('<p style="text-align: center; ">Total: $ '.number_format( $total, 2).' MXN</p>');
+                    $ticket->writeHTML('<p style="text-align: center; "><b>Total: $ '.number_format( $total, 2).'</b></p>');
                     $ticket->writeHTML('<p style="text-align: center; margin-top: 10px;">**TICKET REIMPRESO**</p>');
 
                 }
@@ -506,7 +520,7 @@ class PedidoController extends Controller
 
             if( file_exists( public_path('tickets/').'reimpresion'.$pedido->id.'.pdf' ) ){
 
-                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresion'.$pedido->id.'.pdf "POS-58"');
+                shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresion'.$pedido->id.'.pdf "POS-58 11.3.0.1"');
 
                 $datos['exito'] = true;
 
