@@ -26,12 +26,12 @@
                     @if (Route::has('login'))
                         <nav class="-mx-3 flex flex-1 justify-end">
                             @auth
-                                <a href="{{ url('/') }}" class="btn btn-primary shadow rounded">
+                                <a href="{{ url('/') }}" class="btn btn-info shadow rounded">
                                     <b>Continuar</b>
                                 </a>
                             @else
-                                <a href="{{ route('login') }}" class="btn btn-info shadow rounded">
-                                    <b>Entrar</b>
+                                <a href="{{ route('login') }}" class="btn btn-primary shadow rounded">
+                                    Iniciar Sesión
                                 </a>
                             @endauth
                         </nav>
@@ -40,7 +40,7 @@
             </main>
 
             <footer class="mt-auto text-white-50">
-                <p class="fs-6">Diseña y desarrollador por <a href="https://pabloprogramador.com.mx" class="text-white">PabloProgramador</a> para <u>Carniceria La Higienica</u></p>
+                <p class="fs-6">Diseña y desarrollado por <a href="https://pabloprogramador.com.mx" class="text-white">PabloProgramador</a> para <u>Carniceria La Higienica</u></p>
                 <span class="fs-6 text-light text-center d-block">Versión 1.0.0</span>
             </footer>
         </div>
