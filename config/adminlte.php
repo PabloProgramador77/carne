@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'La Higienica Premium',
+    'title' => 'La Higienica',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>La Higienica Premium</b>',
+    'logo' => '<b>La Higienica</b>',
     'logo_img' => 'img/logo-min-removebg-preview.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
