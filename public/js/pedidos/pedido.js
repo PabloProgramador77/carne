@@ -31,9 +31,9 @@ jQuery(document).ready( function(){
 
             Swal.fire({
 
-                title: 'Terminando pedido',
+                title: 'Imprimiendo pedido',
                 html: 'Un momento por favor: <b></b>',
-                timer: 9975,
+                timer: 29975,
                 allowOutsideClick: false,
                 didOpen: ()=>{
     

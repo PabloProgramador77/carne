@@ -12,7 +12,7 @@ jQuery(document).ready(function(){
 
             title: 'Registrando prestamo',
             html: 'Un momento por favor: <b></b>',
-            timer: 9975,
+            timer: 19975,
             allowOutsideClick: false,
             didOpen: ()=>{
 

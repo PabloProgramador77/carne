@@ -12,7 +12,7 @@ jQuery(document).ready(function(){
 
             title: 'Actualizando abono',
             html: 'Un momento por favor: <b></b>',
-            timer: 9975,
+            timer: 19975,
             allowOutsideClick: false,
             didOpen: ()=>{
 

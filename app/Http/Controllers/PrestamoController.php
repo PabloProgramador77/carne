@@ -28,6 +28,10 @@ class PrestamoController extends Controller
 
             return view('prestamos.index',compact('cliente', 'prestamos'));
 
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            echo "Prestamo no encontrado: ".$e->getMessage();
+
         } catch (\Throwable $th) {
             
             echo $th->getMessage();
@@ -58,7 +62,7 @@ class PrestamoController extends Controller
             ]);
 
             $prestamo = Prestamo::find( $idPrestamo );
-            $cliente = Cliente::find( $idCliente);
+            $cliente = Cliente::find( $idCliente );
 
             $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
             $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$prestamo->updated_at.'</h6>');
@@ -81,7 +85,11 @@ class PrestamoController extends Controller
 
             $this->copia( $idCliente, $idPrestamo );
 
-        }catch(\Throwable $th){
+        } catch( \Mpdf\MpdfException $e){
+
+            echo 'Error al generar el documento de prestamo: '.$e->getMessage();
+
+        } catch(\Throwable $th){
 
             echo $th->getMessage();
 
@@ -126,6 +134,16 @@ class PrestamoController extends Controller
             }
 
             $datos['exito'] = true;
+
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -194,6 +212,16 @@ class PrestamoController extends Controller
 
             $datos['exito'] = true;
 
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
+
         } catch (\Throwable $th) {
             
             $datos['exito'] = false;
@@ -233,7 +261,17 @@ class PrestamoController extends Controller
 
                 $datos['exito'] = true;
 
+            }else{
+
+                $datos['exito'] = false;
+                $datos['mensaje'] = 'Prestamo no encontrado';
+
             }
+
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Prestamo no encontrado: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -294,7 +332,11 @@ class PrestamoController extends Controller
 
             }
 
-        }catch(\Throwable $th){
+        } catch( \Mpdf\MpdfException $e){
+
+            echo "Error al generar la copia del prestamo: ".$e->getMessage();
+
+        } catch(\Throwable $th){
 
             echo $th->getMessage();
 
@@ -346,12 +388,22 @@ class PrestamoController extends Controller
 
                 shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'reimpresionPrestamo'.$prestamo->id.'.pdf "POS-58 11.3.0.1"');
 
+                $datos['exito'] = true;
+
             }
 
-        }catch(\Throwable $th){
+        } catch( \Mpdf\MpdfException $e){
 
-            echo $th->getMessage();
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error al reimprimir el prestamo: '.$e->getMessage();
+
+        } catch(\Throwable $th){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = $th->getMessage();
 
         }
+
+        return response()->json( $datos );
     }
 }

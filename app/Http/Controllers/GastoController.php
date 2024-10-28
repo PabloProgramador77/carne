@@ -26,6 +26,10 @@ class GastoController extends Controller
 
             return view('gastos.index', compact('caja', 'gastos'));
             
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            echo "Caja\Gasto(s) no encontrados: ".$e->getMessage();
+
         } catch (\Throwable $th) {
             
             echo $th->getMessage();
@@ -58,6 +62,16 @@ class GastoController extends Controller
             ]);
 
             $datos['exito'] = true;
+
+        }catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -102,6 +116,16 @@ class GastoController extends Controller
 
             $datos['exito'] = true;
 
+        }catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
+
         } catch (\Throwable $th) {
             
             $datos['exito'] = false;
@@ -127,7 +151,17 @@ class GastoController extends Controller
 
                 $datos['exito'] = true;
 
+            }else{
+
+                $datos['exito'] = false;
+                $datos['mensaje'] = 'Gasto no encontrado';
+                
             }
+
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Gasto no encontrado: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             

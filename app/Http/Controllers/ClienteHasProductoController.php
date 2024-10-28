@@ -57,6 +57,16 @@ class ClienteHasProductoController extends Controller
 
             $datos['exito'] = true;
 
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
+
         } catch (\Throwable $th) {
             
             $datos['exito'] = false;

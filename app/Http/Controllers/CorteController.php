@@ -23,6 +23,10 @@ class CorteController extends Controller
 
             return view('cortes.index', compact('cortes'));
 
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            echo "Cortes no encontrados: ".$e->getMessage();
+
         } catch (\Throwable $th) {
             
             echo $th->getMessage();
@@ -58,6 +62,11 @@ class CorteController extends Controller
                 $datos['pedidos'] = [];
 
             }
+
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -182,6 +191,16 @@ class CorteController extends Controller
 
             }
 
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
+
         } catch (\Throwable $th) {
             
             $datos['exito'] = false;
@@ -224,6 +243,11 @@ class CorteController extends Controller
                 $datos['pedidos'] = [];
 
             }
+
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Gasto\Pedido(s) no encontrado(s): '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -330,6 +354,11 @@ class CorteController extends Controller
                 }
 
             }
+
+        } catch( \Mpdf\MpdfException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error al generar el corte: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             

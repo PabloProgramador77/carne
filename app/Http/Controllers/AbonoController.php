@@ -30,6 +30,10 @@ class AbonoController extends Controller
 
             return view('abonos.index',compact('cliente', 'abonos'));
 
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            echo "Cliente no encontrado: ".$e->getMessage();
+
         } catch (\Throwable $th) {
             
             echo $th->getMessage();
@@ -83,6 +87,10 @@ class AbonoController extends Controller
 
             $this->copia( $idCliente, $idAbono );
 
+        } catch( \Mpdf\MpdfException $e){
+
+            echo 'Error al generar el documento abono: '.$e->getMessage();
+
         } catch (\Throwable $th) {
             
             echo $th->getMessage();
@@ -126,9 +134,24 @@ class AbonoController extends Controller
 
                 $this->create( $cliente->id, $idAbono );
 
+                $datos['exito'] = true;
+
+            }else{
+
+                $datos['exito'] = false;
+                $datos['mensaje'] = 'Cliente no encontrado';
+
             }
 
-            $datos['exito'] = true;
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -203,6 +226,16 @@ class AbonoController extends Controller
 
             $datos['exito'] = true;
 
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+            
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
+
         } catch (\Throwable $th) {
             
             $datos['exito'] = false;
@@ -245,6 +278,11 @@ class AbonoController extends Controller
                 $datos['exito'] = true;
 
             }
+
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Abono no encontrado: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -303,6 +341,10 @@ class AbonoController extends Controller
 
             }
 
+        } catch( \Mpdf\MpdfException $e){
+
+            echo "Error al generar la copia del abono: ".$e->getMessage();
+
         } catch (\Throwable $th) {
             
             echo $th->getMessage();
@@ -358,6 +400,11 @@ class AbonoController extends Controller
                 $datos['exito'] = true;
 
             }
+
+        } catch( \Mpdf\MpdfException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error al reimprimir el abono: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             

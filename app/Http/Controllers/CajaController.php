@@ -23,9 +23,13 @@ class CajaController extends Controller
 
             return view('cajas.index', compact('cajas'));
 
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            echo "Cajas no encontradas: ".$e->getMessage();
+
         } catch (\Throwable $th) {
             
-            echo $th->getMessage();
+            echo 'Error al obtener las cajas: '.$th->getMessage();
 
         }
     }
@@ -53,6 +57,16 @@ class CajaController extends Controller
             ]);
 
             $datos['exito'] = true;
+
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -88,6 +102,16 @@ class CajaController extends Controller
 
             $datos['exito'] = true;
 
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
+
         } catch (\Throwable $th) {
             
             $datos['exito'] = false;
@@ -114,6 +138,16 @@ class CajaController extends Controller
                 
             $datos['exito'] = true;
 
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
+
         } catch (\Throwable $th) {
             
             $datos['exito'] = false;
@@ -139,7 +173,17 @@ class CajaController extends Controller
 
                 $datos['exito'] = true;
 
+            }else{
+
+                $datos['exito'] = false;
+                $datos['mensaje'] = 'Caja no encontrada';
+
             }
+
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Caja no encontrada: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             

@@ -29,6 +29,10 @@ class PedidoController extends Controller
 
             return view('pedidos.index', compact('pedidos', 'clientes', 'cajas'));
 
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            echo "Pedido(s) no encontrado(s): ".$e->getMessage();
+
         } catch (\Throwable $th) {
             
             echo $th->getMessage();
@@ -89,13 +93,16 @@ class PedidoController extends Controller
 
                     foreach( $productos as $producto ){
 
+                        $cantidad = is_numeric( $producto->cantidad ) ? floatval( $producto->cantidad ) : round( floatval( $producto->cantidad ) );
+                        $precio = is_numeric( $producto->precio ) ? floatval( $producto->precio ) : round( floatval( $producto->precio ) );
+
                         $ticket->writeHTML('<tr>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
-                        $total += number_format( ($producto->cantidad * $producto->precio), 2 );
+                        $total += ($cantidad * $precio);
 
                     }
 
@@ -129,9 +136,17 @@ class PedidoController extends Controller
 
             }
 
+        } catch( \Mpdf\MpdfException $e ){
+
+            echo 'Error al general el ticket del pedido: '.$e->getMessage();
+
+            return false;
+
         } catch (\Throwable $th) {
              
             echo $th->getMessage();
+
+            return false;
 
         }
     }
@@ -165,6 +180,16 @@ class PedidoController extends Controller
 
             }
 
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
+
         } catch (\Throwable $th) {
             
             echo $th->getMessage();
@@ -193,6 +218,10 @@ class PedidoController extends Controller
 
             }
 
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            echo "Pedido\Producto(s) no encontrado(s): ".$e->getMessage();
+
         } catch (\Throwable $th) {
             
             $datos['exito'] = false;
@@ -210,20 +239,38 @@ class PedidoController extends Controller
     {
         try {
 
-            $pedido = Pedido::where('id', '=', $request->pedido)
+            $nota = $request->nota ? $request->nota : 'Sin nota';
+            $totalPedido = str_replace(',', '', $total);
+            $totalPedido = is_numeric( $totalPedido ) ? floatval( $totalPedido ) :  round( floatval( $totalPedido ));
+
+            Pedido::where('id', '=', $request->pedido)
                     ->update([
 
-                        'total' => $total,
-                        'nota' => $request->nota,
+                        'total' => $totalPedido,
+                        'nota' => $nota,
 
                     ]);
 
             return true;
 
 
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            echo 'Error de validación: '.$e->getMessage();
+
+            return false;
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            echo 'Error en la base de datos: '.$e->getMessage();
+
+            return false;
+
         } catch (\Throwable $th) {
             
             echo $th->getMessage();
+
+            return false;
 
         }
     }
@@ -235,7 +282,7 @@ class PedidoController extends Controller
     {
         try {
             
-            $pedido = Pedido::where('id', '=', $request->pedido)
+            Pedido::where('id', '=', $request->pedido)
                     ->update([
 
                         'estado' => $request->estado,
@@ -246,26 +293,31 @@ class PedidoController extends Controller
 
             $idCliente = $pedido->idCliente;
 
-            if( $request->estado === 'Cobrado' ){
+            $cliente = Cliente::find( $idCliente );
 
-                $this->create( $request->pedido );
+            $deuda = is_numeric( $cliente->deuda ) ? floatval( $cliente->deuda ) : round( floatval( $cliente->deuda ) );
+            $totalPedido = is_numeric( $pedido->total ) ? floatval( $pedido->total ) : round( floatval( $pedido->total ) );
+            
+            $total = $deuda - $totalPedido;
 
-            }else{
+            Cliente::where('id', '=', $idCliente)
+                    ->update([
 
-                $cliente = Cliente::find( $idCliente );
-                
-                $total = floatval( $cliente->deuda - $pedido->total );
+                        'deuda' => $total,
 
-                Cliente::where('id', '=', $idCliente)
-                        ->update([
-
-                            'deuda' => $total,
-
-                        ]);
-
-            }
+                    ]);
 
             $datos['exito'] = true;
+
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -292,7 +344,17 @@ class PedidoController extends Controller
 
                 $datos['exito'] = true;
 
+            }else{
+
+                $datos['exito'] = false;
+                $datos['mensaje'] = 'Pedido no encontrado';
+
             }
+
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Pedido no encontrado: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -327,6 +389,11 @@ class PedidoController extends Controller
                 $datos['mensaje'] = 'Sin ventas registradas';
                 
             }
+
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Abono no encontrado: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -391,13 +458,16 @@ class PedidoController extends Controller
 
                     foreach( $productos as $producto ){
 
+                        $cantidad = is_numeric( $producto->cantidad ) ? floatval( $producto->cantidad ) : round( floatval( $producto->cantidad ) );
+                        $precio = is_numeric( $producto->precio ) ? floatval( $producto->precio ) : round( floatval( $producto->precio ) );
+
                         $ticket->writeHTML('<tr>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
-                        $total += number_format( ($producto->cantidad * $producto->precio), 2 );
+                        $total += ($cantidad * $precio);
 
                     }
 
@@ -430,6 +500,10 @@ class PedidoController extends Controller
                 return false;
 
             }
+
+        } catch( \Mpdf\MpdfException $e){
+
+            echo "Error al generar la copia del pedido: ".$e->getMessage();
 
         } catch (\Throwable $th) {
              
@@ -491,13 +565,16 @@ class PedidoController extends Controller
 
                     foreach( $productos as $producto ){
 
+                        $cantidad = is_numeric( $producto->cantidad ) ? floatval( $producto->cantidad ) : round( floatval( $producto->cantidad ) );
+                        $precio = is_numeric( $producto->precio ) ? floatval( $producto->precio ) : round( floatval( $producto->precio ) );
+
                         $ticket->writeHTML('<tr>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($producto->cantidad * $producto->precio), 2 ).'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
-                        $total += number_format( ($producto->cantidad * $producto->precio), 2 );
+                        $total += ($cantidad * $precio);
 
                     }
 
@@ -525,6 +602,11 @@ class PedidoController extends Controller
                 $datos['exito'] = true;
 
             }
+
+        } catch( \Mpdf\MpdfException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = "Error al reimprimir el pedido: ".$e->getMessage();
 
         } catch (\Throwable $th) {
             

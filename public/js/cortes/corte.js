@@ -15,7 +15,7 @@ jQuery(document).ready( function(){
 
             title: 'Realizando corte',
             html: 'Un momento por favor: <b></b>',
-            timer: 9975,
+            timer: 99975,
             allowOutsideClick: false,
             didOpen: ()=>{
 

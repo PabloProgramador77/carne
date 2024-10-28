@@ -31,7 +31,7 @@ class PedidoHasProductoController extends Controller
                 $cantidad = is_numeric( $peso['cantidad']) ? floatval( $peso['cantidad']) : round( floatval( $peso['cantidad']), 2);
                 $precio = is_numeric( $peso['precio']) ? floatval( $peso['precio'] ) : round( floatval( $peso['precio']), 2);
 
-                $pedidoHasProducto = PedidoHasProducto::create([
+                PedidoHasProducto::create([
 
                     'idPedido' => $request->pedido,
                     'idClienteHasProducto' => $peso['producto'],
@@ -40,7 +40,7 @@ class PedidoHasProductoController extends Controller
 
                 ]);
 
-                $total += $cantidad * $precio;
+                $total += ($cantidad * $precio);
 
             }
 
@@ -50,6 +50,16 @@ class PedidoHasProductoController extends Controller
             $clienteController->edit( $request );
 
             $datos['exito'] = true;
+
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -72,10 +82,10 @@ class PedidoHasProductoController extends Controller
             
             foreach( $request->pesos as $peso ){
 
-                $cantidad = is_numeric( $peso['cantidad']) ? floatval( $peso['cantidad']) : 0;
-                $precio = is_numeric( $peso['precio']) ? floatval( $peso['precio'] ) : 0;
+                $cantidad = is_numeric( $peso['cantidad']) ? floatval( $peso['cantidad']) : round( floatval( $peso['cantidad'] ) );
+                $precio = is_numeric( $peso['precio']) ? floatval( $peso['precio'] ) : round( floatval( $peso['precio'] ) );
 
-                $pedidoHasProducto = PedidoHasProducto::create([
+                PedidoHasProducto::create([
 
                     'idPedido' => $request->pedido,
                     'idClienteHasProducto' => $peso['producto'],
@@ -84,11 +94,9 @@ class PedidoHasProductoController extends Controller
 
                 ]);
 
-                $total += $cantidad * $precio;
+                $total += ($cantidad * $precio);
 
             }
-
-            $total = number_format( $total, 2 );
 
             $pedidoController = new PedidoController();
             $pedidoController->edit( $request, $total );
@@ -97,6 +105,16 @@ class PedidoHasProductoController extends Controller
             $pedidoController->create( $request->pedido );
 
             $datos['exito'] = true;
+
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             

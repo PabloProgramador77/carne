@@ -26,7 +26,7 @@ class ClienteController extends Controller
 
         } catch (\Throwable $th) {
             
-            echo $th->getMessage();
+            echo 'Error al obtener los clientes: '.$th->getMessage();
 
         }
     }
@@ -43,9 +43,13 @@ class ClienteController extends Controller
 
             return view('clientes.productos', compact('cliente', 'productos'));
 
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            echo "Cliente\Productos no encontrado(s): ".$e->getMessage();
+
         } catch (\Throwable $th) {
             
-            echo $th->getMessage();
+            echo 'Error al obtener los productos del cliente: '.$th->getMessage();
             
         }
     }
@@ -67,6 +71,16 @@ class ClienteController extends Controller
             ]);
 
             $datos['exito'] = true;
+
+        }catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -96,6 +110,10 @@ class ClienteController extends Controller
                 return view('clientes.pedidos', compact('pedidos', 'cliente'));
 
             }
+
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            echo "Cliente\Pedidos no encontrado(s): ".$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -136,9 +154,23 @@ class ClienteController extends Controller
 
             return true;
 
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            echo 'Error de validación: '.$e->getMessage();
+
+            return false;
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            echo 'Error en la base de datos: '.$e->getMessage();
+
+            return false;
+
         } catch (\Throwable $th) {
             
             echo $th->getMessage();
+
+            return false;
 
         }
     }
@@ -160,6 +192,16 @@ class ClienteController extends Controller
                         ]);
 
             $datos['exito'] = true;
+
+        } catch( \Illuminate\Validation\ValidationException $e ){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error de validación: '.$e->getMessage();
+
+        } catch( \Illuminate\Database\QueryException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Error en la base de datos: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             
@@ -186,7 +228,17 @@ class ClienteController extends Controller
 
                 $datos['exito'] = true;
 
+            }else{
+
+                $datos['exito'] = false;
+                $datos['mensaje'] = 'Cliente no encontrado';
+
             }
+
+        } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = 'Cliente no encontrado: '.$e->getMessage();
 
         } catch (\Throwable $th) {
             

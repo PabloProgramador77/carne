@@ -12,7 +12,7 @@ jQuery(document).ready(function(){
 
             title: 'Registrando abono',
             html: 'Un momento por favor: <b></b>',
-            timer: 9975,
+            timer: 19975,
             allowOutsideClick: false,
             didOpen: ()=>{
 
@@ -99,7 +99,7 @@ jQuery(document).ready(function(){
                     icon: 'warning',
                     title: 'Hubo un inconveniente. Trata de nuevo.',
                     allowOutsideClick: false,
-                    showConfirmButton: true
+                    showConfirmButton: true,
 
                 }).then((resultado)=>{
 

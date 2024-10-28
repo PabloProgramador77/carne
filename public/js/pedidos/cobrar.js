@@ -33,7 +33,7 @@ jQuery(document).ready( function(){
 
                 title: 'Terminando pedido',
                 html: 'Un momento por favor: <b></b>',
-                timer: 9975,
+                timer: 19975,
                 allowOutsideClick: false,
                 didOpen: ()=>{
     
