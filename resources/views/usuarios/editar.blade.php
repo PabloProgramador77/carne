@@ -24,6 +24,21 @@
                         </x-slot>
                     </x-adminlte-input>
                 </div>
+                <div class="form-group">
+                    <x-adminlte-select id="rolEditar" name="rolEditar">
+                        <x-slot name="prependSlot">
+                            <div class="input-group-text text-info">
+                                <i class="fas fa-user-tag">*</i>
+                            </div>
+                        </x-slot>
+                        <option value="0">Elige un rol de usuario</option>
+                        @foreach( $roles as $rol)
+                            @if( $rol->name !== 'Developer' )
+                                <option value="{{ $rol->name }}">{{ $rol->name }}</option>
+                            @endif
+                        @endforeach
+                    </x-adminlte-select>
+                </div>
                 <input type="hidden" name="id" id="id">
             </form>
         </div>

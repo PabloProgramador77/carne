@@ -8,6 +8,7 @@ use App\Http\Requests\Usuario\Create;
 use App\Http\Requests\Usuario\Delete;
 use App\Http\Requests\Usuario\Update;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -19,8 +20,9 @@ class UserController extends Controller
         try {
             
             $usuarios = User::all();
+            $roles = Role::all();
 
-            return view('usuarios.index', compact('usuarios'));
+            return view('usuarios.index', compact('usuarios', 'roles'));
 
         } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $e){
 
@@ -58,6 +60,12 @@ class UserController extends Controller
                 'password' => Hash::make( $password.'123' ),
 
             ]);
+
+            if( $usuario && $usuario->id){
+
+                $usuario->syncRoles( [$request->rol] );
+
+            }
 
             $datos['exito'] = true;
 
@@ -104,7 +112,11 @@ class UserController extends Controller
     {
         try {
             
-            $usuario = User::where('id', '=', $request->id)
+            $usuario = User::find( $request->id );
+
+            if( $usuario && $usuario->id ){
+
+                User::where('id', '=', $request->id)
                     ->update([
 
                         'name' => $request->nombre,
@@ -112,7 +124,16 @@ class UserController extends Controller
 
                     ]);
 
-            $datos['exito'] = true;
+                $usuario->syncRoles( [$request->rol] );
+
+                $datos['exito'] = true;
+
+            }else{
+
+                $datos['exito'] = false;
+                $datos['mensaje'] = 'Usuario no encontrado';
+
+            }
 
         } catch( \Illuminate\Validation\ValidationException $e ){
 

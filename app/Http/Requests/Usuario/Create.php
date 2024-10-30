@@ -25,6 +25,7 @@ class Create extends FormRequest
             
             'nombre' => 'required|string',
             'email' => 'required|string',
+            'rol' => 'required|string',
             
         ];
     }

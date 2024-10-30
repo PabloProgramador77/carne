@@ -26,6 +26,7 @@ class Update extends FormRequest
             'id' => 'required|integer',
             'nombre' => 'required|string',
             'email' => 'required|string',
+            'rol' => 'required|string',
             
         ];
     }

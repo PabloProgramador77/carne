@@ -32,6 +32,7 @@ jQuery(document).ready(function(){
 
                         'nombre' : $("#nombreEditar").val(),
                         'email' : $("#emailEditar").val(),
+                        'rol' : $("#rolEditar").val(),
                         'id' : $("#id").val(),
                         '_token' : csrfToken,
 

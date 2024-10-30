@@ -33,7 +33,7 @@
             
             @if( count( $usuarios ) > 0 )
                 @php
-                    $heads = ['Folio', 'Nombre', 'Email', 'Acciones', ''];
+                    $heads = ['Folio', 'Nombre', 'Email', 'Rol', 'Acciones', ''];
                 @endphp
 
                 <x-adminlte-datatable id="contenedorusuarios" theme="light" :heads="$heads" striped hoverable compressed beautify>
@@ -42,8 +42,9 @@
                             <td>{{ $usuario->id }}</td>
                             <td>{{ $usuario->name }}</td>
                             <td>{{ $usuario->email }}</td>
+                            <td><span class="bg-teal rounded p-1">{{ $usuario->getRoleNames()->first() ? : 'Sin rol' }}</span></td>
                             <td>
-                                <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $usuario->id }}" data-value="{{ $usuario->name }}, {{ $usuario->email }}"></x-adminlte-button>
+                                <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $usuario->id }}" data-value="{{ $usuario->name }}, {{ $usuario->email }}, {{ $usuario->getRoleNames()->first() }}"></x-adminlte-button>
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $usuario->id }}" data-value="{{ $usuario->name }}"></x-adminlte-button>
                             </td>
                         </tr>
