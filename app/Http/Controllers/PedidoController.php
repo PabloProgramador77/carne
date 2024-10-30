@@ -295,17 +295,21 @@ class PedidoController extends Controller
 
             $cliente = Cliente::find( $idCliente );
 
-            $deuda = is_numeric( $cliente->deuda ) ? floatval( $cliente->deuda ) : round( floatval( $cliente->deuda ) );
-            $totalPedido = is_numeric( $pedido->total ) ? floatval( $pedido->total ) : round( floatval( $pedido->total ) );
-            
-            $total = $deuda - $totalPedido;
+            if( $pedido->estado === 'Pagado'){
 
-            Cliente::where('id', '=', $idCliente)
+                $deuda = is_numeric( $cliente->deuda ) ? floatval( $cliente->deuda ) : round( floatval( $cliente->deuda ) );
+                $totalPedido = is_numeric( $pedido->total ) ? floatval( $pedido->total ) : round( floatval( $pedido->total ) );
+                
+                $total = $deuda - $totalPedido;
+
+                Cliente::where('id', '=', $idCliente)
                     ->update([
 
                         'deuda' => $total,
 
                     ]);
+                    
+            }
 
             $datos['exito'] = true;
 
