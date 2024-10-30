@@ -325,7 +325,7 @@ return [
             'icon' => 'fas fa-cash-register',
             'text-color' => 'success',
         ],
-        /*[
+        [
             'text' => 'Usuarios',
             'icon' => 'fas fa-users',
             'text-color' => 'success',
@@ -349,7 +349,7 @@ return [
                     'text-color' => 'success',
                 ],
             ],
-        ],*/
+        ],
         
     ],
 

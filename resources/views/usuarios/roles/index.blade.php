@@ -36,7 +36,7 @@
                     $heads = ['Folio', 'Nombre', 'Acciones', ''];
                 @endphp
 
-                <x-adminlte-datatable id="contenedorroles" theme="light" :heads="$heads" striped hoverable compressed beautify>
+                <x-adminlte-datatable id="contenedorRoles" theme="light" :heads="$heads" striped hoverable compressed beautify>
                     @foreach( $roles as $rol )
                         <tr>
                             <td>{{ $rol->id }}</td>
@@ -44,6 +44,7 @@
                             <td>
                                 <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $rol->id }}" data-value="{{ $rol->name }}"></x-adminlte-button>
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $rol->id }}" data-value="{{ $rol->name }}"></x-adminlte-button>
+                                <x-adminlte-button class="shadow permisos" icon="fas fa-user-cog" theme="primary" data-id="{{ $rol->id }}" data-value="{{ $rol->name }}" data-toggle="modal" data-target="#modalPermisos"></x-adminlte-button>
                             </td>
                         </tr>
                     @endforeach
@@ -61,6 +62,7 @@
 
     @include('usuarios.roles.nuevo')
     @include('usuarios.roles.editar')
+    @include('usuarios.roles.permisos')
 
     <script src="{{ asset('js/jquery-3.7.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/sweetAlert.js') }}" type="text/javascript"></script>
@@ -68,5 +70,6 @@
     <script src="{{ asset('js/roles/read.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/roles/update.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/roles/delete.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/roles/permisos.js') }}" type="text/javascript"></script>
 
 @stop

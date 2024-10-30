@@ -349,7 +349,7 @@ class CorteController extends Controller
 
                 if( file_exists( public_path('tickets/').'corte'.$corte->id.'.pdf' ) ){
 
-                    shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'corte'.$corte->id.'.pdf "POS-58 11.3.0.1"');
+                    shell_exec('PDFtoPrinter.exe '.public_path('tickets/').'corte'.$corte->id.'.pdf "POS-58"');
                      
                 }
 
