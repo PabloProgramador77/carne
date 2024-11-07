@@ -37,7 +37,7 @@
                     $heads = ['Producto', 'Descripción', 'Precio', 'Piezas / Peso'];
                 @endphp
                 <x-adminlte-datatable id="contenedorProductos" theme="light" :heads="$heads" striped hoverable compressed beautify>
-                @foreach( $productos as $producto )
+                    @foreach( $productos as $producto )
                     <tr>
                         <td>{{ $producto->nombre }}</td>
                         <td>

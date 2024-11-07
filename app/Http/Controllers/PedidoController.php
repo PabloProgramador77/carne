@@ -85,6 +85,12 @@ class PedidoController extends Controller
                     $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Concepto:</b></td><td>Compra</td></tr>');
                     $ticket->writeHTML('</table>');
 
+                    if( $pedido->nota !== '' || $pedido->nota !== NULL || $pedido->nota !== 'Sin nota' ){
+
+                        $ticket->writeHTML('<p style="font-size: 12px; overflow: auto;"><b>Nota:</b> '.$pedido->nota.'</p>');
+
+                    }
+
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
                     $ticket->writeHTML('<thead style="border-bottom: 2px;">');
                     $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Importe</th></tr>');
@@ -454,6 +460,12 @@ class PedidoController extends Controller
                     $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Concepto:</b></td><td>Compra</td></tr>');
                     $ticket->writeHTML('</table>');
 
+                    if( $pedido->nota !== '' || $pedido->nota !== NULL || $pedido->nota !== 'Sin nota' ){
+
+                        $ticket->writeHTML('<p style="font-size: 11px; display: block; overflow: auto;"><b>Nota:</b> '.$pedido->nota.'</p>');
+                        
+                    }
+
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
                     $ticket->writeHTML('<thead style="border-bottom: 2px;">');
                     $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Importe</th></tr>');
@@ -560,6 +572,12 @@ class PedidoController extends Controller
                     $ticket->writeHTML('<tr><td>Folio:</td><td>'.$pedido->id.'</td></tr>');
                     $ticket->writeHTML('<tr><td>Concepto:</td><td>Compra</td></tr>');
                     $ticket->writeHTML('</table>');
+
+                    if( $pedido->nota !== '' || $pedido->nota !== NULL || $pedido->nota !== 'Sin nota' ){
+
+                        $ticket->writeHTML('<p style="font-size: 11px; display: block; overflow: auto;"><b>Nota:</b> '.$pedido->nota.'</p>');
+                        
+                    }
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
                     $ticket->writeHTML('<thead style="border-bottom: 2px;">');
