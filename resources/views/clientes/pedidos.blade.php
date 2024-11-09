@@ -30,16 +30,27 @@
             
             @if( count( $pedidos ) > 0 )
                 @php
-                    $heads = ['Folio', 'Total', 'Fecha', ''];
+                    $heads = ['Folio', 'Total', 'Estado', 'Fecha', ''];
                 @endphp
                 <x-adminlte-datatable id="contenedorPedidos" :heads="$heads" theme="light" striped hoverable compressed beautify>
                     @foreach( $pedidos as $pedido )
                         <tr>
                             <td>{{ $pedido->id }}</td>
                             <td>$ {{ number_format( $pedido->total, 2 ) }}</td>
+                            <td><span class="bg-teal p-1 text-center rounded">{{ $pedido->estado }}</span></td>
                             <td>{{ $pedido->created_at }}</td>
                             <td>
-                                <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-toggle="modal" data-target="#modalVer" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}"></x-adminlte-button>
+                                @if( $pedido->estado === 'Pendiente')
+                                    <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                    <x-adminlte-button class="shadow cobrar" id="cobrar" theme="warning" icon="fas fa-hand-holding-usd" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalCobrar"></x-adminlte-button>
+                                @endif
+                                @if( $pedido->estado === 'Cobrado' )
+                                    <x-adminlte-button class="shadow pagar" id="pagar" theme="success" icon="fas fa-dollar-sign" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}"></x-adminlte-button>
+                                    <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                @endif
+                                @if( $pedido->estado === 'Pagado' || $pedido->estado === 'Corte')
+                                    <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -61,5 +72,6 @@
     <script src="{{ asset('js/sweetAlert.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/read.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/imprimir.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/pedidos/update.js') }}" type="text/javascript"></script>
 
 @stop
