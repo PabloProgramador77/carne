@@ -10,7 +10,7 @@ jQuery(document).ready( function(){
 
         if( $(this).attr('id') === 'cobrar' ){
 
-            var estado = 'Cobrado';
+            var estado = 'Entregado';
 
         }else{
 
