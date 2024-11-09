@@ -15,6 +15,7 @@ class Caja extends Model
 
         'nombre',
         'total',
+        'apertura',
 
     ];
 }

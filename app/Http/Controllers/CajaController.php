@@ -53,6 +53,7 @@ class CajaController extends Controller
 
                 'nombre' => $request->nombre,
                 'total' => 0,
+                'apertura' => 0,
 
             ]);
 
@@ -96,7 +97,7 @@ class CajaController extends Controller
             $caja = Caja::where('id', '=', $request->caja)
                     ->update([
 
-                        'total' => $request->importe,
+                        'apertura' => $request->importe,
 
                     ]);
 

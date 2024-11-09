@@ -33,7 +33,7 @@
             
             @if( count( $cajas ) > 0 )
                 @php
-                    $heads = ['Folio', 'Caja', 'Total', ''];
+                    $heads = ['Folio', 'Caja', 'Total', 'Monto de apertura', ''];
                 @endphp
                 <x-adminlte-datatable id="contenedorCajas" theme="light" :heads="$heads" striped hoverable compressed beautify>
                     @foreach( $cajas as $caja )
@@ -41,6 +41,7 @@
                             <td>{{ $caja->id }}</td>
                             <td>{{ $caja->nombre }}</td>
                             <td>$ {{ number_format( $caja->total, 2 ) }}</td>
+                            <td>$ {{ number_format( $caja->apertura) }}</td>
                             <td>
                                 <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $caja->id }}" data-value="{{ $caja->id }}, {{ $caja->nombre }}, {{ $caja->total }}"></x-adminlte-button>
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $caja->id }}" data-value="{{ $caja->nombre }}"></x-adminlte-button>

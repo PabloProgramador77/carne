@@ -106,11 +106,11 @@ jQuery(document).ready( function(){
 
                             if( efectivo <= 0 ){
 
-                                html += '<tr class="bg-danger text-center p-1"><td colspan="4">Efectivo en caja: $ '+efectivo+' MXN</td></tr>';
+                                html += '<tr class="bg-danger text-center p-1"><td colspan="4">Total de corte: $ '+efectivo+' MXN</td></tr>';
 
                             }else{
 
-                                html += '<tr class="bg-success text-center p-1"><td colspan="4">Efectivo en caja: $ '+efectivo+' MXN</td></tr>';
+                                html += '<tr class="bg-success text-center p-1"><td colspan="4">Total de corte: $ '+efectivo+' MXN</td></tr>';
 
                             }
                             
