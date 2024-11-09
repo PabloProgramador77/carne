@@ -32,43 +32,57 @@
         </div>
 
         <div class="container-fluid row p-2">
+            <div class="accordion accordion-flush container-fluid">
+                @foreach( $pedidos->groupBy( function( $fecha ){
+                    return \Carbon\Carbon::parse( $fecha->created_at)->format('Y-m-d');
+                }) as $fecha => $grupo )
+                    <div class="accordion-item" id="accordion-{{ $fecha }}">
+                        <div class="accordion-header">
+                            <a class="bg-light border-info border-bottom p-1 text-center accordion-button collapsed d-block" type="button" data-toggle="collapse" data-target="#flush-{{ $fecha }}" aria-controls="flush-{{ $fecha }}">
+                                <b>{{ \Carbon\Carbon::parse($fecha)->format('d-m-Y') }}</b>
+                            </a>
+                        </div>
+                        <div id="flush-{{ $fecha }}" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                @if( count( $grupo ) > 0 )
+                                @php
+                                    $heads = ['Estatus', 'Cliente', 'Total', 'Nota', 'Fecha', ''];
+                                @endphp
+                                    <x-adminlte-datatable id="contenedorPedidos" theme="light" :heads="$heads" striped hoverable compressed beautify>
+                                        @foreach( $grupo as $pedido )
+                                            <tr>
+                                                <td><span class="bg-teal p-1 text-center rounded">{{ $pedido->estado }}</span></td>
+                                                <td>{{ $pedido->cliente->nombre }}</td>
+                                                <td>$ {{ number_format( $pedido->total, 2 ) }}</td>
+                                                <td>{{ $pedido->nota ? : 'Sin nota' }}</td>
+                                                <td>{{ $pedido->created_at }}</td>
+                                                <td>
+                                                    @if( $pedido->estado === 'Pendiente')
+                                                        <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                                        <x-adminlte-button class="shadow cobrar" id="cobrar" theme="warning" icon="fas fa-hand-holding-usd" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalCobrar"></x-adminlte-button>
+                                                    @endif
+                                                    @if( $pedido->estado === 'Cobrado' )
+                                                        <x-adminlte-button class="shadow pagar" id="pagar" theme="success" icon="fas fa-dollar-sign" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}"></x-adminlte-button>
+                                                        <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                                    @endif
+                                                    @if( $pedido->estado === 'Pagado')
+                                                        <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </x-adminlte-datatable>
+                                @else
+                                    <tr>
+                                        <td colspan="5" class="text-danger"><i class="fas fa-info-circle"></i> Sin pedidos registrados.</td>
+                                    </tr>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
             
-            @if( count( $pedidos ) > 0 )
-                @php
-                    $heads = ['Estatus', 'Cliente', 'Total', 'Nota', 'Fecha', ''];
-                @endphp
-                <x-adminlte-datatable id="contenedorPedidos" theme="light" :heads="$heads" striped hoverable compressed beautify>
-                    @foreach( $pedidos as $pedido )
-                        <tr>
-                            <td>{{ $pedido->estado }}</td>
-                            <td>{{ $pedido->cliente->nombre }}</td>
-                            <td>$ {{ number_format( $pedido->total, 2 ) }}</td>
-                            <td>{{ $pedido->nota ? : 'Sin nota' }}</td>
-                            <td>{{ $pedido->created_at }}</td>
-                            <td>
-                                @if( $pedido->estado === 'Pendiente')
-                                    <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
-                                    <x-adminlte-button class="shadow cobrar" id="cobrar" theme="warning" icon="fas fa-hand-holding-usd" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalCobrar"></x-adminlte-button>
-                                @endif
-                                @if( $pedido->estado === 'Cobrado' )
-                                    <x-adminlte-button class="shadow pagar" id="pagar" theme="success" icon="fas fa-dollar-sign" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}"></x-adminlte-button>
-                                    <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
-                                @endif
-                                @if( $pedido->estado === 'Pagado')
-                                    <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
-                                @endif
-                                
-                                
-                            </td>
-                        </tr>
-                    @endforeach
-                </x-adminlte-datatable>
-            @else
-                <tr>
-                    <td colspan="5" class="text-danger"><i class="fas fa-info-circle"></i> Sin pedidos registrados.</td>
-                </tr>
-            @endif
-
         </div>
 
     </section>
