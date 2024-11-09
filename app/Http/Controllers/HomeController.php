@@ -26,6 +26,20 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $registros = Pedido::where('created_at', '<', now()->subDays(30))
+                    ->where('estado', '=', 'Corte')
+                    ->get();
+
+        if( count( $registros ) > 0 ){
+
+            foreach( $registros as $registro ){
+
+                $registro->delete();
+
+            }
+
+        }
+
         $productos = Producto::all();
         $clientes = Cliente::all();
         $pedidos = Pedido::all();
