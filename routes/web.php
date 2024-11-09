@@ -44,6 +44,7 @@ Route::post('/abono/agregar', [App\Http\Controllers\AbonoController::class, 'sto
 Route::post('/abono/actualizar', [App\Http\Controllers\AbonoController::class, 'update'])->name('actualizar-abono');
 Route::post('/abono/borrar', [App\Http\Controllers\AbonoController::class, 'destroy'])->name('borrar-abono');
 Route::post('/abono/imprimir', [App\Http\Controllers\AbonoController::class, 'imprimir'])->name('imprimir-abono');
+Route::post('/abono/pedidos', [App\Http\Controllers\AbonoController::class, 'show'])->name('pedidos-abono');
 
 Route::get('/cliente/prestamos/{id}', [App\Http\Controllers\PrestamoController::class, 'index'])->name('prestamos-cliente');
 Route::post('/prestamo/agregar', [App\Http\Controllers\PrestamoController::class, 'store'])->name('agregar-prestamo');

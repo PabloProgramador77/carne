@@ -1,9 +1,9 @@
 <x-adminlte-modal id="modalNuevo" size="lg" title="Nuevo Abono" theme="primary" icon="fas fa-plus-circle" static-backdrop scrollable>
     <div class="container-fluid row">
-        <div class="col-lg-5">
-            <img src="{{ asset('img/abono.jpg') }}" alt="" width="100%" height="auto" class="shadow">
+        <div class="col-lg-4">
+            <img src="{{ asset('img/abono.jpg') }}" alt="" width="75%" height="auto" class="shadow m-auto">
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-8">
             <form novalidate>
                 <small class="fs-6 fw-semibold bg-warning border-bottom p-1 d-block mb-2">Los campos con * son obligatorios</small>
                 <div class="form-group">
@@ -24,7 +24,15 @@
                 </div>
             </form>
         </div>
-        
+        <div class="col-lg-12">
+            <span class="bg-info text-center p-1 d-block">Elige los pedidos a abonar</span>
+            @php
+                $heads = ['[]', 'Folio', 'Total', 'Estado'];
+            @endphp
+            <x-adminlte-datatable id="contenedorPedidosAbono" theme="light" :heads="$heads" striped hoverable compressed beautify>
+
+            </x-adminlte-datatable>
+        </div>
     </div>
     <x-slot name="footerSlot">
         <x-adminlte-button theme="success" label=" Guardar" id="registrar" icon="fas fa-save"></x-adminlte-button>

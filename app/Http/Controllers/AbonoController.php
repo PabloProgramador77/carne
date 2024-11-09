@@ -132,6 +132,21 @@ class AbonoController extends Controller
 
                         ]);
 
+                if( $request->pedidos && count( $request->pedidos ) > 0 ){
+
+                    foreach( $request->pedidos as $pedido ){
+
+                        Pedido::where('id', '=', $pedido)
+                                ->update([
+
+                                    'estado' => 'Pagado',
+
+                                ]);
+
+                    }
+
+                }
+
                 $this->create( $cliente->id, $idAbono );
 
                 $datos['exito'] = true;
@@ -166,9 +181,35 @@ class AbonoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Abono $abono)
+    public function show( Request $request )
     {
-        //
+        try {
+            
+            $pedidos = Pedido::where('idCliente', '=', $request->cliente)
+                    ->where('estado', '!=', 'Corte')
+                    ->where('estado', '!=', 'Pagado')
+                    ->get();
+
+            if( count( $pedidos ) > 0 ){
+
+                $datos['exito'] = true;
+                $datos['pedidos'] = $pedidos;
+
+            }else{
+
+                $datos['exito'] = false;
+                $datos['mensaje'] = 'Sin pedidos';
+
+            }
+
+        } catch (\Throwable $th) {
+            
+            $datos['exito'] = false;
+            $datos['mensaje'] = $th->getMessage();
+
+        }
+
+        return response()->json( $datos );
     }
 
     /**

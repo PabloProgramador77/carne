@@ -29,7 +29,7 @@
             </div>
 
             <div class="col-lg-2 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo abono" label=""></x-adminlte-button>
+                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo abono" label="" id="nuevo"></x-adminlte-button>
                 <x-adminlte-button theme="success" data-toggle="modal" data-target="#modalLiquidar" icon="fas fa-dollar-sign" title="Liquidar deuda" class="mx-5" data-value="{{ $cliente->id }}, {{ $cliente->deuda }}" id="liquidar"></x-adminlte-button>
             </div>
 
@@ -85,5 +85,6 @@
     <script src="{{ asset('js/abonos/liquidar.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/abonos/liquidacion.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/abonos/imprimir.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/abonos/suma.js') }}" type="text/javascript"></script>
 
 @stop
