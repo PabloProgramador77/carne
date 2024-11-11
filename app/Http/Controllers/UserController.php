@@ -112,7 +112,7 @@ class UserController extends Controller
     {
         try{
 
-            $usuario = User::where('id', '=', auth()->user()->id)
+            $user = User::where('id', '=', auth()->user()->id)
                     ->update([
 
                         'name' => $request->nombre,
@@ -121,6 +121,20 @@ class UserController extends Controller
                         'direccion' => $request->direccion,
 
                     ]);
+
+            $usuarios = User::all();
+
+            foreach( $usuarios as $usuario ){
+
+                User::where('id', '=', $usuario->id)
+                    ->update([
+
+                        'telefono' => $request->telefono,
+                        'direccion' => $request->direccion,
+
+                    ]);
+
+            }
 
             $datos['exito'] = true;
 
