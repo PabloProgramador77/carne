@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'telefono',
+        'direccion',
     ];
 
     /**
@@ -44,5 +46,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Profile Username
+     */
+    public function adminlte_profile_url(){
+
+        return '/profile/username';
+
     }
 }

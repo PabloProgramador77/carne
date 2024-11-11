@@ -40,7 +40,15 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            
+            return view('usuarios.perfil');
+
+        } catch (\Throwable $th) {
+            
+            echo $th->getMessage();
+
+        }
     }
 
     /**
@@ -100,9 +108,30 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit( Request $request )
     {
-        //
+        try{
+
+            $usuario = User::where('id', '=', auth()->user()->id)
+                    ->update([
+
+                        'name' => $request->nombre,
+                        'email' => $request->email,
+                        'telefono' => $request->telefono,
+                        'direccion' => $request->direccion,
+
+                    ]);
+
+            $datos['exito'] = true;
+
+        }catch( \Throwable $th){
+
+            $datos['exito'] = false;
+            $datos['mensaje'] = $th->getMessage();
+
+        }
+
+        return response()->json( $datos );
     }
 
     /**
