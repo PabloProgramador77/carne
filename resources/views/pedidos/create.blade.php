@@ -49,11 +49,14 @@
                         </td>
                         <td>$ {{ $producto->precio }} MXN</td>
                         <td>
-                            <x-adminlte-input name="cantidad" id="cantidad" placeholder="Peso/Cantidad del producto" data-value="{{ $producto->id }}, {{ $producto->precio }}">
+                            <x-adminlte-input name="cantidad" id="cantidad" placeholder="Peso/Cantidad del producto" data-id="{{ $producto->id }}" data-value="{{ $producto->id }}, {{ $producto->precio }}">
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text text-info">
                                         <i class="fas fa-balance-scale"></i>
                                     </div>
+                                </x-slot>
+                                <x-slot name="appendSlot">
+                                    <x-adminlte-button class="shadow conversor" theme="outline-info" icon="fas fa-calculator" data-toggle="modal" data-target="#modalConversor" data-value="{{ $producto->id }}, {{ $producto->nombre }}, {{ $producto->precio }}"></x-adminlte-button>
                                 </x-slot>
                             </x-adminlte-input>
                         </td>
@@ -77,6 +80,7 @@
     </section>
 
     @include('pedidos.terminar')
+    @include('pedidos.conversor')
 
     <script src="{{ asset('js/jquery-3.7.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/sweetAlert.js') }}" type="text/javascript"></script>
@@ -84,5 +88,6 @@
     <script src="{{ asset('js/pedidos/cobrar.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/cancelar.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pedidos/total.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/pedidos/conversor.js') }}" type="text/javascript"></script>
 
 @stop
