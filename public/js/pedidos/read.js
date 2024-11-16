@@ -26,7 +26,9 @@ jQuery(document).ready(function(){
                 icon: 'error',
                 title: 'Error de lectura',
                 allowOutsideClick: false,
-                showConfirmButton: true,
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
 
             });
 
@@ -85,7 +87,9 @@ jQuery(document).ready(function(){
                             icon: 'error',
                             title: 'Sin coincidencias en la búsqueda de productos',
                             allowOutsideClick: false,
-                            showConfirmButton: true,
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
     
                         });
 
@@ -100,7 +104,9 @@ jQuery(document).ready(function(){
                         icon: 'error',
                         title: respuesta.mensaje,
                         allowOutsideClick: false,
-                        showConfirmButton: true,
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
 
                     });
 

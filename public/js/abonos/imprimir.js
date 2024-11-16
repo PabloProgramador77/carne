@@ -29,11 +29,13 @@ jQuery(document).ready(function(){
                     icon: 'success',
                     title: 'Abono reimpreso',
                     allowOutsideClick: false,
-                    showConfirmButton: true,
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
 
                 }).then( function( resultado){
 
-                    if( resultado.isConfirmed ){
+                    if( resultado.dismiss === Swal.DismissReason.timer ){
 
                         window.location.href = '/cliente/abonos/'+$("#idCliente").val();
 

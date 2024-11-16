@@ -29,11 +29,13 @@ jQuery(document).ready(function(){
                     icon: 'success',
                     title: 'Pedido reimpreso',
                     allowOutsideClick: false,
-                    showConfirmButton: true,
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
 
                 }).then( function( resultado){
 
-                    if( resultado.isConfirmed ){
+                    if( resultado.dismiss === Swal.DismissReason.timer ){
 
                         window.location.href = '/pedidos';
 
@@ -48,8 +50,18 @@ jQuery(document).ready(function(){
                     icon: 'error',
                     title: respuesta.mensaje,
                     allowOutsideClick: false,
-                    showConfirmButton: true,
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
 
+                }).then( ( resultado ) =>{
+
+                    if( resultado.dismiss === Swal.DismissReason.timer ){
+
+                        window.location.href = '/pedidos';
+
+                    }
+                    
                 });
 
                 $("#imprimir").attr('disabled', true);

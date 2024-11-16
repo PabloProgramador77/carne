@@ -26,7 +26,17 @@ jQuery(document).ready(function(){
                 icon: 'error',
                 title: 'Error de lectura',
                 allowOutsideClick: false,
-                showConfirmButton: true,
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+
+            }).then( (resultado)=>{
+
+                if( resultado.dismiss === Swal.DismissReason.timer ){
+
+                    window.location.href = '/clientes';
+                    
+                }
 
             });
 

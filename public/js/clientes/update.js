@@ -11,18 +11,12 @@ jQuery(document).ready(function(){
         Swal.fire({
 
             title: 'Actualizando cliente',
-            html: 'Un momento por favor: <b></b>',
+            html: 'Un momento por favor',
             timer: 9975,
             allowOutsideClick: false,
+            showConfirmButton: false,
+            timerProgressBar: true,
             didOpen: ()=>{
-
-                Swal.showLoading();
-                const b = Swal.getHtmlContainer().querySelector('b');
-                procesamiento = setInterval(()=>{
-
-                    b.textContent = Swal.getTimerLeft();
-
-                }, 100);
 
                 $.ajax({
 
@@ -49,11 +43,13 @@ jQuery(document).ready(function(){
                             icon: 'success',
                             title: 'Cliente actualizado',
                             allowOutsideClick: false,
-                            showConfirmButton: true
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
 
                         }).then((resultado)=>{
 
-                            if( resultado.isConfirmed ){
+                            if( resultado.dismiss === Swal.DismissReason.timer ){
 
                                 window.location.href = '/clientes';
 
@@ -68,11 +64,13 @@ jQuery(document).ready(function(){
                             icon: 'error',
                             title: respuesta.mensaje,
                             allowOutsideClick: false,
-                            showConfirmButton: true
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
 
                         }).then((resultado)=>{
 
-                            if( resultado.isConfirmed ){
+                            if( resultado.dismiss === Swal.DismissReason.timer ){
 
                                 window.location.href = '/clientes';
 
@@ -100,11 +98,13 @@ jQuery(document).ready(function(){
                     icon: 'warning',
                     title: 'Hubo un inconveniente. Trata de nuevo.',
                     allowOutsideClick: false,
-                    showConfirmButton: true
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
 
                 }).then((resultado)=>{
 
-                    if( resultado.isConfirmed ){
+                    if( resultado.dismiss === Swal.DismissReason.timer ){
 
                         window.location.href = '/clientes';
 

@@ -14,15 +14,9 @@ jQuery(document).ready(function(){
             html: 'Un momento por favor: <b></b>',
             timer: 9975,
             allowOutsideClick: false,
+            showConfirmButton: false,
+            timerProgressBar: true,
             didOpen: ()=>{
-
-                Swal.showLoading();
-                const b = Swal.getHtmlContainer().querySelector('b');
-                procesamiento = setInterval(()=>{
-
-                    b.textContent = Swal.getTimerLeft();
-
-                }, 100);
 
                 $.ajax({
 
@@ -48,11 +42,13 @@ jQuery(document).ready(function(){
                             icon: 'success',
                             title: 'Prestamo actualizado',
                             allowOutsideClick: false,
-                            showConfirmButton: true
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
 
                         }).then((resultado)=>{
 
-                            if( resultado.isConfirmed ){
+                            if( resultado.dismiss === Swal.DismissReason.timer ){
 
                                 window.location.href = '/cliente/prestamos/' + $("#idCliente").val();
 
@@ -67,11 +63,13 @@ jQuery(document).ready(function(){
                             icon: 'error',
                             title: respuesta.mensaje,
                             allowOutsideClick: false,
-                            showConfirmButton: true
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
 
                         }).then((resultado)=>{
 
-                            if( resultado.isConfirmed ){
+                            if( resultado.dismiss === Swal.DismissReason.timer ){
 
                                 window.location.href = '/cliente/prestamos/' + $("#idCliente").val();
 
@@ -99,11 +97,13 @@ jQuery(document).ready(function(){
                     icon: 'warning',
                     title: 'Hubo un inconveniente. Trata de nuevo.',
                     allowOutsideClick: false,
-                    showConfirmButton: true
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
 
                 }).then((resultado)=>{
 
-                    if( resultado.isConfirmed ){
+                    if( resultado.dismiss === Swal.DismissReason.timer ){
 
                         window.location.href = '/cliente/prestamos/' + $("#idCliente").val();
 

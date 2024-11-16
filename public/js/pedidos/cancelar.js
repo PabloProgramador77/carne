@@ -43,11 +43,13 @@ jQuery(document).ready(function(){
                             icon: 'success',
                             title: 'Pedido cancelado.',
                             allowOutsideClick: false,
-                            showConfirmButton: true
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
 
                         }).then((resultado)=>{
 
-                            if( resultado.isConfirmed ){
+                            if( resultado.dismiss === Swal.DismissReason.timer ){
 
                                 window.location.href = '/pedidos';
 
@@ -62,11 +64,13 @@ jQuery(document).ready(function(){
                             icon: 'error',
                             title: respuesta.mensaje,
                             allowOutsideClick: false,
-                            showConfirmButton: true
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
 
                         }).then((resultado)=>{
 
-                            if( resultado.isConfirmed ){
+                            if( resultado.dismiss == Swal.DismissReason.timer ){
 
                                 window.location.href = '/pedidos';
 

@@ -16,7 +16,17 @@ jQuery( document ).ready( function( e ){
                 icon: 'warning',
                 title: 'Error de lectura',
                 allowOutsideClick: false,
-                showConfirmButton: true,
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+
+            }).then((resultado)=>{
+
+                if( resultado.dismiss === Swal.DismissReason.timer ){
+
+                    window.location.href = '/cortes';
+
+                }
 
             });
 
@@ -92,8 +102,18 @@ jQuery( document ).ready( function( e ){
                             icon: 'info',
                             title: 'Sin coincidencias en la búsqueda de pedidos del corte',
                             allowOutsideClick: false,
-                            showConfirmButton: true,
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
     
+                        }).then( (resultado)=>{
+
+                            if( resultado.dismiss === Swal.DismissReason.timer ){
+
+                                window.location.href = '/cortes';
+
+                            }
+                            
                         });
 
                     }
@@ -107,8 +127,18 @@ jQuery( document ).ready( function( e ){
                         icon: 'error',
                         title: respuesta.mensaje,
                         allowOutsideClick: false,
-                        showConfirmButton: true,
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
 
+                    }).then( (resultado)=>{
+
+                        if( resultado.dismiss === Swal.DismissReason.timer ){
+
+                            window.location.href = '/cortes';
+
+                        }
+                        
                     });
 
                 }

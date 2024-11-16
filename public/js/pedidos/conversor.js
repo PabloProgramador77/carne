@@ -18,7 +18,9 @@ jQuery(document).ready( function(){
                 icon: 'warning',
                 title: 'Error de lectura del producto',
                 allowOutsideClick: false,
-                showConfirmButton: true,
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
 
             });
 

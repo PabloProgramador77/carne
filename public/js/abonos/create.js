@@ -72,11 +72,13 @@ jQuery(document).ready(function(){
                     icon: 'error',
                     title: respuesta.mensaje,
                     allowOutsideClick: false,
-                    showConfirmButton: true
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
 
                 }).then((resultado)=>{
 
-                    if( resultado.isConfirmed ){
+                    if( resultado.dismiss === Swal.DismissReason.timer ){
 
                         window.location.href = '/cliente/abonos/'+$("#idCliente").val();
 
@@ -99,19 +101,14 @@ jQuery(document).ready(function(){
 
         Swal.fire({
 
+            icon: 'info',
             title: 'Registrando abono',
-            html: 'Un momento por favor: <b></b>',
-            timer: 19975,
+            html: 'Un momento por favor',
+            timer: 29975,
+            timerProgressBar: true,
             allowOutsideClick: false,
+            showConfirmButton: false,
             didOpen: ()=>{
-
-                Swal.showLoading();
-                const b = Swal.getHtmlContainer().querySelector('b');
-                procesamiento = setInterval(()=>{
-
-                    b.textContent = Swal.getTimerLeft();
-
-                }, 100);
 
                 $.ajax({
 
@@ -138,11 +135,13 @@ jQuery(document).ready(function(){
                             icon: 'success',
                             title: 'Abono registrado',
                             allowOutsideClick: false,
-                            showConfirmButton: true
+                            showConfirmButton: false,
+                            timer: 1500,
+                            timerProgressBar: true,
 
                         }).then((resultado)=>{
 
-                            if( resultado.isConfirmed ){
+                            if( resultado.dismiss === Swal.DismissReason.timer ){
 
                                 window.location.href = '/cliente/abonos/'+$("#idCliente").val();
 
@@ -157,11 +156,13 @@ jQuery(document).ready(function(){
                             icon: 'error',
                             title: respuesta.mensaje,
                             allowOutsideClick: false,
-                            showConfirmButton: true
+                            showConfirmButton: false,
+                            timer: 1500,
+                            timerProgressBar: true,
 
                         }).then((resultado)=>{
 
-                            if( resultado.isConfirmed ){
+                            if( resultado.dismiss === Swal.DismissReason.timer ){
 
                                 window.location.href = '/cliente/abonos/'+$("#idCliente").val();
 
@@ -189,11 +190,13 @@ jQuery(document).ready(function(){
                     icon: 'warning',
                     title: 'Hubo un inconveniente. Trata de nuevo.',
                     allowOutsideClick: false,
-                    showConfirmButton: true,
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
 
                 }).then((resultado)=>{
 
-                    if( resultado.isConfirmed ){
+                    if( resultado.dismiss == Swal.DismissReason.timer ){
 
                         window.location.href = '/cliente/abonos/'+$("#idCliente").val();
 
