@@ -309,8 +309,8 @@ class CorteController extends Controller
                 ]);
 
                 $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
-                $ticket->writeHTML('<small style="text-align: center;">'.( auth()->user()->telefono ? : '' ).'</small>');
-                $ticket->writeHTML('<small style="text-align: center;">'.( auth()->user()->direccion ? : '' ).'</small>');
+                $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
+                $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
                 $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$corte->created_at.'</h6>');
                 $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
                 $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Folio:</b></td><td>'.$corte->id.'</td></tr>');

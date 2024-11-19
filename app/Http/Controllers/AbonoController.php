@@ -67,8 +67,8 @@ class AbonoController extends Controller
             $cliente = Cliente::find( $idCliente );
 
             $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
-            $ticket->writeHTML('<small style="text-align: center;">'.( auth()->user()->telefono ? : '' ).'</small>');
-            $ticket->writeHTML('<small style="text-align: center;">'.( auth()->user()->direccion ? : '' ).'</small>');
+            $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
+            $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
             $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->updated_at.'</h6>');
             $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$cliente->nombre.'</h5>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
@@ -360,8 +360,8 @@ class AbonoController extends Controller
             $cliente = Cliente::find( $idCliente );
 
             $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
-            $ticket->writeHTML('<small style="text-align: center;">'.( auth()->user()->telefono ? : '' ).'</small>');
-            $ticket->writeHTML('<small style="text-align: center;">'.( auth()->user()->direccion ? : '' ).'</small>');
+            $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
+            $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
             $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->updated_at.'</h6>');
             $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$cliente->nombre.'</h5>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
@@ -422,8 +422,8 @@ class AbonoController extends Controller
             $cliente = Cliente::find( $abono->idCliente );
 
             $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
-            $ticket->writeHTML('<small style="text-align: center;">'.( auth()->user()->telefono ? : '' ).'</small>');
-            $ticket->writeHTML('<small style="text-align: center;">'.( auth()->user()->direccion ? : '' ).'</small>');
+            $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
+            $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
             $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->updated_at.'</h6>');
             $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$cliente->nombre.'</h5>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
