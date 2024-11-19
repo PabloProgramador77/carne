@@ -61,6 +61,13 @@ jQuery(document).ready(function(){
 
                     });
 
+                }else{
+
+                    html += '<tr><td><i class="fas fa-info-circle"></i> Sin pedidos para abonar</td></tr>';
+
+                    $("#contenedorPedidosAbono").empty();
+                    $("#contenedorPedidosAbono").append( html );
+
                 }
 
                 console.log( pedidos );

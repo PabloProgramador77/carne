@@ -199,7 +199,7 @@ class AbonoController extends Controller
 
             }else{
 
-                $datos['exito'] = false;
+                $datos['exito'] = true;
                 $datos['mensaje'] = 'Sin pedidos';
 
             }
