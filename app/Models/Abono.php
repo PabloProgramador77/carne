@@ -15,6 +15,7 @@ class Abono extends Model
 
         'monto',
         'nota',
+        'estado',
         'idCliente',
 
     ];
@@ -22,6 +23,12 @@ class Abono extends Model
     public function cliente(){
 
         return $this->hasOne( Cliente::class, 'id', 'idCliente' );
+        
+    }
+
+    public function corte(){
+
+        return $this->belongsTo( Corte::class, 'corte_has_abonos', 'idAbono', 'idCorte' );
         
     }
 }

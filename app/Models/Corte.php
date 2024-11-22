@@ -23,4 +23,10 @@ class Corte extends Model
         return $this->belongsToMany( Pedido::class, 'corte_has_pedidos', 'idCorte', 'idPedido' );
         
     }
+
+    public function abonos(){
+
+        return $this->belongsToMany( Abono::class, 'corte_has_abonos', 'idCorte', 'idAbono' );
+
+    }
 }

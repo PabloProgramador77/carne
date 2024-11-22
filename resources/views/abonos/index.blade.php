@@ -43,7 +43,7 @@
             
             @if( count( $abonos ) > 0 )
                 @php
-                    $heads = ['Folio', 'Importe', 'Nota', 'Fecha', ''];
+                    $heads = ['Folio', 'Importe', 'Nota', 'Estado', 'Fecha', ''];
                 @endphp
                 <x-adminlte-datatable id="contenedorAbonos" theme="light" :heads="$heads" striped hoverable compressed beautify>
                     @foreach( $abonos as $abono )
@@ -51,11 +51,17 @@
                             <td>{{ $abono->id }}</td>
                             <td>$ {{ number_format( $abono->monto, 2 ) }}</td>
                             <td>{{ $abono->nota ? : 'Sin nota' }}</td>
+                            <td><span class="p-1 bg-teal rounded">{{ ( $abono->estado) }}</span></td>
                             <td>{{ $abono->created_at }}</td>
                             <td>
-                                <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $abono->id }}" data-value="{{ $abono->id }}, {{ $abono->monto }}, {{ $abono->nota }}"></x-adminlte-button>
-                                <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $abono->id }}" data-value="{{ $abono->monto }}"></x-adminlte-button>
-                                <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="secondary" data-toggle="modal" data-target="#modalVer" data-id="{{ $abono->id }}" data-value="{{ $abono->monto }}, {{ $abono->nota }}, {{ $abono->cliente->nombre }}, {{ $abono->cliente->deuda }}, {{ $abono->created_at }}"></x-adminlte-button>
+                                @if( $abono->estado != 'Corte')
+                                    <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $abono->id }}" data-value="{{ $abono->id }}, {{ $abono->monto }}, {{ $abono->nota }}"></x-adminlte-button>
+                                    <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $abono->id }}" data-value="{{ $abono->monto }}"></x-adminlte-button>
+                                    <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="secondary" data-toggle="modal" data-target="#modalVer" data-id="{{ $abono->id }}" data-value="{{ $abono->monto }}, {{ $abono->nota }}, {{ $abono->cliente->nombre }}, {{ $abono->cliente->deuda }}, {{ $abono->created_at }}"></x-adminlte-button>
+                                @else
+                                    <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="secondary" data-toggle="modal" data-target="#modalVer" data-id="{{ $abono->id }}" data-value="{{ $abono->monto }}, {{ $abono->nota }}, {{ $abono->cliente->nombre }}, {{ $abono->cliente->deuda }}, {{ $abono->created_at }}"></x-adminlte-button>    
+                                @endif
+                                
                             </td>
                         </tr>
                     @endforeach

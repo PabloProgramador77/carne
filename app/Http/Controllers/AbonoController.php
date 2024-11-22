@@ -112,6 +112,7 @@ class AbonoController extends Controller
                 'monto' => $request->monto,
                 'nota' => $request->nota,
                 'idCliente' => $request->cliente,
+                'estado' => 'Pendiente',
 
             ]);
 

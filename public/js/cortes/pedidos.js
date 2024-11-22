@@ -52,6 +52,7 @@ jQuery(document).ready( function(){
                             var total = 0;
                             var efectivo = 0;
                             var gastos = 0;
+                            var abonos = 0;
 
                             var html = '<thead><tr><th>Cliente</th><th>Total</th><th>Estatus</th><th>Fecha</th></thead>';
 
@@ -95,8 +96,30 @@ jQuery(document).ready( function(){
 
                             }
 
+                            if( respuesta.abonos.length > 0 ){
+
+                                html += '<thead><tr><th>Folio</th><th>Abono</th><th>Nota</th><th>Fecha</th></tr></thead>';
+
+                                respuesta.abonos.forEach( function( abono ){
+
+                                    efectivo += parseFloat( abono.monto );
+
+                                    html += '<tr>';
+                                    html += '<td>'+abono.id+'</td>';
+                                    html += '<td>'+abono.monto+'</td>';
+                                    html += '<td>'+(abono.nota ? abono.nota : 'Sin nota')+'</td>';
+                                    html += '<td>'+abono.created_at+'</td>';
+                                    html += '</tr>';
+
+                                    abonos += parseFloat( abono.monto );
+
+                                });
+
+                            }
+
                             html += '<tr class="bg-primary text-center p-1"><td colspan="4">Total de Ventas: $ '+total+' MXN</td></tr>';
                             html += '<tr class="bg-warning text-center p-1"><td colspan="4">Total de Gastos: $ '+gastos+' MXN</td></tr>';
+                            html += '<tr class="bg-info text-center p-1"><td colspan="4">Total de Abonos: $ '+abonos+'</td></tr>';
 
                             if( efectivo <= 0 ){
 

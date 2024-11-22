@@ -36,7 +36,7 @@
             
             @if( count( $gastos ) > 0 )
                 @php
-                    $heads = ['Folio', 'Importe', 'Descripción', 'Fecha', ''];
+                    $heads = ['Folio', 'Importe', 'Descripción', 'Estado', 'Fecha', ''];
                 @endphp
                 <x-adminlte-datatable id="contenedorgastos" theme="light" :heads="$heads" striped hoverable compressed beautify>
                     @foreach( $gastos as $gasto )
@@ -44,10 +44,16 @@
                             <td>{{ $gasto->id }}</td>
                             <td>$ {{ number_format( $gasto->monto, 2 ) }}</td>
                             <td>{{ $gasto->descripcion }}</td>
+                            <td><span class="p-1 bg-teal rounded">{{ $gasto->estado }}</span></td>
                             <td>{{ $gasto->created_at }}</td>
                             <td>
-                                <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $gasto->id }}" data-value="{{ $gasto->id }}, {{ $gasto->monto }}, {{ $gasto->descripcion }}"></x-adminlte-button>
-                                <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $gasto->id }}" data-value="{{ $gasto->monto }}"></x-adminlte-button>
+                                @if( $gasto->estado != 'Corte')
+                                    <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $gasto->id }}" data-value="{{ $gasto->id }}, {{ $gasto->monto }}, {{ $gasto->descripcion }}"></x-adminlte-button>
+                                    <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $gasto->id }}" data-value="{{ $gasto->monto }}"></x-adminlte-button>
+                                @else
+                                    
+                                @endif
+                                
                             </td>
                         </tr>
                     @endforeach

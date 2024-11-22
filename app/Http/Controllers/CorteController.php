@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Abono;
 use App\Models\Caja;
 use App\Models\Corte;
+use App\Models\CorteHasAbono;
 use App\Models\CorteHasGasto;
 use App\Models\CorteHasPedido;
 use App\Models\Gasto;
@@ -50,11 +52,16 @@ class CorteController extends Controller
                     ->where('gastos.estado', '!=', 'Corte')
                     ->get();
 
-            if( count( $pedidos ) > 0 || count( $gastos ) > 0 ){
+            $abonos = Abono::select('abonos.id', 'abonos.monto', 'abonos.nota', 'abonos.created_at')
+                    ->where('abonos.estado', '!=', 'Corte')
+                    ->get();
+
+            if( count( $pedidos ) > 0 || count( $gastos ) > 0 || count( $abonos ) > 0 ){
 
                 $datos['exito'] = true;
                 $datos['pedidos'] = $pedidos;
                 $datos['gastos'] = $gastos;
+                $datos['abonos'] = $abonos;
 
             }else{
 
@@ -93,79 +100,96 @@ class CorteController extends Controller
             $gastos = Gasto::select('gastos.id', 'gastos.monto', 'gastos.descripcion', 'gastos.estado')
                     ->where('gastos.estado', '!=', 'Corte')
                     ->get();
-            
-            if( count( $pedidos ) > 0 || count( $gastos ) > 0 ){
 
-                $total = 0;
-                $costos = 0;
-                $efectivo = 0;
+            $abonos = Abono::select('abonos.id', 'abonos.monto', 'abonos.nota', 'abonos.estado')
+                    ->where('abonos.estado', '!=', 'Corte')
+                    ->get();
+
+            $total = 0;
+            $costos = 0;
+            $abonado = 0;
+            $efectivo = 0;
+
+            if( count( $pedidos ) > 0 ){
 
                 foreach( $pedidos as $pedido ){
 
                     if( $pedido->estado === 'Pagado' ){
-
+    
                         $efectivo += $pedido->total;
-
+    
                         $orden = Pedido::where('id', '=', $pedido->id)
                                 ->update([
                                     
                                     'estado' => 'Corte',
                                     
                                 ]);
-
+    
                     }
-
+    
                     $total += $pedido->total;
-
+    
                 }
+
+            }
+            
+            if( count( $gastos ) > 0 ){
 
                 foreach( $gastos as $gasto ){
 
                     $efectivo -= $gasto->monto;
-
+    
                     $costo = Gasto::where('id', '=', $gasto->id)
                             ->update([
-
+    
                                 'estado' => 'Corte',
-
-                            ]);
-
-                    $costos += $gasto->monto;
-
-                }
-
-                $corte = Corte::create([
-
-                    'total' => $total,
-                    'efectivo' => $efectivo,
-
-                ]);
-
-                if( $corte->id ){
-
-                    $idCorte = $corte->id;
-
-                    foreach( $pedidos as $pedido ){
-
-                        if( $pedido->estado === 'Pagado' ){
-
-                            $corteHasPedido = CorteHasPedido::create([
-
-                                'idCorte' => $idCorte,
-                                'idPedido' => $pedido->id,
     
                             ]);
+    
+                    $costos += $gasto->monto;
+    
+                }
 
-                        }
+            }
+            
+            if( count( $abonos ) > 0 ){
 
-                    }
+                foreach( $abonos as $abono ){
 
-                    foreach( $gastos as $gasto){
+                    $efectivo += $abono->monto;
+    
+                    Abono::where('id', '=', $abono->id)
+                            ->update([
+    
+                                'estado' => 'Corte',
+    
+                            ]);
+                    
+                    $abonado += $abono->monto;
+    
+                }
 
-                        $corteHasGasto = CorteHasGasto::create([
+            }
+
+            $corte = Corte::create([
+
+                'total' => $total,
+                'efectivo' => $efectivo,
+
+            ]);
+
+            if( $corte->id ){
+
+                $idCorte = $corte->id;
+
+                foreach( $pedidos as $pedido ){
+
+                    if( $pedido->estado === 'Pagado' ){
+
+                        $corteHasPedido = CorteHasPedido::create([
 
                             'idCorte' => $idCorte,
-                            'idGasto' => $gasto->id,
+                            'idPedido' => $pedido->id,
 
                         ]);
 
@@ -173,23 +197,45 @@ class CorteController extends Controller
 
                 }
 
-                $caja = Caja::find( $request->caja );
+                foreach( $gastos as $gasto){
 
-                $totalCaja = floatval( ( ($caja->total + $efectivo) - $costos ) );
+                    $corteHasGasto = CorteHasGasto::create([
 
-                Caja::where('id', '=', $request->caja)
-                        ->update([
+                        'idCorte' => $idCorte,
+                        'idGasto' => $gasto->id,
 
-                            'total' => $totalCaja,
+                    ]);
 
-                        ]);
+                }
 
+                foreach( $abonos as $abono ){
 
-                $this->corte( $idCorte );
+                    $corteHasAbono = CorteHasAbono::create([
 
-                $datos['exito'] = true;
+                        'idCorte' => $idCorte,
+                        'idAbono' => $abono->id,
+
+                    ]);
+
+                }
 
             }
+
+            $caja = Caja::find( $request->caja );
+
+            $totalCaja = floatval( ( ( $caja->total + $efectivo + $abonado ) - $costos ) );
+
+            Caja::where('id', '=', $request->caja)
+                    ->update([
+
+                        'total' => $totalCaja,
+
+                    ]);
+
+
+            $this->corte( $idCorte );
+
+            $datos['exito'] = true;
 
         } catch( \Illuminate\Validation\ValidationException $e ){
 
@@ -293,6 +339,10 @@ class CorteController extends Controller
 
             if( $corte && $corte->id ){
 
+                $totalPedidos = 0;
+                $totalGastos = 0;
+                $totalAbonos = 0;
+
                 $ticket = new \Mpdf\Mpdf([
 
                     'mode' => 'utf-8',
@@ -308,6 +358,51 @@ class CorteController extends Controller
     
                 ]);
 
+                $pedidos = Pedido::select('pedidos.total')
+                        ->join('corte_has_pedidos', 'pedidos.id', '=', 'corte_has_pedidos.idPedido')
+                        ->where('corte_has_pedidos.idCorte', '=', $corte->id)
+                        ->get();
+
+                $gastos = Gasto::select('gastos.monto')
+                        ->join('corte_has_gastos', 'gastos.id', '=', 'corte_has_gastos.idGasto')
+                        ->where('corte_has_gastos.idCorte', '=', $corte->id)
+                        ->get();
+
+                $abonos = Abono::select('abonos.monto')
+                        ->join('corte_has_abonos', 'abonos.id', '=', 'corte_has_abonos.idAbono')
+                        ->where('corte_has_abonos.idCorte', '=', $corte->id)
+                        ->get();
+
+                if( count( $pedidos ) > 0 ){
+
+                    foreach( $pedidos as $pedido ){
+
+                        $totalPedidos += $pedido->total;
+
+                    }
+
+                }
+
+                if( count( $gastos ) > 0 ){
+
+                    foreach( $gastos as $gasto ){
+
+                        $totalGastos += $gasto->monto;
+
+                    }
+                    
+                }
+
+                if( count( $abonos ) > 0 ){
+                    
+                    foreach( $abonos as $abono ){
+
+                        $totalAbonos += $abono->monto;
+
+                    }
+
+                }
+
                 $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
                 $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
                 $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
@@ -317,35 +412,12 @@ class CorteController extends Controller
                 $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
                 $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Concepto:</b> </td><td>Corte de caja</td></tr>');
                 $ticket->writeHTML('</table>');
-
-                $pedidos = Pedido::select('pedidos.total', 'pedidos.created_at', 'clientes.nombre')
-                        ->join('clientes', 'pedidos.idCliente', '=', 'clientes.id')
-                        ->join('corte_has_pedidos', 'pedidos.id', '=', 'corte_has_pedidos.idPedido')
-                        ->where('corte_has_pedidos.idCorte', '=', $corte->id)
-                        ->get();
-
-                if( count( $pedidos ) > 0 ){
-
-                    $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
-                    $ticket->writeHTML('<tr><th>Pedido</th><th>Importe</th></tr>');
-
-                    foreach( $pedidos as $pedido ){
-
-                        $ticket->writeHTML('<tr><td style="font-size: 14px;">'.$pedido->nombre.'</td><td style="font-size: 14px;">$ '.$pedido->total.'</td></tr>');
-
-                    }
-
-                    $ticket->writeHTML('<tr><td colpsan="2" style="text-align: center;"><b>Total de Corte: $ '.$corte->total.'</b></td></tr>');
-                    $ticket->writeHTML('</table>');
-
-                }else{
-
-                    $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
-                    $ticket->writeHTML('<tr><th>Pedido</th><th>Importe</th></tr>');
-                    $ticket->writeHTML('<tr><td colspan="3" style="text-align: center;">Sin pedidos en el corte</td></tr>');
-                    $ticket->writeHTML('</table>');
-
-                }
+                $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+                $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Pedidos: $ '.$totalPedidos.'</b></td></tr>');
+                $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Gastos: $ '.$totalGastos.'</b></td></tr>');
+                $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Abonos: $ '.$totalAbonos.'</b></td></tr>');
+                $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Corte: $ '.$corte->efectivo.'</b></td></tr>');
+                $ticket->writeHTML('</table>');
                 
                 $ticket->Output( public_path('tickets/').'corte'.$corte->id.'.pdf', \Mpdf\Output\Destination::FILE );
 
