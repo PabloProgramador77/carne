@@ -37,7 +37,9 @@
                             <td>$ {{ number_format( $corte->efectivo, 2 ) }}</td>
                             <td>{{ $corte->created_at }}</td>
                             <td>
+                                @can('ver-corte')
                                 <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="info" data-toggle="modal" data-target="#modalVer" data-id="{{ $corte->id }}" data-value="{{ $corte->id }}, {{ $corte->efectivo }}, {{ $corte->created_at }}"></x-adminlte-button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

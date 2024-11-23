@@ -72,7 +72,9 @@
                         </x-adminlte-input>
                     </div>
                     <div class="form-group">
+                        @can('editar-perfil')
                        <x-adminlte-button theme="primary" icon="fas fa-save" label="Guardar" class="shadow" id="aceptar"></x-adminlte-button>
+                        @endcan
                     </div>
                 </form>
             </div>

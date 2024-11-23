@@ -20,7 +20,9 @@
             </div>
 
             <div class="col-lg-2 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo rol" label=""></x-adminlte-button>
+                @can('agregar-role')
+                    <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo rol" label=""></x-adminlte-button>
+                @endcan
             </div>
 
             <div class="col-lg-12">
@@ -42,9 +44,15 @@
                             <td>{{ $rol->id }}</td>
                             <td>{{ $rol->name }}</td>
                             <td>
+                                @can('editar-role')
                                 <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $rol->id }}" data-value="{{ $rol->name }}"></x-adminlte-button>
+                                @endcan
+                                @can('borrar-role')
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $rol->id }}" data-value="{{ $rol->name }}"></x-adminlte-button>
-                                <x-adminlte-button class="shadow permisos" icon="fas fa-user-cog" theme="primary" data-id="{{ $rol->id }}" data-value="{{ $rol->name }}" data-toggle="modal" data-target="#modalPermisos"></x-adminlte-button>
+                                @endcan
+                                @can('asignar-permisos')
+                                    <x-adminlte-button class="shadow permisos" icon="fas fa-user-cog" theme="primary" data-id="{{ $rol->id }}" data-value="{{ $rol->name }}" data-toggle="modal" data-target="#modalPermisos"></x-adminlte-button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

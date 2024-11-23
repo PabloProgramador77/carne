@@ -20,7 +20,9 @@
             </div>
 
             <div class="col-lg-2 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo producto" label=""></x-adminlte-button>
+                @can('agregar-producto')
+                    <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo producto" label=""></x-adminlte-button>
+                @endcan
             </div>
 
             <div class="col-lg-12">
@@ -43,8 +45,12 @@
                             <td>{{ $producto->nombre }}</td>
                             <td>{{ $producto->descripcion ? $producto->descripcion : 'Sin descripción' }}</td>
                             <td>
+                                @can('editar-producto')
                                 <x-adminlte-button class="shadow editar" theme="info" data-id="{{ $producto->id }}" data-toggle="modal" data-target="#modalEditar" data-value="{{ $producto->nombre }}, {{ $producto->descripcion }}" icon="fas fa-edit" ></x-adminlte-button>
+                                @endcan
+                                @can('borrar-producto')
                                 <x-adminlte-button class="shadow borrar" theme="danger" data-id="{{ $producto->id }}" data-value="{{ $producto->nombre }}" icon="fas fa-trash"></x-adminlte-button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

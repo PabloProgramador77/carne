@@ -22,7 +22,9 @@
             </div>
 
             <div class="col-lg-2 my-2">
+                @can('asignar-productos')
                 <x-adminlte-button theme="success" icon="fas fa-save" title="Guardar precios" label=" Guardar" class="shadow" id="guardar"></x-adminlte-button>
+                @endcan
             </div>
 
             <div class="col-lg-12">

@@ -20,7 +20,9 @@
             </div>
 
             <div class="col-lg-2 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo permiso" label=""></x-adminlte-button>
+                @can('agregar-permiso')
+                    <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo permiso" label=""></x-adminlte-button>
+                @endcan
             </div>
 
             <div class="col-lg-12">
@@ -42,8 +44,12 @@
                             <td>{{ $permiso->id }}</td>
                             <td>{{ $permiso->name }}</td>
                             <td>
+                                @can('editar-permiso')
                                 <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $permiso->id }}" data-value="{{ $permiso->name }}"></x-adminlte-button>
+                                @endcan
+                                @can('borrar-permiso')
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $permiso->id }}" data-value="{{ $permiso->name }}"></x-adminlte-button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

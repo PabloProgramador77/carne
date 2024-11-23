@@ -20,9 +20,15 @@
             </div>
 
             <div class="col-lg-3 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo pedido"></x-adminlte-button>
-                <x-adminlte-button theme="warning" data-toggle="modal" data-target="#modalCorte" icon="fas fa-cash-register" title="Corte de caja" class="mx-3" id="corte"></x-adminlte-button>
+                @can('agregar-pedido')
+                    <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo pedido"></x-adminlte-button>
+                @endcan
+                @can('corte-pedidos')
+                    <x-adminlte-button theme="warning" data-toggle="modal" data-target="#modalCorte" icon="fas fa-cash-register" title="Corte de caja" class="mx-3" id="corte"></x-adminlte-button>
+                @endcan
+                @can('ventas-pedidos')
                 <x-adminlte-button theme="secondary" data-toggle="modal" data-target="#modalVentas" icon="fas fa-info-circle" title="Consulta de ventas" id="ventas"></x-adminlte-button>
+                @endcan
             </div>
 
             <div class="col-lg-12">
@@ -58,15 +64,25 @@
                                                 <td>{{ $pedido->created_at }}</td>
                                                 <td>
                                                     @if( $pedido->estado === 'Pendiente')
+                                                        @can('ver-pedido')
                                                         <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                                        @endcan
+                                                        @can('entregar-pedido')
                                                         <x-adminlte-button class="shadow cobrar" id="cobrar" theme="warning" icon="fas fa-hand-holding-usd" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalCobrar"></x-adminlte-button>
+                                                        @endcan
                                                     @endif
                                                     @if( $pedido->estado === 'Entregado' )
+                                                        @can('pagar-pedido')
                                                         <x-adminlte-button class="shadow pagar" id="pagar" theme="success" icon="fas fa-dollar-sign" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}"></x-adminlte-button>
+                                                        @endcan
+                                                        @can('ver-pedido')
                                                         <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                                        @endcan
                                                     @endif
                                                     @if( $pedido->estado === 'Pagado')
+                                                        @can('ver-pedido')
                                                         <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                                        @endcan
                                                     @endif
                                                 </td>
                                             </tr>

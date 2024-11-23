@@ -20,7 +20,9 @@
             </div>
 
             <div class="col-lg-2 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nueva caja" label=""></x-adminlte-button>
+                @can('agregar-caja')
+                    <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nueva caja" label=""></x-adminlte-button>
+                @endcan
             </div>
 
             <div class="col-lg-12">
@@ -43,9 +45,15 @@
                             <td>$ {{ number_format( $caja->total, 2 ) }}</td>
                             <td>$ {{ number_format( $caja->apertura) }}</td>
                             <td>
+                                @can('editar-caja')
                                 <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $caja->id }}" data-value="{{ $caja->id }}, {{ $caja->nombre }}, {{ $caja->total }}"></x-adminlte-button>
+                                @endcan
+                                @can('borrar-caja')
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $caja->id }}" data-value="{{ $caja->nombre }}"></x-adminlte-button>
+                                @endcan
+                                @can('gastos-caja')
                                 <a href="{{ url('/gastos') }}/{{ $caja->id }}" class="btn btn-secondary shadow gastos" title="Gastos"><i class="fas fa-hand-holding-usd"></i></a>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

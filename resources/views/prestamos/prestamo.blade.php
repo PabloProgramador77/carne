@@ -17,7 +17,9 @@
         </div>
     </div>
     <x-slot name="footerSlot">
+        @can('imprimir-prestamo')
         <x-adminlte-button theme="primary" label=" Imprimir" id="imprimir" icon="fas fa-print"></x-adminlte-button>
+        @endcan
         <x-adminlte-button theme="danger" label=" Cerrar" id="cancelar" data-dismiss="modal" icon="fas fa-window-close"></x-adminlte-button>
     </x-slot>
 </x-adminlte-modal>

@@ -29,7 +29,9 @@
             </div>
 
             <div class="col-lg-2 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo prestamo" label=""></x-adminlte-button>
+                @can('agregar-prestamo')
+                    <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo prestamo" label=""></x-adminlte-button>
+                @endcan
             </div>
 
             <div class="col-lg-12">
@@ -52,9 +54,15 @@
                             <td>{{ $prestamo->nota ? : 'Sin nota' }}</td>
                             <td>{{ $prestamo->created_at }}</td>
                             <td>
+                                @can('editar-producto')
                                 <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $prestamo->id }}" data-value="{{ $prestamo->id }}, {{ $prestamo->monto }}, {{ $prestamo->nota }}"></x-adminlte-button>
+                                @endcan
+                                @can('borrar-producto')
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $prestamo->id }}" data-value="{{ $prestamo->monto }}"></x-adminlte-button>
+                                @endcan
+                                @can('ver-producto')
                                 <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="secondary" data-toggle="modal" data-target="#modalVer" data-id="{{ $prestamo->id }}" data-value="{{ $prestamo->monto }}, {{ $prestamo->nota }}, {{ $prestamo->cliente->nombre }}, {{ $prestamo->cliente->deuda }}, {{ $prestamo->created_at }}"></x-adminlte-button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

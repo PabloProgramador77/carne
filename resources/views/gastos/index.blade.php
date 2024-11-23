@@ -22,8 +22,12 @@
             </div>
 
             <div class="col-lg-2 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo gasto" class="shadow"></x-adminlte-button>
-                <x-adminlte-button theme="info" icon="fas fa-dollar-sign" title="Monto de apertura" class="mx-2 shadow" id="apertura"></x-adminlte-button>
+                @can('agregar-gasto')
+                    <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo gasto" class="shadow"></x-adminlte-button>
+                @endcan
+                @can('apertura-gastos')
+                    <x-adminlte-button theme="info" icon="fas fa-dollar-sign" title="Monto de apertura" class="mx-2 shadow" id="apertura"></x-adminlte-button>
+                @endcan
             </div>
 
             <div class="col-lg-12">
@@ -48,8 +52,12 @@
                             <td>{{ $gasto->created_at }}</td>
                             <td>
                                 @if( $gasto->estado != 'Corte')
+                                    @can('editar-gasto')
                                     <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $gasto->id }}" data-value="{{ $gasto->id }}, {{ $gasto->monto }}, {{ $gasto->descripcion }}"></x-adminlte-button>
+                                    @endcan
+                                    @can('borrar-gasto')
                                     <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $gasto->id }}" data-value="{{ $gasto->monto }}"></x-adminlte-button>
+                                    @endcan
                                 @else
                                     
                                 @endif

@@ -20,7 +20,9 @@
             </div>
 
             <div class="col-lg-2 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo usuario" label=""></x-adminlte-button>
+                @can('agregar-usuario')
+                    <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo usuario" label=""></x-adminlte-button>
+                @endcan
             </div>
 
             <div class="col-lg-12">
@@ -44,8 +46,12 @@
                             <td>{{ $usuario->email }}</td>
                             <td><span class="bg-teal rounded p-1">{{ $usuario->getRoleNames()->first() ? : 'Sin rol' }}</span></td>
                             <td>
+                                @can('editar-usuario')
                                 <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $usuario->id }}" data-value="{{ $usuario->name }}, {{ $usuario->email }}, {{ $usuario->getRoleNames()->first() }}"></x-adminlte-button>
+                                @endcan
+                                @can('borrar-usuario')
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $usuario->id }}" data-value="{{ $usuario->name }}"></x-adminlte-button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

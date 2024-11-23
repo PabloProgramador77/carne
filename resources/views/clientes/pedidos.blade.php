@@ -41,15 +41,25 @@
                             <td>{{ $pedido->created_at }}</td>
                             <td>
                                 @if( $pedido->estado === 'Pendiente')
+                                    @can('ver-pedido')
                                     <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                    @endcan
+                                    @can('entregar-pedido')
                                     <x-adminlte-button class="shadow cobrar" id="cobrar" theme="warning" icon="fas fa-hand-holding-usd" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalCobrar"></x-adminlte-button>
+                                    @endcan
                                 @endif
                                 @if( $pedido->estado === 'Entregado' )
+                                    @can('pagar-pedido')
                                     <x-adminlte-button class="shadow pagar" id="pagar" theme="success" icon="fas fa-dollar-sign" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}"></x-adminlte-button>
+                                    @endcan
+                                    @can('ver-pedido')
                                     <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                    @endcan
                                 @endif
                                 @if( $pedido->estado === 'Pagado' || $pedido->estado === 'Corte')
+                                    @can('ver-pedido')
                                     <x-adminlte-button class="shadow ver" theme="info" icon="fas fa-info-circle" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalVer"></x-adminlte-button>
+                                    @endcan
                                 @endif
                             </td>
                         </tr>

@@ -15,7 +15,7 @@
                         <td>{{ $cliente->id }}</td>
                         <td>{{ $cliente->nombre }}</td>
                         <td>{{ ( $cliente->telefono ? : 'Sin telefono' ) }}</td>
-                        <td>{{ ( $cliente->domicilio ? : 'Sin domcilio') }}</td>
+                        <td>{{ ( $cliente->domicilio ? : 'Sin domicilio') }}</td>
                         <td>
                             <a href="{{ url('pedido/cliente') }}/{{ $cliente->id }}" class="btn btn-success shadow rounded" title="Iniciar pedido"><i class="fas fa-shopping-cart"></i></a>
                         </td>

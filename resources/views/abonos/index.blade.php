@@ -29,8 +29,12 @@
             </div>
 
             <div class="col-lg-2 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo abono" label="" id="nuevo"></x-adminlte-button>
+                @can('agregar-abono')
+                    <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo abono" label="" id="nuevo"></x-adminlte-button>
+                @endcan
+                @can('liquidar-abono')
                 <x-adminlte-button theme="success" data-toggle="modal" data-target="#modalLiquidar" icon="fas fa-dollar-sign" title="Liquidar deuda" class="mx-5" data-value="{{ $cliente->id }}, {{ $cliente->deuda }}" id="liquidar"></x-adminlte-button>
+                @endcan
             </div>
 
             <div class="col-lg-12">
@@ -55,11 +59,19 @@
                             <td>{{ $abono->created_at }}</td>
                             <td>
                                 @if( $abono->estado != 'Corte')
+                                    @can('editar-abono')
                                     <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $abono->id }}" data-value="{{ $abono->id }}, {{ $abono->monto }}, {{ $abono->nota }}"></x-adminlte-button>
-                                    <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $abono->id }}" data-value="{{ $abono->monto }}"></x-adminlte-button>
+                                    @endcan
+                                    @can('borrar-abono')
+                                        <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $abono->id }}" data-value="{{ $abono->monto }}"></x-adminlte-button>
+                                    @endcan
+                                    @can('ver-abono')
                                     <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="secondary" data-toggle="modal" data-target="#modalVer" data-id="{{ $abono->id }}" data-value="{{ $abono->monto }}, {{ $abono->nota }}, {{ $abono->cliente->nombre }}, {{ $abono->cliente->deuda }}, {{ $abono->created_at }}"></x-adminlte-button>
+                                    @endcan
                                 @else
+                                    @can('ver-abono')
                                     <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="secondary" data-toggle="modal" data-target="#modalVer" data-id="{{ $abono->id }}" data-value="{{ $abono->monto }}, {{ $abono->nota }}, {{ $abono->cliente->nombre }}, {{ $abono->cliente->deuda }}, {{ $abono->created_at }}"></x-adminlte-button>    
+                                    @endcan
                                 @endif
                                 
                             </td>

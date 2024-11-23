@@ -23,6 +23,8 @@
                 <option value="{{ $caja->id }}">{{ $caja->nombre }}</option>
             @endforeach
         </x-adminlte-select>
+        @can('agregar-corte')
         <x-adminlte-button theme="success" label=" Imprimir" id="imprimirCorte" icon="fas fa-print" class="shadow mx-5"></x-adminlte-button>
+        @endcan
     </x-slot>
 </x-adminlte-modal>

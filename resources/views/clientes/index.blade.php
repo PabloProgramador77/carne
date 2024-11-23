@@ -20,7 +20,9 @@
             </div>
 
             <div class="col-lg-2 my-2">
-                <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo cliente" label=""></x-adminlte-button>
+                @can('agregar-cliente')
+                    <x-adminlte-button theme="primary" data-toggle="modal" data-target="#modalNuevo" icon="fas fa-plus-circle" title="Nuevo cliente" label=""></x-adminlte-button>
+                @endcan
             </div>
 
             <div class="col-lg-12">
@@ -44,12 +46,24 @@
                             <td>{{ $cliente->telefono ? : 'Sin telefono' }}</td>
                             <td>{{ $cliente->domicilio ? : 'Sin domicilio' }}</td>
                             <td>
+                                @can('editar-cliente')
                                 <x-adminlte-button class="shadow editar" icon="fas fa-edit" theme="info" data-toggle="modal" data-target="#modalEditar" data-id="{{ $cliente->id }}" data-value="{{ $cliente->nombre }}, {{ $cliente->telefono }}, {{ $cliente->domicilio }}"></x-adminlte-button>
+                                @endcan
+                                @can('borrar-cliente')
                                 <x-adminlte-button class="shadow borrar" icon="fas fa-trash" theme="danger" data-id="{{ $cliente->id }}" data-value="{{ $cliente->nombre }}"></x-adminlte-button>
-                                <a href="{{ url('/cliente/productos') }}/{{ $cliente->id }}" class="btn btn-secondary shadow rounded" title="Productos de cliente"><i class="fas fa-drumstick-bite"></i></a>
+                                @endcan
+                                @can('productos-cliente')
+                                    <a href="{{ url('/cliente/productos') }}/{{ $cliente->id }}" class="btn btn-secondary shadow rounded" title="Productos de cliente"><i class="fas fa-drumstick-bite"></i></a>
+                                @endcan
+                                @can('pedidos-cliente')
                                 <a href="{{ url('/cliente/pedidos') }}/{{ $cliente->id }}" class="btn btn-success shadow rounded" title="Pedidos de cliente"><i class="fas fa-shopping-cart"></i></a>
-                                <a href="{{ url('/cliente/abonos') }}/{{ $cliente->id }}" class="btn btn-warning shadow rounded" title="Abonos de cliente"><i class="fas fa-hand-holding-usd"></i></a>
+                                @endcan
+                                @can('abonos-cliente')
+                                    <a href="{{ url('/cliente/abonos') }}/{{ $cliente->id }}" class="btn btn-warning shadow rounded" title="Abonos de cliente"><i class="fas fa-hand-holding-usd"></i></a>
+                                @endcan
+                                @can('prestamos-cliente')
                                 <a href="{{ url('/cliente/prestamos') }}/{{ $cliente->id }}" class="btn btn-primary shadow rounded" title="Prestamos de cliente"><i class="fas fa-hand-holding-usd"></i></a>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
