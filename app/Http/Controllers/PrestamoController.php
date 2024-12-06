@@ -131,8 +131,6 @@ class PrestamoController extends Controller
 
                         ]);
 
-                $this->create( $cliente->id, $idPrestamo );
-
             }
 
             $datos['exito'] = true;

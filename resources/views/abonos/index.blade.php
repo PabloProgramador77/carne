@@ -54,7 +54,7 @@
                         <tr>
                             <td>{{ $abono->id }}</td>
                             <td>$ {{ number_format( $abono->monto, 2 ) }}</td>
-                            <td>{{ $abono->nota ? : 'Sin nota' }}</td>
+                            <td>{{ $abono->nota ? $abono->nota : 'Sin nota' }}</td>
                             <td><span class="p-1 bg-teal rounded">{{ ( $abono->estado) }}</span></td>
                             <td>{{ $abono->created_at }}</td>
                             <td>

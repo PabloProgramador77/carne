@@ -150,8 +150,6 @@ class AbonoController extends Controller
 
                 }
 
-                $this->create( $cliente->id, $idAbono );
-
                 $datos['exito'] = true;
 
             }else{
