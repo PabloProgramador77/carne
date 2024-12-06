@@ -35,6 +35,7 @@ Route::post('/pedido/buscar', [App\Http\Controllers\PedidoController::class, 'sh
 Route::post('/pedido/pagar', [App\Http\Controllers\PedidoController::class, 'update'])->name('pagar-pedido');
 Route::post('/pedidos/ventas', [App\Http\Controllers\PedidoController::class, 'ventas'])->name('ventas');
 Route::post('/pedido/imprimir', [App\Http\Controllers\PedidoController::class, 'imprimir'])->name('imprimir-pedido');
+Route::post('/pedido/borrar', [App\Http\Controllers\PedidoController::class, 'destroy'])->name('borrar-pedido');
 
 Route::get('/cortes', [App\Http\Controllers\CorteController::class, 'index'])->name('cortes');
 Route::post('/corte/nuevo', [App\Http\Controllers\CorteController::class, 'create'])->name('nuevo-corte');
