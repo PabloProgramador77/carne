@@ -26,7 +26,7 @@
                     @if (Route::has('login'))
                         <nav class="-mx-3 flex flex-1 justify-end">
                             @auth
-                                <a href="{{ url('/') }}" class="btn btn-info shadow rounded">
+                                <a href="{{ url('/home') }}" class="btn btn-info shadow rounded">
                                     <b>Continuar</b>
                                 </a>
                             @else
@@ -41,7 +41,7 @@
 
             <footer class="mt-auto text-white-50">
                 <p class="fs-6">Diseñado y desarrollado por <a href="https://pabloprogramador.com.mx" class="text-white">PabloProgramador</a> para <u>Carniceria La Higienica</u></p>
-                <span class="fs-6 text-light text-center d-block">Versión 1.1.3</span>
+                <span class="fs-6 text-light text-center d-block">Versión 1.1.4</span>
             </footer>
         </div>
     </body>

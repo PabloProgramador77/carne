@@ -63,6 +63,7 @@ jQuery(document).ready( function(){
 
         $("#modalConversor").css('display', 'none');
         $(".modal-backdrop").remove();
+        $("body").css('overflow', 'auto');
 
         var totalPedido = 0;
 
