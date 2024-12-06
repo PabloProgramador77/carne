@@ -47,7 +47,9 @@
                                     @can('entregar-pedido')
                                     <x-adminlte-button class="shadow cobrar" id="cobrar" theme="warning" icon="fas fa-hand-holding-usd" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}, {{ $pedido->total }}, {{ $pedido->created_at }}" data-toggle="modal" data-target="#modalCobrar"></x-adminlte-button>
                                     @endcan
+                                    @can('borrar-pedido')
                                     <x-adminlte-button class="shadow borrar" id="borrar" theme="danger" icon="fas fa-trash" data-id="{{ $pedido->id }}" data-value="{{ $pedido->cliente->nombre }}"></x-adminlte-button>
+                                    @endcan
                                 @endif
                                 @if( $pedido->estado === 'Entregado' )
                                     @can('pagar-pedido')
