@@ -71,7 +71,7 @@ jQuery(document).ready( function(){
     
                                 if( respuesta.exito && resultado.isConfirmed ){
 
-                                    window.location.href = 'intent:#Intent;scheme=rawbt;type=application/pdf;S.url=${respuesta.url};end';
+                                    window.location.href = respuesta.url;
 
                                 }
     
