@@ -105,6 +105,7 @@ class PedidoHasProductoController extends Controller
             $pedidoController->create( $request->pedido );
 
             $datos['exito'] = true;
+            $datos['url'] = public_path('tickets/').'ticket'.$request->pedido.'.pdf';
 
         } catch( \Illuminate\Validation\ValidationException $e ){
 

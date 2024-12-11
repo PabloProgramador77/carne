@@ -63,16 +63,16 @@ jQuery(document).ready( function(){
                                 icon: 'success',
                                 title: 'Pedido terminado',
                                 allowOutsideClick: false,
-                                showConfirmButton: false,
+                                showConfirmButton: true,
                                 timer: 2000,
                                 timerProgressBar: true,
     
                             }).then((resultado)=>{
     
-                                if( resultado.dismiss === Swal.DismissReason.timer ){
-    
-                                    window.location.href = '/pedidos';
-    
+                                if( respuesta.exito && resultado.isConfirmed ){
+
+                                    window.location.href = 'intent:#Intent;scheme=rawbt;type=application/pdf;S.url=${respuesta.url};end';
+
                                 }
     
                             });
