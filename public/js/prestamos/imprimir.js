@@ -29,15 +29,17 @@ jQuery(document).ready(function(){
                     icon: 'success',
                     title: 'Prestamo reimpreso',
                     allowOutsideClick: false,
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true,
+                    showConfirmButton: true,
 
                 }).then( function( resultado){
 
-                    if( resultado.dismiss === Swal.DismissReason.timer ){
+                    if( resultado.isConfirmed ){
 
-                        window.location.href = '/cliente/prestamos/'+$("#idCliente").val();
+                        window.open('http://carne.dev/tickets/reimpresionPrestamo'+$("#idPrestamo").val()+'.pdf', '_blank');
+
+                        setTimeout( function(){
+                            window.location.href = '/prestamos';
+                        }, 2000);
 
                     }
 

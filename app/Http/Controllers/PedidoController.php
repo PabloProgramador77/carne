@@ -49,7 +49,7 @@ class PedidoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['58', '2750'],
+                'format' => ['80', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
                 'margin_left' => 5,
@@ -120,6 +120,52 @@ class PedidoController extends Controller
                     $ticket->writeHTML('<p style="text-align: center; margin-top: 20px;">_____________________</p>');
                     $ticket->writeHTML('<p style="text-align: center;">Firma de '.$pedido->cliente->nombre.'</p>');
 
+                    //Copia
+                    $total = 0;
+                    
+                    $ticket->writeHTML('<h4 style="page-break-before: always; text-align: center;">Carniceria La Higienica</h4>');
+                    $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
+                    $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
+                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$pedido->cliente->nombre.'</h5>');
+                    $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+                    $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
+                    $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Folio:</b></td><td>'.$pedido->id.'</td></tr>');
+                    $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Concepto:</b></td><td>Compra</td></tr>');
+                    $ticket->writeHTML('</table>');
+
+                    if( $pedido->nota !== '' || $pedido->nota !== NULL || $pedido->nota !== 'Sin nota' ){
+
+                        $ticket->writeHTML('<p style="font-size: 12px; overflow: auto;"><b>Nota:</b> '.$pedido->nota.'</p>');
+
+                    }
+
+                    $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
+                    $ticket->writeHTML('<thead style="border-bottom: 2px;">');
+                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Importe</th></tr>');
+                    $ticket->writeHTML('</thead>');
+                    $ticket->writeHTML('<tbody>');
+
+                    foreach( $productos as $producto ){
+
+                        $cantidad = is_numeric( $producto->cantidad ) ? floatval( $producto->cantidad ) : round( floatval( $producto->cantidad ) );
+                        $precio = is_numeric( $producto->precio ) ? floatval( $producto->precio ) : round( floatval( $producto->precio ) );
+
+                        $ticket->writeHTML('<tr>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
+                        $ticket->writeHTML('</tr>');
+
+                        $total += ($cantidad * $precio);
+
+                    }
+
+                    $ticket->writeHTML('</tbody>');
+                    $ticket->writeHTML('</table>');
+                    $ticket->writeHTML('<p style="text-align: center;"><b>Total: $ '.number_format( $total, 2).'</b></p>');
+                    $ticket->writeHTML('<p style="text-align: center; margin-top: 20px;">TICKET COPIA</p>');
+
                 }
 
             }
@@ -134,7 +180,7 @@ class PedidoController extends Controller
 
             if( file_exists( public_path('tickets/').'ticket'.$pedido->id.'.pdf' ) ){
 
-                $this->copia( $id );
+                //$this->copia( $id );
 
                 return true;
 
@@ -426,7 +472,7 @@ class PedidoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['58', '2750'],
+                'format' => ['80', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
                 'margin_left' => 5,
@@ -541,7 +587,7 @@ class PedidoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['58', '2750'],
+                'format' => ['80', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
                 'margin_left' => 5,

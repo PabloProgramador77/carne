@@ -64,14 +64,16 @@ jQuery(document).ready( function(){
                                 title: 'Pedido terminado',
                                 allowOutsideClick: false,
                                 showConfirmButton: true,
-                                timer: 2000,
-                                timerProgressBar: true,
     
                             }).then((resultado)=>{
     
                                 if( respuesta.exito && resultado.isConfirmed ){
 
-                                    window.location.href = respuesta.url;
+                                    window.open('http://carne.dev/tickets/ticket'+$("#idPedido").val()+'.pdf', '_blank');
+
+                                    setTimeout( function(){
+                                        window.location.href = '/pedidos';
+                                    }, 2000);
 
                                 }
     

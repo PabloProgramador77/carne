@@ -29,15 +29,17 @@ jQuery(document).ready(function(){
                     icon: 'success',
                     title: 'Pedido reimpreso',
                     allowOutsideClick: false,
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true,
+                    showConfirmButton: true,
 
                 }).then( function( resultado){
 
-                    if( resultado.dismiss === Swal.DismissReason.timer ){
+                    if( resultado.isConfirmed ){
 
-                        window.location.href = '/pedidos';
+                        window.open('http://carne.dev/tickets/reimpresion'+$("#idPedido").val()+'.pdf', '_blank');
+
+                        setTimeout( function(){
+                            window.location.href = '/pedidos';
+                        }, 2000);
 
                     }
 

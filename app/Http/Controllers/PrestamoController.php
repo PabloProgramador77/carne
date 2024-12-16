@@ -49,7 +49,7 @@ class PrestamoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['58', '2750'],
+                'format' => ['80', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
                 'margin_left' => 5,
@@ -292,7 +292,7 @@ class PrestamoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['58', '2750'],
+                'format' => ['80', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
                 'margin_left' => 5,
@@ -354,7 +354,7 @@ class PrestamoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['58', '2750'],
+                'format' => ['80', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
                 'margin_left' => 5,

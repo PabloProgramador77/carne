@@ -29,15 +29,17 @@ jQuery(document).ready(function(){
                     icon: 'success',
                     title: 'Abono reimpreso',
                     allowOutsideClick: false,
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
+                    showConfirmButton: true,
 
                 }).then( function( resultado){
 
-                    if( resultado.dismiss === Swal.DismissReason.timer ){
+                    if( resultado.isConfirmed ){
 
-                        window.location.href = '/cliente/abonos/'+$("#idCliente").val();
+                        window.open('http://carne.dev/tickets/reimpresionAbono'+$("#idAbono").val()+'.pdf', '_blank');
+
+                        setTimeout( function(){
+                            window.location.href = '/abonos';
+                        }, 2000);
 
                     }
 
