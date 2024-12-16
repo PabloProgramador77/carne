@@ -79,7 +79,7 @@ class PedidoController extends Controller
                     $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
                     $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
                     $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
-                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at->format('dd/mm/yy g:i A').'</h6>');
                     $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$pedido->cliente->nombre.'</h5>');
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
                     $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
@@ -95,7 +95,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
                     $ticket->writeHTML('<thead style="border-bottom: 2px;">');
-                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Importe</th></tr>');
+                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Precio</th><th>Importe</th></tr>');
                     $ticket->writeHTML('</thead>');
                     $ticket->writeHTML('<tbody>');
 
@@ -107,6 +107,7 @@ class PedidoController extends Controller
                         $ticket->writeHTML('<tr>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.$producto->precio.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
@@ -126,7 +127,7 @@ class PedidoController extends Controller
                     $ticket->writeHTML('<h4 style="page-break-before: always; text-align: center;">Carniceria La Higienica</h4>');
                     $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
                     $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
-                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at->format('dd/mm/yy g:i A').'</h6>');
                     $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$pedido->cliente->nombre.'</h5>');
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
                     $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
@@ -142,7 +143,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
                     $ticket->writeHTML('<thead style="border-bottom: 2px;">');
-                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Importe</th></tr>');
+                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Precio</th><th>Importe</th></tr>');
                     $ticket->writeHTML('</thead>');
                     $ticket->writeHTML('<tbody>');
 
@@ -154,6 +155,7 @@ class PedidoController extends Controller
                         $ticket->writeHTML('<tr>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.$producto->precio.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
@@ -502,7 +504,7 @@ class PedidoController extends Controller
                     $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
                     $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
                     $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
-                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at->format('dd/mm/yy g:i A').'</h6>');
                     $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$pedido->cliente->nombre.'</h5>');
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
                     $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
@@ -518,7 +520,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
                     $ticket->writeHTML('<thead style="border-bottom: 2px;">');
-                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Importe</th></tr>');
+                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Precio</th><th>Importe</th></tr>');
                     $ticket->writeHTML('</thead>');
                     $ticket->writeHTML('<tbody>');
 
@@ -530,6 +532,7 @@ class PedidoController extends Controller
                         $ticket->writeHTML('<tr>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.$producto->precio.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
@@ -617,7 +620,7 @@ class PedidoController extends Controller
                     $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
                     $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
                     $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
-                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at.'</h6>');
+                    $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$pedido->created_at->format('dd/mm/yy g:i A').'</h6>');
                     $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$pedido->cliente->nombre.'</h5>');
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
                     $ticket->writeHTML('<tr><td>Cajero:</td><td>'.auth()->user()->name.'</td></tr>');
@@ -633,7 +636,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
                     $ticket->writeHTML('<thead style="border-bottom: 2px;">');
-                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Importe</th></tr>');
+                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Precio</th><th>Importe</th></tr>');
                     $ticket->writeHTML('</thead>');
                     $ticket->writeHTML('<tbody>');
 
@@ -645,6 +648,7 @@ class PedidoController extends Controller
                         $ticket->writeHTML('<tr>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.$producto->precio.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 

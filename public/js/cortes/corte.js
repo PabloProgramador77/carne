@@ -43,15 +43,17 @@ jQuery(document).ready( function(){
                             icon: 'success',
                             title: 'Corte realizado',
                             allowOutsideClick: false,
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true,
+                            showConfirmButton: true,
 
                         }).then((resultado)=>{
 
-                            if( resultado.dismiss === Swal.DismissReason.timer ){
+                            if( resultado.isConfirmed ){
 
-                                window.location.href = '/pedidos';
+                                window.open('http://carne.dev/tickets/corte'+respuesta.corte+'.pdf', '_blank');
+
+                                setTimeout( function(){
+                                    window.location.href = '/pedidos';
+                                }, 2000);
 
                             }
 
