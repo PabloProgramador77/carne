@@ -49,7 +49,7 @@ jQuery(document).ready( function(){
 
                             if( resultado.isConfirmed ){
 
-                                window.open('http://carne.dev/tickets/corte'+respuesta.corte+'.pdf', '_blank');
+                                window.open('http://127.0.0.1:8000/tickets/corte'+respuesta.corte+'.pdf', '_blank');
 
                                 setTimeout( function(){
                                     window.location.href = '/pedidos';

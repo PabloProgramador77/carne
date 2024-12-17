@@ -69,7 +69,7 @@ jQuery(document).ready( function(){
     
                                 if( respuesta.exito && resultado.isConfirmed ){
 
-                                    window.open('http://carne.dev/tickets/ticket'+$("#idPedido").val()+'.pdf', '_blank');
+                                    window.open('http://127.0.0.1:8000/tickets/ticket'+$("#idPedido").val()+'.pdf', '_blank');
 
                                     setTimeout( function(){
                                         window.location.href = '/pedidos';

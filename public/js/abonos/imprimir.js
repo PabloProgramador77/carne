@@ -35,7 +35,7 @@ jQuery(document).ready(function(){
 
                     if( resultado.isConfirmed ){
 
-                        window.open('http://carne.dev/tickets/reimpresionAbono'+$("#idAbono").val()+'.pdf', '_blank');
+                        window.open('http://127.0.0.1:8000/tickets/reimpresionAbono'+$("#idAbono").val()+'.pdf', '_blank');
 
                         setTimeout( function(){
                             window.location.href = '/abonos';

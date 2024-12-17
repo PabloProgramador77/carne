@@ -35,7 +35,7 @@ jQuery(document).ready(function(){
 
                     if( resultado.isConfirmed ){
 
-                        window.open('http://carne.dev/tickets/reimpresionPrestamo'+$("#idPrestamo").val()+'.pdf', '_blank');
+                        window.open('http://127.0.0.1:8000/tickets/reimpresionPrestamo'+$("#idPrestamo").val()+'.pdf', '_blank');
 
                         setTimeout( function(){
                             window.location.href = '/prestamos';
