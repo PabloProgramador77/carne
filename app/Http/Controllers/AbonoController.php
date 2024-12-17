@@ -54,12 +54,10 @@ class AbonoController extends Controller
                 'format' => ['58', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
-                'margin_left' => 5,
-                'margin_right' => 5,
+                'margin_left' => 0,
+                'margin_right' => 0,
                 'margin_top' => 5,
                 'margin_bottom' => 5,
-                'margin_header' => 5,
-                'margin_footer' => 5,
 
             ]);
 
@@ -69,7 +67,7 @@ class AbonoController extends Controller
             $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
-            $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->updated_at.'</h6>');
+            $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->created_at->format('dd/mm/yy g:i A').'</h6>');
             $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$cliente->nombre.'</h5>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
             $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
@@ -346,12 +344,10 @@ class AbonoController extends Controller
                 'format' => ['58', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
-                'margin_left' => 5,
-                'margin_right' => 5,
+                'margin_left' => 0,
+                'margin_right' => 0,
                 'margin_top' => 5,
                 'margin_bottom' => 5,
-                'margin_header' => 5,
-                'margin_footer' => 5,
 
             ]);
 
@@ -361,7 +357,7 @@ class AbonoController extends Controller
             $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
-            $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->updated_at.'</h6>');
+            $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->created_at->format('dd/mm/yy g:i A').'</h6>');
             $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$cliente->nombre.'</h5>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
             $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
@@ -408,12 +404,10 @@ class AbonoController extends Controller
                 'format' => ['58', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
-                'margin_left' => 5,
-                'margin_right' => 5,
+                'margin_left' => 0,
+                'margin_right' => 0,
                 'margin_top' => 5,
                 'margin_bottom' => 5,
-                'margin_header' => 5,
-                'margin_footer' => 5,
 
             ]);
 
@@ -423,7 +417,7 @@ class AbonoController extends Controller
             $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
-            $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->updated_at.'</h6>');
+            $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->created_at->format('dd/mm/yy g:i A').'</h6>');
             $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$cliente->nombre.'</h5>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
             $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
