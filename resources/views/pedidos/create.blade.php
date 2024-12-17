@@ -31,38 +31,51 @@
         </div>
 
         <div class="container-fluid row p-2">
-    
             @if( count( $productos ) > 0 )
                 @php
-                    $heads = ['Producto', 'Descripción', 'Precio', 'Piezas / Peso'];
+                    $heads = ['Producto', 'Descripción', 'Precio', 'Peso'];
                 @endphp
-                <x-adminlte-datatable id="contenedorProductos" theme="light" :heads="$heads" striped hoverable compressed beautify>
-                    @foreach( $productos as $producto )
-                    <tr>
-                        <td>{{ $producto->nombre }}</td>
-                        <td>
-                            @if( $producto->descripcion === NULL || $producto->descripcion === '')
-                                Sin descripción
-                            @else
-                                {{ $producto->descripcion }}
-                            @endif
-                        </td>
-                        <td>$ {{ $producto->precio }} MXN</td>
-                        <td>
-                            <x-adminlte-input name="cantidad" id="cantidad" placeholder="Peso/Cantidad del producto" data-id="{{ $producto->id }}" data-value="{{ $producto->id }}, {{ $producto->precio }}">
-                                <x-slot name="prependSlot">
-                                    <div class="input-group-text text-info">
-                                        <i class="fas fa-balance-scale"></i>
-                                    </div>
-                                </x-slot>
-                                <x-slot name="appendSlot">
-                                    <x-adminlte-button class="shadow conversor" theme="outline-info" icon="fas fa-calculator" data-toggle="modal" data-target="#modalConversor" data-value="{{ $producto->id }}, {{ $producto->nombre }}, {{ $producto->precio }}"></x-adminlte-button>
-                                </x-slot>
-                            </x-adminlte-input>
-                        </td>
-                    </tr>
-                    @endforeach
-                </x-adminlte-datatable>
+                
+                <div class="col-lg-10 col-md-9 col-sm-8">
+                    <x-adminlte-datatable id="contenedorProductos" theme="light" :heads="$heads" striped hoverable compressed beautify>
+                        @foreach( $productos as $producto )
+                        <tr>
+                            <td>{{ $producto->nombre }}</td>
+                            <td>
+                                @if( $producto->descripcion === NULL || $producto->descripcion === '')
+                                    Sin descripción
+                                @else
+                                    {{ $producto->descripcion }}
+                                @endif
+                            </td>
+                            <td>$ {{ number_format($producto->precio, 1) }}</td>
+                            <td>
+                                <x-adminlte-input name="cantidad" id="cantidad" placeholder="Peso/Cantidad del producto" data-id="{{ $producto->id }}" data-value="{{ $producto->id }}, {{ $producto->precio }}, {{ $producto->nombre }}">
+                                    <x-slot name="prependSlot">
+                                        <div class="input-group-text text-info">
+                                            <i class="fas fa-balance-scale"></i>
+                                        </div>
+                                    </x-slot>
+                                    <x-slot name="appendSlot">
+                                        <x-adminlte-button class="shadow conversor" theme="outline-info" icon="fas fa-calculator" data-toggle="modal" data-target="#modalConversor" data-value="{{ $producto->id }}, {{ $producto->nombre }}, {{ $producto->precio }}"></x-adminlte-button>
+                                    </x-slot>
+                                </x-adminlte-input>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </x-adminlte-datatable>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4 p-1 border rounded shadow">
+                    <p class="p-1 border-bottom text-center fw-semibold"><b>Vista de Pedido</b></p>
+                    <div class="container-fluid">
+                        <table class="container-fluid bg-info overflow-hidden" id="contenedorProductosPedido">
+                            <thead class="container-fluid">
+                                <th class="text-center p-1 border border-white">Producto</th>
+                                <th class="text-center p-1 border border-white">Importe</th>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
                 
             @else
                 <div class="col-lg-4 mx-auto">
