@@ -5,6 +5,8 @@ jQuery( document ).ready( function(){
 
         var total = 0;
 
+        $("#contenedorProductosPedido").empty();
+
         $("input[name=cantidad]").each( function(){
 
             if( $(this).val() === 0 || $(this).val() === '' || $(this).val() === null ){
@@ -14,6 +16,12 @@ jQuery( document ).ready( function(){
             }else{
 
                 total += parseFloat( $(this).val() * $(this).attr('data-value').split(',')[1] );
+
+                var html = '<tbody class="container-fluid p-1 overflow-hidden">';
+                html += '<tr><td class="text-center p-1 border">'+$(this).attr('data-value').split(',')[2]+'</td><td class="text-center p-1 border">$'+parseFloat($(this).attr('data-value').split(',')[1]*$(this).val()).toFixed(1)+'</td></tr>';
+                html += '</tbody>';
+
+                $("#contenedorProductosPedido").append( html );
 
             }
 
