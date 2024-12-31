@@ -50,7 +50,7 @@ jQuery(document).ready( function(){
 
         var unidades = parseFloat( $(this).val() );
 
-        total = parseFloat( (( unidades * 1 ) / $("#totalProductoConversor").val()) ).toFixed(2);
+        total = parseFloat( (( unidades * 1 ) / $("#totalProductoConversor").val()) ).toFixed(3);
 
         $("#resultado").empty();
         $("#resultado").val( total );
