@@ -31,27 +31,28 @@ class ClienteHasProductoController extends Controller
     {
         try {
 
-            $clienteHasProducto = ClienteHasProducto::where('idCliente', '=', $request->cliente)->get();
-
-                if( count( $clienteHasProducto ) > 0 ){
-
-                    foreach( $clienteHasProducto as $producto ){
-
-                        $producto->delete();
-
-                    }
-
-                }
-
             foreach( $request->precios as $precio ){
 
-                $clienteHasProducto = ClienteHasProducto::create([
+                $clienteHasProducto = ClienteHasProducto::where('idCliente', '=', $request->cliente)
+                                    ->where('idProducto', '=', $precio['producto'])
+                                    ->first();
 
-                    'idCliente' => $request->cliente,
-                    'idProducto' => $precio['producto'],
-                    'precio' => $precio['precio'],
+                if( $clienteHasProducto ){
 
-                ]);
+                    $clienteHasProducto->precio = $precio['precio'];
+                    $clienteHasProducto->save();
+
+                }else{
+
+                    $clienteHasProducto = ClienteHasProducto::create([
+
+                        'idCliente' => $request->cliente,
+                        'idProducto' => $precio['producto'],
+                        'precio' => $precio['precio'],
+
+                    ]);
+
+                }
 
             }
 

@@ -63,7 +63,7 @@ class PedidoController extends Controller
 
             if( $pedido->id ){
 
-                $productos = ClienteHasProducto::select('productos.nombre', 'cliente_has_productos.precio', 'pedido_has_productos.cantidad')
+                $productos = ClienteHasProducto::select('productos.nombre', 'cliente_has_productos.precio', 'pedido_has_productos.cantidad', 'pedido_has_productos.monto')
                             ->join('productos', 'cliente_has_productos.idProducto', '=', 'productos.id')
                             ->join('pedido_has_productos', 'cliente_has_productos.id', '=', 'pedido_has_productos.idClienteHasProducto')
                             ->where('pedido_has_productos.idPedido', '=', $id)
@@ -101,15 +101,16 @@ class PedidoController extends Controller
 
                         $cantidad = is_numeric( $producto->cantidad ) ? floatval( $producto->cantidad ) : round( floatval( $producto->cantidad ) );
                         $precio = is_numeric( $producto->precio ) ? floatval( $producto->precio ) : round( floatval( $producto->precio ) );
+                        $monto = is_numeric( $producto->monto ) ? floatval( $producto->monto ) : round( floatval( $producto->monto ) );
 
                         $ticket->writeHTML('<tr>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.number_format($producto->cantidad, 1).'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format($producto->precio, 1).'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 1 ).'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.round( $producto->monto ).'</td>');
                         $ticket->writeHTML('</tr>');
 
-                        $total += ($cantidad * $precio);
+                        $total += round($producto->monto);
 
                     }
 
@@ -439,7 +440,7 @@ class PedidoController extends Controller
 
             if( $pedido->id ){
 
-                $productos = ClienteHasProducto::select('productos.nombre', 'cliente_has_productos.precio', 'pedido_has_productos.cantidad')
+                $productos = ClienteHasProducto::select('productos.nombre', 'cliente_has_productos.precio', 'pedido_has_productos.cantidad', 'pedido_has_productos.monto')
                             ->join('productos', 'cliente_has_productos.idProducto', '=', 'productos.id')
                             ->join('pedido_has_productos', 'cliente_has_productos.id', '=', 'pedido_has_productos.idClienteHasProducto')
                             ->where('pedido_has_productos.idPedido', '=', $id)
@@ -482,10 +483,10 @@ class PedidoController extends Controller
                         $ticket->writeHTML('<td style="font-size: 18px;">'.number_format($producto->cantidad, 1).'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format($producto->precio, 1).'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 1 ).'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.round( $producto->monto ).'</td>');
                         $ticket->writeHTML('</tr>');
 
-                        $total += ($cantidad * $precio);
+                        $total += round( $producto->monto );
 
                     }
 
@@ -553,7 +554,7 @@ class PedidoController extends Controller
 
             if( $pedido->id ){
 
-                $productos = ClienteHasProducto::select('productos.nombre', 'cliente_has_productos.precio', 'pedido_has_productos.cantidad')
+                $productos = ClienteHasProducto::select('productos.nombre', 'cliente_has_productos.precio', 'pedido_has_productos.cantidad', 'pedido_has_productos.monto')
                             ->join('productos', 'cliente_has_productos.idProducto', '=', 'productos.id')
                             ->join('pedido_has_productos', 'cliente_has_productos.id', '=', 'pedido_has_productos.idClienteHasProducto')
                             ->where('pedido_has_productos.idPedido', '=', $request->id)
@@ -596,10 +597,10 @@ class PedidoController extends Controller
                         $ticket->writeHTML('<td style="font-size: 18px;">'.number_format($producto->cantidad, 1).'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format($producto->precio, 1).'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 1 ).'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.round( $producto->monto ).'</td>');
                         $ticket->writeHTML('</tr>');
 
-                        $total += ($cantidad * $precio);
+                        $total += round( $producto->monto );
 
                     }
 
