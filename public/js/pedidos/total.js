@@ -28,7 +28,7 @@ jQuery( document ).ready( function(){
         });
 
         console.log( total );
-        $("#total").val( total );
+        $("#total").val( total.toFixed(1) );
 
     });
 

@@ -90,7 +90,7 @@ jQuery(document).ready( function(){
         });
 
         console.log( totalPedido );
-        $("#total").val( totalPedido );
+        $("#total").val( totalPedido.toFixed(1) );
 
     });
 

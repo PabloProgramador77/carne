@@ -106,12 +106,10 @@ class PedidoController extends Controller
                         $monto = is_numeric( $producto->monto ) ? floatval( $producto->monto ) : round( floatval( $producto->monto ) );
 
                         $ticket->writeHTML('<tr>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.number_format($producto->cantidad, 1).'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format($producto->precio, 1).'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.round( $producto->monto ).'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.$producto->precio.'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
                         $total += round($producto->monto);
@@ -120,7 +118,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('</tbody>');
                     $ticket->writeHTML('</table>');
-                    $ticket->writeHTML('<p style="text-align: center;"><b>Total: $ '.number_format( $total, 2).'</b></p>');
+                    $ticket->writeHTML('<p style="text-align: center;"><b>Total: $ '.number_format( $total, 1).'</b></p>');
                     $ticket->writeHTML('<p style="text-align: center; margin-top: 20px;">_____________________</p>');
                     $ticket->writeHTML('<p style="text-align: center;">Firma de '.$pedido->cliente->nombre.'</p>');
 
@@ -156,10 +154,10 @@ class PedidoController extends Controller
                         $precio = is_numeric( $producto->precio ) ? floatval( $producto->precio ) : round( floatval( $producto->precio ) );
 
                         $ticket->writeHTML('<tr>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.number_format($producto->cantidad, 1).'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.$producto->precio.'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format($producto->precio, 1).'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">$'.round( $producto->monto ).'</td>');
                         $ticket->writeHTML('</tr>');
 
                         $total += ($cantidad * $precio);
@@ -168,7 +166,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('</tbody>');
                     $ticket->writeHTML('</table>');
-                    $ticket->writeHTML('<p style="text-align: center;"><b>Total: $ '.number_format( $total, 2).'</b></p>');
+                    $ticket->writeHTML('<p style="text-align: center;"><b>Total: $ '.number_format( $total, 1).'</b></p>');
                     $ticket->writeHTML('<p style="text-align: center; margin-top: 20px;">TICKET COPIA</p>');
 
                 }
@@ -533,12 +531,10 @@ class PedidoController extends Controller
                         $precio = is_numeric( $producto->precio ) ? floatval( $producto->precio ) : round( floatval( $producto->precio ) );
 
                         $ticket->writeHTML('<tr>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.number_format($producto->cantidad, 1).'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format($producto->precio, 1).'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.round( $producto->monto ).'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.$producto->precio.'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
                         $total += round( $producto->monto );
@@ -547,7 +543,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('</tbody>');
                     $ticket->writeHTML('</table>');
-                    $ticket->writeHTML('<p style="text-align: center; "><b>Total: $ '.number_format( $total, 2).'</b></p>');
+                    $ticket->writeHTML('<p style="text-align: center; "><b>Total: $ '.number_format( $total, 1).'</b></p>');
                     $ticket->writeHTML('<p style="text-align: center; margin-top: 10px;">**TICKET COPIA**</p>');
 
                 }
@@ -651,12 +647,10 @@ class PedidoController extends Controller
                         $precio = is_numeric( $producto->precio ) ? floatval( $producto->precio ) : round( floatval( $producto->precio ) );
 
                         $ticket->writeHTML('<tr>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->cantidad.'</td>');
+                        $ticket->writeHTML('<td style="font-size: 18px;">'.number_format($producto->cantidad, 1).'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">'.$producto->nombre.'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format($producto->precio, 1).'</td>');
                         $ticket->writeHTML('<td style="font-size: 18px;">$'.round( $producto->monto ).'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.$producto->precio.'</td>');
-                        $ticket->writeHTML('<td style="font-size: 18px;">$'.number_format( ($cantidad * $precio), 2 ).'</td>');
                         $ticket->writeHTML('</tr>');
 
                         $total += round( $producto->monto );
@@ -665,7 +659,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('</tbody>');
                     $ticket->writeHTML('</table>');
-                    $ticket->writeHTML('<p style="text-align: center; "><b>Total: $ '.number_format( $total, 2).'</b></p>');
+                    $ticket->writeHTML('<p style="text-align: center; "><b>Total: $ '.number_format( $total, 1).'</b></p>');
                     $ticket->writeHTML('<p style="text-align: center; margin-top: 10px;">**TICKET REIMPRESO**</p>');
 
                 }
