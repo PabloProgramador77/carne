@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Pedido;
+use App\Models\Corte;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -30,6 +31,9 @@ class HomeController extends Controller
                     ->where('estado', '=', 'Corte')
                     ->get();
 
+        $cortes = Corte::where('created_at', '<', now()->subDays(15))
+                ->get();
+
         if( count( $registros ) > 0 ){
 
             foreach( $registros as $registro ){
@@ -38,6 +42,16 @@ class HomeController extends Controller
 
             }
 
+        }
+
+        if( count( $cortes ) > 0 ){
+
+            foreach( $cortes as $corte ){
+
+                $corte->delete();
+
+            }
+            
         }
 
         $productos = Producto::all();
