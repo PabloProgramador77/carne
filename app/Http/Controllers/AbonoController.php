@@ -51,7 +51,7 @@ class AbonoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['58', '2750'],
+                'format' => ['50', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
                 'margin_left' => 0,
@@ -341,7 +341,7 @@ class AbonoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['58', '2750'],
+                'format' => ['50', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
                 'margin_left' => 0,
@@ -401,7 +401,7 @@ class AbonoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['58', '2750'],
+                'format' => ['50', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
                 'margin_left' => 0,
