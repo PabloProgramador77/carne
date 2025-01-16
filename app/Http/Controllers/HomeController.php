@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Pedido;
-use App\Models\Cortes;
+use App\Models\Corte;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -31,7 +31,7 @@ class HomeController extends Controller
                     ->where('estado', '=', 'Corte')
                     ->get();
 
-        $cortes = Cortes::where('created_at', '<', now()->subDays(15))
+        $cortes = Corte::where('created_at', '<', now()->subDays(15))
                     ->get();
 
         if( count( $registros ) > 0 ){
