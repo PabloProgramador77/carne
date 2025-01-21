@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Abono;
 use App\Models\Cliente;
+use App\Models\Prestamo;
 use Illuminate\Http\Request;
 use App\Http\Requests\Abono\Create;
 use App\Http\Requests\Abono\Read;
@@ -133,18 +134,13 @@ class AbonoController extends Controller
 
                         ]);
 
-                if( $request->pedidos && count( $request->pedidos ) > 0 ){
+                if( $request->nota == 'Liquidación' ){
 
-                    foreach( $request->pedidos as $pedido ){
+                    $this->liquidacion( $request );
 
-                        Pedido::where('id', '=', $pedido)
-                                ->update([
+                }else{
 
-                                    'estado' => 'Pagado',
-
-                                ]);
-
-                    }
+                    $this->abono( $request );
 
                 }
 
@@ -455,4 +451,66 @@ class AbonoController extends Controller
         
         return response()->json( $datos );
     }
+
+    /**
+     * Procedimiento de abono
+     */
+    public function abono( Request $request ){
+        try{
+
+            if( $request->pedidos && count( $request->pedidos ) > 0 ){
+
+                foreach( $request->pedidos as $pedido ){
+
+                    Pedido::where('id', '=', $pedido)
+                            ->update([
+
+                                'estado' => 'Pagado',
+
+                            ]);
+
+                }
+
+            }
+
+        }catch( \Throwable $th ){
+
+            echo $th->getMessage();
+
+        }
+    }
+
+    public function liquidacion( Request $request ){
+        try{
+
+            $pedidos = Pedido::where('idCliente', '=', $request->cliente)
+                                ->get();
+
+            $prestamos = Prestamo::where('idCliente', '=', $request->cliente)
+                        ->get();
+
+            foreach( $pedidos as $pedido ){
+                
+                Pedido::where('id', '=', $pedido->id)
+                        ->update([
+
+                            'estado' => 'Pagado',
+
+                        ]);
+
+            }
+
+            foreach( $prestamos as $prestamo ){
+
+                $prestamo->delete();
+
+            }
+
+        }catch( \Throwable $th ){
+
+            echo $th->getMessage();
+
+        }
+    }
+
 }
