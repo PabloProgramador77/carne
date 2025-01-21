@@ -277,12 +277,18 @@ class CorteController extends Controller
                     ->where('corte_has_gastos.idCorte', '=', $request->id)
                     ->get();
 
+            $abonos = Abono::select('abonos.id', 'abonos.monto', 'abonos.nota', 'abonos.created_at')
+                    ->join('corte_has_abonos', 'abonos.id', '=', 'corte_has_abonos.idAbono')
+                    ->where('corte_has_abonos.idCorte', '=', $request->id)
+                    ->get();
 
-            if( count( $pedidos ) > 0 || count( $gastos ) > 0 ){
+
+            if( count( $pedidos ) > 0 || count( $gastos ) > 0 || count( $abonos ) > 0 ){
 
                 $datos['exito'] = true;
                 $datos['pedidos'] = $pedidos;
                 $datos['gastos'] = $gastos;
+                $datos['abonos'] = $abonos;
 
             }else{
 

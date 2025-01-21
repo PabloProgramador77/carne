@@ -59,20 +59,24 @@ jQuery( document ).ready( function( e ){
 
                 if( respuesta.exito ){
 
-                    if( respuesta.pedidos && respuesta.pedidos.length > 0 ){
+                    if( (respuesta.pedidos && respuesta.pedidos.length > 0) || (respuesta.gastos && respuesta.gastos.length > 0 ) || (respuesta.abonos && respuesta.abonos.length > 0) ){
 
                         var html = '<thead><tr><th>Folio</th><th>Cliente</th><th>Total</th><th>Fecha</th></tr></thead>';
 
-                        respuesta.pedidos.forEach( function( pedido ){
+                        if( respuesta.pedidos && respuesta.pedidos.length > 0 ){
+                        
+                            respuesta.pedidos.forEach( function( pedido ){
 
-                            html += '<tr>';
-                            html += '<td>'+pedido.id+'</td>';
-                            html += '<td>'+pedido.nombre+'</td>';
-                            html += '<td>$ '+pedido.total+'</td>';
-                            html += '<td>'+pedido.created_at+'</td>';
-                            html += '</tr>';
+                                html += '<tr>';
+                                html += '<td>'+pedido.id+'</td>';
+                                html += '<td>'+pedido.nombre+'</td>';
+                                html += '<td>$ '+pedido.total+'</td>';
+                                html += '<td>'+pedido.created_at+'</td>';
+                                html += '</tr>';
+    
+                            });
 
-                        });
+                        }
 
                         if( respuesta.gastos && respuesta.gastos.length > 0 ){
 
@@ -89,6 +93,23 @@ jQuery( document ).ready( function( e ){
 
                             });
 
+                        }
+
+                        if( respuesta.abonos && respuesta.abonos.length > 0 ){
+                            
+                            html += '<tr><td><b>Folio</b></td><td><b>Abono</b></td><td><b>Importe</b></td><td><b>Fecha</b></td></tr>';
+
+                            respuesta.abonos.forEach( function( abono ){
+
+                                html += '<tr>';
+                                html += '<td>'+abono.id+'</td>';
+                                html += '<td>'+abono.nota+'</td>';
+                                html += '<td>$ '+abono.monto+'</td>';
+                                html += '<td>'+abono.created_at+'</td>';
+                                html += '</tr>';
+
+                            });
+                            
                         }
                         
                         $("#contenedorPedidos").empty().append( html );
