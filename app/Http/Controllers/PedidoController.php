@@ -401,7 +401,24 @@ class PedidoController extends Controller
 
             if( $pedido->id ){
 
-                $pedido->delete();
+                if( $pedido->estado == 'Entregado' || $pedido->estado == 'Pagado' ){
+
+                    $pedido->delete();
+
+                }else if( $pedido->estado == 'Pendiente' ){
+
+                    $deuda = floatval( $pedido->cliente->deuda - $pedido->total );
+
+                    Cliente::where('id', '=', $pedido->cliente->id)
+                                ->update([
+
+                                    'deuda' => $deuda,
+
+                                ]);
+
+                    $pedido->delete();
+
+                }
 
                 $datos['exito'] = true;
 
