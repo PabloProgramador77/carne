@@ -419,6 +419,7 @@ class AbonoController extends Controller
             $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
             $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Folio:</b></td><td>'.$abono->id.'</td></tr>');
             $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Concepto:</b></td><td>Abono</td></tr>');
+            $ticket->WriteHTML('<tr><td style="font-size: 16px;"><b>Deuda:</b> $</td><td>'.floatval($cliente->deuda + $abono->monto).'</td></tr>');
             $ticket->writeHTML('</table>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
             $ticket->writeHTML('<tr><th>Nota</th><th>Importe</th></tr>');
