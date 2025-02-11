@@ -11,6 +11,7 @@ use App\Models\CorteHasPedido;
 use App\Models\Gasto;
 use App\Models\Pedido;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CorteController extends Controller
 {
@@ -46,14 +47,17 @@ class CorteController extends Controller
             $pedidos = Pedido::select('pedidos.total', 'pedidos.created_at', 'clientes.nombre', 'pedidos.estado')
                         ->join('clientes', 'pedidos.idCliente', '=', 'clientes.id')
                         ->where('pedidos.estado', '!=', 'Corte')
+                        ->whereDate('pedidos.created_at', Carbon::today())
                         ->get();
 
             $gastos = Gasto::select('gastos.id', 'gastos.monto', 'gastos.descripcion', 'gastos.created_at')
                     ->where('gastos.estado', '!=', 'Corte')
+                    ->whereDate('gastos.created_at', Carbon::today())
                     ->get();
 
             $abonos = Abono::select('abonos.id', 'abonos.monto', 'abonos.nota', 'abonos.created_at')
                     ->where('abonos.estado', '!=', 'Corte')
+                    ->whereDate('abonos.created_at', Carbon::today())
                     ->get();
 
             if( count( $pedidos ) > 0 || count( $gastos ) > 0 || count( $abonos ) > 0 ){
@@ -95,14 +99,17 @@ class CorteController extends Controller
             $pedidos = Pedido::select('pedidos.id', 'pedidos.total', 'pedidos.created_at', 'clientes.nombre', 'pedidos.estado')
                         ->join('clientes', 'pedidos.idCliente', '=', 'clientes.id')
                         ->where('pedidos.estado', '!=','Corte')
+                        ->whereDate('pedidos.created_at', Carbon::today())
                         ->get();
 
             $gastos = Gasto::select('gastos.id', 'gastos.monto', 'gastos.descripcion', 'gastos.estado')
                     ->where('gastos.estado', '!=', 'Corte')
+                    ->whereDate('gastos.created_at', Carbon::today())
                     ->get();
 
             $abonos = Abono::select('abonos.id', 'abonos.monto', 'abonos.nota', 'abonos.estado')
                     ->where('abonos.estado', '!=', 'Corte')
+                    ->whereDate('abonos.created_at', Carbon::today())
                     ->get();
 
             $total = 0;

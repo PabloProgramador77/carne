@@ -43,7 +43,7 @@ jQuery(document).ready( function(){
                             Swal.fire({
 
                                 icon: 'success',
-                                title: 'Pedidos encontrados',
+                                title: 'Datos encontrados',
                                 allowOutsideClick: false,
                                 showConfirmButton: true,
     
@@ -168,7 +168,7 @@ jQuery(document).ready( function(){
                             Swal.fire({
 
                                 icon: 'error',
-                                title: 'No hay pedidos para el corte',
+                                title: 'No hay datos para el corte',
                                 allowOutsideClick: false,
                                 showConfirmButton: false,
                                 timer: 2000,
