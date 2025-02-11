@@ -117,23 +117,44 @@ jQuery(document).ready( function(){
 
                             }
 
-                            html += '<tr class="bg-primary text-center p-1"><td colspan="4">Total de Ventas: $ '+total.toFixed(2)+' MXN</td></tr>';
-                            html += '<tr class="bg-warning text-center p-1"><td colspan="4">Total de Gastos: $ '+gastos.toFixed(2)+' MXN</td></tr>';
-                            html += '<tr class="bg-info text-center p-1"><td colspan="4">Total de Abonos: $ '+abonos.toFixed(2)+'</td></tr>';
-
-                            if( efectivo <= 0 ){
-
-                                html += '<tr class="bg-danger text-center p-1"><td colspan="4">Total de corte: $ '+efectivo.toFixed(2)+' MXN</td></tr>';
-
-                            }else{
-
-                                html += '<tr class="bg-success text-center p-1"><td colspan="4">Total de corte: $ '+efectivo.toFixed(2)+' MXN</td></tr>';
-
-                            }
-                            
-
                             $("#contenedorPedidosCorte").empty();
                             $("#contenedorPedidosCorte").append( html );
+
+                            var existingRows = $("#contenedorPedidosCorte").html();
+
+                            $("#caja").on('change', function() {
+                                
+                                var option = $(this).find('option:selected');
+                                var apertura = option.attr('data-value');
+                            
+                                console.log(apertura);
+                            
+                                // Reset html and efectivo for recalculation
+                                
+                                var html = '';
+
+                                var efectivo = parseFloat(apertura);
+                            
+                                html = existingRows + html;
+
+                                html += '<tr class="bg-secondary text-center p-1 total-row"><td colspan="4">Apertura de caja: $ ' + apertura + '</td></tr>';
+                            
+                                // Assuming total, gastos, and abonos are already calculated elsewhere in the code
+                                html += '<tr class="bg-primary text-center p-1"><td colspan="4">Total de Ventas: $ ' + total.toFixed(2) + '</td></tr>';
+                                html += '<tr class="bg-warning text-center p-1"><td colspan="4">Total de Gastos: $ ' + gastos.toFixed(2) + '</td></tr>';
+                                html += '<tr class="bg-info text-center p-1"><td colspan="4">Total de Abonos: $ ' + abonos.toFixed(2) + '</td></tr>';
+                            
+                                efectivo += total - gastos + abonos;
+                            
+                                if (efectivo <= 0) {
+                                    html += '<tr class="bg-danger text-center p-1"><td colspan="4">Total de corte: $ ' + efectivo.toFixed(2) + '</td></tr>';
+                                } else {
+                                    html += '<tr class="bg-success text-center p-1"><td colspan="4">Total de corte: $ ' + efectivo.toFixed(2) + '</td></tr>';
+                                }
+                            
+                                $("#contenedorPedidosCorte").empty();
+                                $("#contenedorPedidosCorte").append(html);
+                            });
 
                             if( efectivo > 0 ){
 

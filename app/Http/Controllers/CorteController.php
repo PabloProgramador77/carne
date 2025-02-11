@@ -171,9 +171,13 @@ class CorteController extends Controller
 
             }
 
+            $caja = Caja::find( $request->caja );
+
+            $totalCaja = floatval( ( ( $caja->apertura + $efectivo + $abonado ) - $costos ) );
+
             $corte = Corte::create([
 
-                'total' => $total,
+                'total' => $totalCaja,
                 'efectivo' => $efectivo,
 
             ]);
@@ -221,10 +225,6 @@ class CorteController extends Controller
 
             }
 
-            $caja = Caja::find( $request->caja );
-
-            $totalCaja = floatval( ( ( $caja->total + $efectivo + $abonado ) - $costos ) );
-
             Caja::where('id', '=', $request->caja)
                     ->update([
 
@@ -233,7 +233,7 @@ class CorteController extends Controller
                     ]);
 
 
-            $this->corte( $idCorte );
+            $this->corte( $idCorte, $caja->apertura );
 
             $datos['exito'] = true;
             $datos['corte'] = $idCorte;
@@ -339,7 +339,7 @@ class CorteController extends Controller
     /**
      * Reporte PDF de corte
      */
-    public function corte( $idCorte ){
+    public function corte( $idCorte, $apertura ){
         try {
             
             $corte = Corte::find( $idCorte );
@@ -420,10 +420,11 @@ class CorteController extends Controller
                 $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Concepto:</b> </td><td>Corte de caja</td></tr>');
                 $ticket->writeHTML('</table>');
                 $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
+                $ticket->writeHTML('<tr><td style="text-align: center;"><b>Importe de apertura: $ '.$apertura.'</b></td></tr>');
                 $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Pedidos: $ '.$totalPedidos.'</b></td></tr>');
                 $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Gastos: $ '.$totalGastos.'</b></td></tr>');
                 $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Abonos: $ '.$totalAbonos.'</b></td></tr>');
-                $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Corte: $ '.$corte->efectivo.'</b></td></tr>');
+                $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Corte: $ '.($corte->efectivo + $apertura).'</b></td></tr>');
                 $ticket->writeHTML('</table>');
                 
                 $ticket->Output( public_path('tickets/').'corte'.$corte->id.'.pdf', \Mpdf\Output\Destination::FILE );
