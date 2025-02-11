@@ -61,9 +61,11 @@ jQuery( document ).ready( function( e ){
 
                     if( (respuesta.pedidos && respuesta.pedidos.length > 0) || ( respuesta.gastos && respuesta.gastos.length > 0 ) || ( respuesta.abonos && respuesta.abonos.length > 0 ) ){
 
-                        var html = '<thead><tr><th>Folio</th><th>Cliente</th><th>Total</th><th>Fecha</th></tr></thead>';
+                        var html = '';
 
                         if( respuesta.pedidos && respuesta.pedidos.length > 0 ){
+
+                            html = '<thead><tr><th>Folio</th><th>Cliente</th><th>Total</th><th>Fecha</th></tr></thead>';
                         
                             respuesta.pedidos.forEach( function( pedido ){
 
@@ -73,6 +75,8 @@ jQuery( document ).ready( function( e ){
                                 html += '<td>$ '+pedido.total+'</td>';
                                 html += '<td>'+pedido.created_at+'</td>';
                                 html += '</tr>';
+
+                                total -= pedido.total;
     
                             });
 
@@ -86,10 +90,12 @@ jQuery( document ).ready( function( e ){
 
                                 html += '<tr>';
                                 html += '<td>'+gasto.id+'</td>';
-                                html += '<td>'+gasto.descripcion+'</td>';
+                                html += '<td>'+gasto.descripcion ? gasto.descripcion : 'Sin descripción'+'</td>';
                                 html += '<td>$ '+gasto.monto+'</td>';
                                 html += '<td>'+gasto.created_at+'</td>';
                                 html += '</tr>';
+
+                                total += gasto.monto;
 
                             });
 
@@ -103,14 +109,18 @@ jQuery( document ).ready( function( e ){
 
                                 html += '<tr>';
                                 html += '<td>'+abono.id+'</td>';
-                                html += '<td>'+abono.nota+'</td>';
+                                html += '<td>'+abono.nota ? abono.nota : 'Sin nota'+'</td>';
                                 html += '<td>$ '+abono.monto+'</td>';
                                 html += '<td>'+abono.created_at+'</td>';
                                 html += '</tr>';
 
+                                total -= abono.monto;
+
                             });
 
                         }
+
+                        html += '<tr class="bg-info p-1 text-center"><td colspan="4"><b>Apertura de caja: $ '+total+'</b></td></tr>';
                         
                         $("#contenedorPedidos").empty().append( html );
 

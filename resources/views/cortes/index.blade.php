@@ -34,11 +34,11 @@
                     @foreach( $cortes as $corte )
                         <tr>
                             <td>{{ $corte->id }}</td>
-                            <td>$ {{ number_format( $corte->efectivo, 2 ) }}</td>
+                            <td>$ {{ number_format( $corte->total, 2 ) }}</td>
                             <td>{{ $corte->created_at }}</td>
                             <td>
                                 @can('ver-corte')
-                                <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="info" data-toggle="modal" data-target="#modalVer" data-id="{{ $corte->id }}" data-value="{{ $corte->id }}, {{ $corte->efectivo }}, {{ $corte->created_at }}"></x-adminlte-button>
+                                <x-adminlte-button class="shadow ver" icon="fas fa-info-circle" theme="info" data-toggle="modal" data-target="#modalVer" data-id="{{ $corte->id }}" data-value="{{ $corte->id }}, {{ $corte->total }}, {{ $corte->created_at }}"></x-adminlte-button>
                                 @endcan
                             </td>
                         </tr>

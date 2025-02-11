@@ -98,6 +98,7 @@ class CajaController extends Controller
                     ->update([
 
                         'apertura' => $request->importe,
+                        'total' => $request->importe,
 
                     ]);
 

@@ -20,7 +20,7 @@
             </x-slot>
             <option value="0">Elige una caja</option>
             @foreach( $cajas as $caja)
-                <option value="{{ $caja->id }}">{{ $caja->nombre }}</option>
+                <option value="{{ $caja->id }}" data-value="{{ $caja->apertura }}">{{ $caja->nombre }}</option>
             @endforeach
         </x-adminlte-select>
         @can('agregar-corte')
