@@ -422,7 +422,7 @@ class CorteController extends Controller
                 $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Pedidos: $ '.$totalPedidos.'</b></td></tr>');
                 $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Gastos: $ '.$totalGastos.'</b></td></tr>');
                 $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Abonos: $ '.$totalAbonos.'</b></td></tr>');
-                $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Corte: $ '.($corte->efectivo + $apertura).'</b></td></tr>');
+                $ticket->writeHTML('<tr><td style="text-align: center;"><b>Total de Corte: $ '.(( $apertura + $totalPedidos + $totalAbonos ) - $totalGastos).'</b></td></tr>');
                 $ticket->writeHTML('</table>');
                 
                 $ticket->Output( public_path('tickets/').'corte'.$corte->id.'.pdf', \Mpdf\Output\Destination::FILE );
