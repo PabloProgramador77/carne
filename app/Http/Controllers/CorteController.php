@@ -115,15 +115,13 @@ class CorteController extends Controller
             $total = 0;
             $costos = 0;
             $abonado = 0;
-            $efectivo = 0;
+            $ventas = 0;
 
             if( count( $pedidos ) > 0 ){
 
                 foreach( $pedidos as $pedido ){
 
                     if( $pedido->estado === 'Pagado' ){
-    
-                        $efectivo += $pedido->total;
     
                         $orden = Pedido::where('id', '=', $pedido->id)
                                 ->update([
@@ -134,7 +132,7 @@ class CorteController extends Controller
     
                     }
     
-                    $total += $pedido->total;
+                    $ventas += $pedido->total;
     
                 }
 
@@ -143,10 +141,8 @@ class CorteController extends Controller
             if( count( $gastos ) > 0 ){
 
                 foreach( $gastos as $gasto ){
-
-                    $efectivo -= $gasto->monto;
     
-                    $costo = Gasto::where('id', '=', $gasto->id)
+                    Gasto::where('id', '=', $gasto->id)
                             ->update([
     
                                 'estado' => 'Corte',
@@ -162,8 +158,6 @@ class CorteController extends Controller
             if( count( $abonos ) > 0 ){
 
                 foreach( $abonos as $abono ){
-
-                    $efectivo += $abono->monto;
     
                     Abono::where('id', '=', $abono->id)
                             ->update([
@@ -180,12 +174,12 @@ class CorteController extends Controller
 
             $caja = Caja::find( $request->caja );
 
-            $totalCaja = floatval( ( ( $caja->apertura + $efectivo + $abonado ) - $costos ) );
+            $totalCaja = floatval( ( ( $caja->apertura + $ventas + $abonado ) - $costos ) );
 
             $corte = Corte::create([
 
                 'total' => $totalCaja,
-                'efectivo' => $efectivo,
+                'efectivo' => floatval( ( $ventas + $abonado ) ),
 
             ]);
 
