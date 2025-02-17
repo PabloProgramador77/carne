@@ -488,6 +488,7 @@ class AbonoController extends Controller
         try{
 
             $pedidos = Pedido::where('idCliente', '=', $request->cliente)
+                                ->where('estado', '!=', 'Corte')
                                 ->get();
 
             $prestamos = Prestamo::where('idCliente', '=', $request->cliente)
