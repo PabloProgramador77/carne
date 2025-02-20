@@ -32,7 +32,7 @@ jQuery( document ).ready( function( e ){
 
         }else{
 
-            var total = $(this).attr('data-value').split(',')[1];
+            var total = parseFloat( $(this).attr('data-value').split(',')[1] );
             var fecha = $(this).attr('data-value').split(',')[2];
 
             $("#folioCorte").text( 'Folio: ' + id );
@@ -76,7 +76,7 @@ jQuery( document ).ready( function( e ){
                                 html += '<td>'+pedido.created_at+'</td>';
                                 html += '</tr>';
 
-                                total -= pedido.total;
+                                total -= parseFloat( pedido.total );
     
                             });
 
@@ -90,12 +90,12 @@ jQuery( document ).ready( function( e ){
 
                                 html += '<tr>';
                                 html += '<td>'+gasto.id+'</td>';
-                                html += '<td>'+gasto.descripcion ? gasto.descripcion : 'Sin descripción'+'</td>';
+                                html += '<td>'+ (gasto.descripcion ? gasto.descripcion : 'Sin descripción' )+'</td>';
                                 html += '<td>$ '+gasto.monto+'</td>';
                                 html += '<td>'+gasto.created_at+'</td>';
                                 html += '</tr>';
 
-                                total += gasto.monto;
+                                total += parseFloat( gasto.monto );
 
                             });
 
@@ -109,12 +109,12 @@ jQuery( document ).ready( function( e ){
 
                                 html += '<tr>';
                                 html += '<td>'+abono.id+'</td>';
-                                html += '<td>'+abono.nota ? abono.nota : 'Sin nota'+'</td>';
+                                html += '<td>'+(abono.nota ? abono.nota : 'Sin nota')+'</td>';
                                 html += '<td>$ '+abono.monto+'</td>';
                                 html += '<td>'+abono.created_at+'</td>';
                                 html += '</tr>';
 
-                                total -= abono.monto;
+                                total -= parseFloat( abono.monto );
 
                             });
 
