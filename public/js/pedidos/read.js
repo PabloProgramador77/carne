@@ -68,9 +68,9 @@ jQuery(document).ready(function(){
 
                             html += '<tr>';
                             html += '<td>'+producto.nombre+'</td>';
-                            html += '<td>$ '+producto.precio+' MXN</td>';
+                            html += '<td>$ '+producto.precio+'</td>';
                             html += '<td>'+producto.cantidad+'</td>';
-                            html += '<td>$ '+( producto.precio * producto.cantidad)+' MXN</td>';
+                            html += '<td>$ '+parseFloat( producto.precio * producto.cantidad).toFixed(1)+' MXN</td>';
                             html += '</tr>';
 
                         });

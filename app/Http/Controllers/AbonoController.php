@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Abono;
 use App\Models\Cliente;
+use App\Models\Prestamo;
 use Illuminate\Http\Request;
 use App\Http\Requests\Abono\Create;
 use App\Http\Requests\Abono\Read;
@@ -52,15 +53,14 @@ class AbonoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
+                'format' => ['50', '2750'],
                 'format' => ['80', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
-                'margin_left' => 5,
-                'margin_right' => 5,
+                'margin_left' => 0,
+                'margin_right' => 0,
                 'margin_top' => 5,
                 'margin_bottom' => 5,
-                'margin_header' => 5,
-                'margin_footer' => 5,
 
             ]);
 
@@ -70,6 +70,7 @@ class AbonoController extends Controller
             $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
+            $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->created_at->format('d/m/y g:i A').'</h6>');
             $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->updated_at->format('d/m/y g:i A').'</h6>');
             $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$cliente->nombre.'</h5>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
@@ -136,6 +137,13 @@ class AbonoController extends Controller
 
                         ]);
 
+                if( $request->nota == 'Liquidación' ){
+
+                    $this->liquidacion( $request );
+
+                }else{
+
+                    $this->abono( $request );
                 if( $request->nota == 'Liquidación' ){
 
                     $this->liquidacion( $request );
@@ -339,15 +347,14 @@ class AbonoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
+                'format' => ['50', '2750'],
                 'format' => ['80', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
-                'margin_left' => 5,
-                'margin_right' => 5,
+                'margin_left' => 0,
+                'margin_right' => 0,
                 'margin_top' => 5,
                 'margin_bottom' => 5,
-                'margin_header' => 5,
-                'margin_footer' => 5,
 
             ]);
 
@@ -357,6 +364,7 @@ class AbonoController extends Controller
             $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
+            $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->created_at->format('d/m/y g:i A').'</h6>');
             $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->updated_at->format('d/m/y g:i A').'</h6>');
             $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$cliente->nombre.'</h5>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
@@ -401,15 +409,14 @@ class AbonoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
+                'format' => ['50', '2750'],
                 'format' => ['80', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
-                'margin_left' => 5,
-                'margin_right' => 5,
+                'margin_left' => 0,
+                'margin_right' => 0,
                 'margin_top' => 5,
                 'margin_bottom' => 5,
-                'margin_header' => 5,
-                'margin_footer' => 5,
 
             ]);
 
@@ -419,12 +426,14 @@ class AbonoController extends Controller
             $ticket->writeHTML('<h4 style="text-align: center;">Carniceria La Higienica</h4>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->telefono ? : '' ).'</p>');
             $ticket->writeHTML('<p style="text-align: center; display: block; width: 100%;">'.( auth()->user()->direccion ? : '' ).'</p>');
+            $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->created_at->format('d/m/y g:i A').'</h6>');
             $ticket->writeHTML('<h6 style="text-align: center;"><b>Fecha:</b>'.$abono->updated_at->format('d/m/y g:i A').'</h6>');
             $ticket->writeHTML('<h5 style="text-align: center;"><b>Cliente:</b>'.$cliente->nombre.'</h5>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
             $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Cajero:</b></td><td>'.auth()->user()->name.'</td></tr>');
             $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Folio:</b></td><td>'.$abono->id.'</td></tr>');
             $ticket->writeHTML('<tr><td style="font-size: 16px;"><b>Concepto:</b></td><td>Abono</td></tr>');
+            $ticket->WriteHTML('<tr><td style="font-size: 16px;"><b>Deuda:</b> $</td><td>'.floatval($cliente->deuda + $abono->monto).'</td></tr>');
             $ticket->WriteHTML('<tr><td style="font-size: 16px;"><b>Deuda:</b> $</td><td>'.floatval($cliente->deuda + $abono->monto).'</td></tr>');
             $ticket->writeHTML('</table>');
             $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto; margin-bottom: 10px;">');
@@ -458,6 +467,69 @@ class AbonoController extends Controller
         
         return response()->json( $datos );
     }
+
+    /**
+     * Procedimiento de abono
+     */
+    public function abono( Request $request ){
+        try{
+
+            if( $request->pedidos && count( $request->pedidos ) > 0 ){
+
+                foreach( $request->pedidos as $pedido ){
+
+                    Pedido::where('id', '=', $pedido)
+                            ->update([
+
+                                'estado' => 'Pagado',
+
+                            ]);
+
+                }
+
+            }
+
+        }catch( \Throwable $th ){
+
+            echo $th->getMessage();
+
+        }
+    }
+
+    public function liquidacion( Request $request ){
+        try{
+
+            $pedidos = Pedido::where('idCliente', '=', $request->cliente)
+                                ->where('estado', '!=', 'Corte')
+                                ->get();
+
+            $prestamos = Prestamo::where('idCliente', '=', $request->cliente)
+                        ->get();
+
+            foreach( $pedidos as $pedido ){
+                
+                Pedido::where('id', '=', $pedido->id)
+                        ->update([
+
+                            'estado' => 'Pagado',
+
+                        ]);
+
+            }
+
+            foreach( $prestamos as $prestamo ){
+
+                $prestamo->delete();
+
+            }
+
+        }catch( \Throwable $th ){
+
+            echo $th->getMessage();
+
+        }
+    }
+
 
     public function abono( Request $request ){
         try{

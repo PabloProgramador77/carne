@@ -6,6 +6,7 @@ use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Pedido;
 use App\Models\Corte;
+use App\Models\Corte;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -32,6 +33,9 @@ class HomeController extends Controller
                     ->get();
 
         $cortes = Corte::where('created_at', '<', now()->subDays(15))
+                ->get();
+
+        $cortes = Corte::where('created_at', '<', now()->subDays(15))
                     ->get();
 
         if( count( $registros ) > 0 ){
@@ -51,6 +55,7 @@ class HomeController extends Controller
                 $corte->delete();
 
             }
+            
             
         }
 

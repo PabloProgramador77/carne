@@ -59,7 +59,7 @@ jQuery( document ).ready( function( e ){
 
                 if( respuesta.exito ){
 
-                    if( (respuesta.pedidos && respuesta.pedidos.length > 0) || (respuesta.gastos && respuesta.gastos.length > 0 ) || (respuesta.abonos && respuesta.abonos.length > 0) ){
+                    if( (respuesta.pedidos && respuesta.pedidos.length > 0) || ( respuesta.gastos && respuesta.gastos.length > 0 ) || ( respuesta.abonos && respuesta.abonos.length > 0 ) ){
 
                         var html = '';
 
@@ -102,7 +102,7 @@ jQuery( document ).ready( function( e ){
                         }
 
                         if( respuesta.abonos && respuesta.abonos.length > 0 ){
-                            
+                        
                             html += '<tr><td><b>Folio</b></td><td><b>Abono</b></td><td><b>Importe</b></td><td><b>Fecha</b></td></tr>';
 
                             respuesta.abonos.forEach( function( abono ){
@@ -117,7 +117,7 @@ jQuery( document ).ready( function( e ){
                                 total -= parseFloat( abono.monto );
 
                             });
-                            
+
                         }
 
                         html += '<tr class="bg-info p-1 text-center"><td colspan="4"><b>Apertura de caja: $ '+total+'</b></td></tr>';

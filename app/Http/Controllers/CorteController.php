@@ -354,15 +354,13 @@ class CorteController extends Controller
                 $ticket = new \Mpdf\Mpdf([
 
                     'mode' => 'utf-8',
-                    'format' => ['80', '2750'],
+                    'format' => ['50', '2750'],
                     'orientation' => 'P',
                     'autoPageBreak' => false,
-                    'margin_left' => 5,
-                    'margin_right' => 5,
+                    'margin_left' => 0,
+                    'margin_right' => 0,
                     'margin_top' => 5,
                     'margin_bottom' => 5,
-                    'margin_header' => 5,
-                    'margin_footer' => 5,
     
                 ]);
 

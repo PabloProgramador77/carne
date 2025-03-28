@@ -31,11 +31,11 @@
         </div>
 
         <div class="container-fluid row p-2">
-    
             @if( count( $productos ) > 0 )
                 @php
-                    $heads = ['Producto', 'Descripción', 'Precio', 'Piezas / Peso'];
+                    $heads = ['Producto', 'Descripción', 'Precio', 'Peso'];
                 @endphp
+                
                 <div class="col-lg-10 col-md-9 col-sm-8">
                     <x-adminlte-datatable id="contenedorProductos" theme="light" :heads="$heads" striped hoverable compressed beautify>
                         @foreach( $productos as $producto )
@@ -48,7 +48,7 @@
                                     {{ $producto->descripcion }}
                                 @endif
                             </td>
-                            <td>$ {{ $producto->precio }}</td>
+                            <td>$ {{ number_format($producto->precio, 1) }}</td>
                             <td>
                                 <x-adminlte-input name="cantidad" id="cantidad" placeholder="Peso/Cantidad del producto" data-id="{{ $producto->id }}" data-value="{{ $producto->id }}, {{ $producto->precio }}, {{ $producto->nombre }}">
                                     <x-slot name="prependSlot">

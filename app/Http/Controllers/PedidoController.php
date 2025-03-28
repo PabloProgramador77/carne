@@ -49,15 +49,13 @@ class PedidoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['80', '2750'],
+                'format' => ['50', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
-                'margin_left' => 5,
-                'margin_right' => 5,
+                'margin_left' => 0,
+                'margin_right' => 0,
                 'margin_top' => 5,
                 'margin_bottom' => 5,
-                'margin_header' => 5,
-                'margin_footer' => 5,
 
             ]);
 
@@ -95,7 +93,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
                     $ticket->writeHTML('<thead style="border-bottom: 2px;">');
-                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Precio</th><th>Importe</th></tr>');
+                    $ticket->writeHTML('<tr><th>Cant.</th><th>Prod.</th><th>Precio</th><th>Importe</th></tr>');
                     $ticket->writeHTML('</thead>');
                     $ticket->writeHTML('<tbody>');
 
@@ -492,15 +490,13 @@ class PedidoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['80', '2750'],
+                'format' => ['50', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
-                'margin_left' => 5,
-                'margin_right' => 5,
+                'margin_left' => 0,
+                'margin_right' => 0,
                 'margin_top' => 5,
                 'margin_bottom' => 5,
-                'margin_header' => 5,
-                'margin_footer' => 5,
 
             ]);
 
@@ -538,7 +534,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
                     $ticket->writeHTML('<thead style="border-bottom: 2px;">');
-                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Precio</th><th>Importe</th></tr>');
+                    $ticket->writeHTML('<tr><th>Cant.</th><th>Prod.</th><th>Precio</th><th>Importe</th></tr>');
                     $ticket->writeHTML('</thead>');
                     $ticket->writeHTML('<tbody>');
 
@@ -608,15 +604,13 @@ class PedidoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['80', '2750'],
+                'format' => ['50', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
-                'margin_left' => 5,
-                'margin_right' => 5,
+                'margin_left' => 0,
+                'margin_right' => 0,
                 'margin_top' => 5,
                 'margin_bottom' => 5,
-                'margin_header' => 5,
-                'margin_footer' => 5,
 
             ]);
 
@@ -654,7 +648,7 @@ class PedidoController extends Controller
 
                     $ticket->writeHTML('<table style="width: 100%; height: auto; overflow: auto;">');
                     $ticket->writeHTML('<thead style="border-bottom: 2px;">');
-                    $ticket->writeHTML('<tr><th>Cantidad</th><th>Producto</th><th>Precio</th><th>Importe</th></tr>');
+                    $ticket->writeHTML('<tr><th>Cant.</th><th>Prod.</th><th>Precio</th><th>Importe</th></tr>');
                     $ticket->writeHTML('</thead>');
                     $ticket->writeHTML('<tbody>');
 
