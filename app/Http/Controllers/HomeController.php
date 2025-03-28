@@ -6,7 +6,6 @@ use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Pedido;
 use App\Models\Corte;
-use App\Models\Corte;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

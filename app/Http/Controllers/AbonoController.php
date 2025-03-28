@@ -53,7 +53,6 @@ class AbonoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['50', '2750'],
                 'format' => ['80', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
@@ -144,14 +143,7 @@ class AbonoController extends Controller
                 }else{
 
                     $this->abono( $request );
-                if( $request->nota == 'Liquidación' ){
-
-                    $this->liquidacion( $request );
-
-                }else{
-
-                    $this->abono( $request );
-
+                
                 }
 
                 $datos['exito'] = true;
@@ -409,7 +401,6 @@ class AbonoController extends Controller
             $ticket = new \Mpdf\Mpdf([
 
                 'mode' => 'utf-8',
-                'format' => ['50', '2750'],
                 'format' => ['80', '2750'],
                 'orientation' => 'P',
                 'autoPageBreak' => false,
@@ -529,72 +520,5 @@ class AbonoController extends Controller
 
         }
     }
-
-
-    public function abono( Request $request ){
-        try{
-
-            if( $request->pedidos && count( $request->pedidos ) > 0 ){
-
-                foreach( $request->pedidos as $pedido ){
-
-                    Pedido::where('id', '=', $pedido)
-                            ->update([
-
-                                'estado' => 'Pagado',
-
-                            ]);
-
-                }
-
-            }
-
-        }catch( \Throwable $th ){
-
-            echo $th->getMessage();
-
-        }
-    }
-
-    public function liquidacion( Request $request ){
-        try{
-
-            $pedidos = Pedido::where('idCliente', '=', $request->cliente)
-                                ->where('estado', '!=', 'Corte')
-                                ->get();
-
-            $prestamos = Prestamo::where('idCliente', '=', $request->cliente)
-                    ->get();
-
-            if( count( $pedidos ) > 0 ){
-            
-                foreach( $pedidos as $pedido ){
-
-                    Pedido::where('id', '=', $pedido->id)
-                            ->update([
-
-                                'estado' => 'Pagado',
-
-                            ]);
-
-                }
-
-            }
-
-            if( count( $prestamos ) > 0 ){
-
-                foreach( $prestamos as $prestamo ){
-
-                    $prestamo->delete();
-
-                }
-
-            }
-            
-        }catch( \Throwable $th ){
-
-            echo $th->getMessage();
-            
-        }
-    }
+    
 }
