@@ -41,7 +41,7 @@
 
             <footer class="mt-auto text-white-50">
                 <p class="fs-6">Diseñado y desarrollado por <a href="https://pabloprogramador.com.mx" class="text-white">PabloProgramador</a> para <u>Carniceria La Higienica</u></p>
-                <span class="fs-6 text-light text-center d-block">Versión 1.1.4</span>
+                <span class="fs-6 text-light text-center d-block">Versión 1.1.5</span>
             </footer>
         </div>
     </body>
