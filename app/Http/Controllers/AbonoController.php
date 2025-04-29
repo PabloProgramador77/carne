@@ -13,7 +13,6 @@ use App\Http\Requests\Abono\Delete;
 use App\Models\Pedido;
 use NumberFormatter;
 use \Mpdf\Mpdf;
-use App\Models\Prestamo;
 
 class AbonoController extends Controller
 {
