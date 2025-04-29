@@ -46,7 +46,7 @@ class CorteController extends Controller
             
             $pedidos = Pedido::select('pedidos.total', 'pedidos.created_at', 'clientes.nombre', 'pedidos.estado')
                         ->join('clientes', 'pedidos.idCliente', '=', 'clientes.id')
-                        ->where('pedidos.estado', '!=', 'Corte')
+                        ->where('pedidos.estado', '=', 'Pagado')
                         ->whereDate('pedidos.created_at', Carbon::today())
                         ->get();
 
