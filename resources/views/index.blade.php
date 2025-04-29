@@ -29,7 +29,10 @@
                             $total += $pedido->total;
                         @endphp
                     @endforeach
-                    <x-adminlte-small-box title="$ {{ number_format( $total, 2) }} MXN" text="Total de Ventas" icon="fas fa-dollar-sign" theme="teal" class="shadow"></x-adminlte-small-box>
+                    @can('ver-ventas')
+                        <x-adminlte-small-box title="$ {{ number_format( $total, 2) }} MXN" text="Total de Ventas" icon="fas fa-dollar-sign" theme="teal" class="shadow"></x-adminlte-small-box>    
+                    @endcan
+                    
                 </div>
             </div>
 
