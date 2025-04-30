@@ -18,7 +18,7 @@ class ProductoController extends Controller
     {
         try {
         
-            $productos = Producto::orderBy('created_at', 'desc')->get();
+            $productos = Producto::orderBy('nombre', 'asc')->get();
 
             return view('productos.index', compact('productos'));
 
